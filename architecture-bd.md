@@ -16,6 +16,7 @@
 - participated_events_ids: Array<UUID>
 - verified: Boolean
 - created_at: Timestamp
+- interest_tags: Array<String>
 
 
 ## Event
@@ -32,3 +33,4 @@
 - max_participants_count: Integer
 - avatar_image: String (URL)
 - images: Array<String>
+- tags: Array<String>
