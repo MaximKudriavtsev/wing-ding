@@ -6,7 +6,6 @@
 - last_name: String (50)
 - email: String(100)
 - password: String(100)
-- password_solt: String(30)
 - description: String (256)
 - avatar_image: String (URL)
 - images: Array<String>
