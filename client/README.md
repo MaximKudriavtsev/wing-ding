@@ -34,8 +34,3 @@ Run Expo Go press "Scan QR Code" on the "Projects" tab of the Expo Go app and sc
 > If you cath a connection error ```Uncaught Error: Java.net,sockettimeoutException: failed to connect to after 10000ms``` 
 > Try to change connection from LAN to tunnel and back in Expo Dev Tools.
 
-## Featured links
-
-[Node.Js](https://nodejs.org/en)
-
-[Expo](https://docs.expo.dev/)
