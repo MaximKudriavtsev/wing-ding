@@ -2,7 +2,7 @@
 
 ## Preparations
 
-First of all to run the application you must install Node.js and the npm command line interface.
+First of all to run the application you must install [Node.Js](https://nodejs.org/en) and the npm command line interface.
 
 Then you should install expo framework. The quickest way to get started:
 
