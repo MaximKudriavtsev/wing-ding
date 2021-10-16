@@ -7,7 +7,7 @@ import { AuthenticationForm } from './src/AuthenticationForm';
 export default function App() {
   return (
     <View style={styles.container}>
-      <AuthenticationForm/>
+      <AuthenticationForm />
     </View>
   );
 }
