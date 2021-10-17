@@ -1,14 +1,17 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { AuthenticationForm } from './src/AuthenticationForm';
+import { ContextProvider } from './src/ContextProvider';
+import { api } from './src/config';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <AuthenticationForm />
-    </View>
+    <ContextProvider inject={{ api }}>
+      <View style={styles.container}>
+        <AuthenticationForm />
+      </View>
+    </ContextProvider>
   );
 }
 
