@@ -14,7 +14,6 @@ To install client application you need to open your workspace folder and run in 
 
 ```expo init wing-ding```
 
-When installation is done, open wing-ding folder and replace all files with the content of folder "client" of this repository.
 
 After that you can build the application:
 
