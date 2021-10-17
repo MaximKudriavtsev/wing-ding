@@ -4,18 +4,7 @@
 
 First of all to run the application you must install [Node.Js](https://nodejs.org/en) and the npm command line interface.
 
-Then you should install expo framework. The quickest way to get started:
-
-```npm install --global expo-cli```
-
-## Installing application
-
-To install client application you need to open your workspace folder and run in command line:
-
-```expo init wing-ding```
-
-
-After that you can build the application:
+To build the application run in terminal:
 
 ```expo start```
 
