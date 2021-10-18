@@ -2,19 +2,20 @@
 
 ## Requirements
 
-1. Any webserver ([Openserver]() Windows or [MAMP]() Mac)
-2. [PHP]() (usually comes with a web server)
-3. [Composer]()
+1. Any webserver ([Openserver](https://ospanel.io/) Windows or [MAMP](https://www.mamp.info/en/downloads/) Mac)
+2. [PHP](https://www.php.net/downloads) (usually comes with a web server)
+3. [Composer](https://getcomposer.org/)
 
-##Installation
+## Installation
 
 1. Clone the project to the web server folder (domains or htdocs).
 2. Install the project by composer
 
 ```composer install```
+
 3. Create a .env file and copy the contents of the .env.example file into it.
 4. Database 
-* Create a database (in phpmyadmin for example), and enter settings in .env:
+* Create a database (with phpmyadmin for example), and enter settings in .env:
 ```
 DB_DATABASE=
 DB_USERNAME=
