@@ -39,7 +39,7 @@ export const LOGIN_STYLE = {
         width: '100%',
         paddingHorizontal: 10,
         height: 50,
-        backgroundColor: '#181327',
+        backgroundColor: THEME.DARKER_COLOR,
         borderRadius: 10,
         marginBottom: 10,
     },
