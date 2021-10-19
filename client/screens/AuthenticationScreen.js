@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, TextInput, Pressable, TouchableOpacity} from 'react-native'
-import { THEME } from "../components/theme";
-import { LOGIN_STYLE } from "../components/theme";
+import { THEME, LOGIN_STYLE } from "../components/theme";
 
 export const AuthenticationScreen = ({toRegistration, toResetting}) => {
     return (
