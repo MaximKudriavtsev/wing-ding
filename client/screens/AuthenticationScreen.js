@@ -20,7 +20,7 @@ export const AuthenticationScreen = ({toRegistration, toResetting}) => {
             <Pressable style={LOGIN_STYLE.button}>
                 <Text style={LOGIN_STYLE.button__text}>Войти</Text>
             </Pressable>
-            <TouchableOpacity onPress={() => toResetting()}>
+            <TouchableOpacity onPress={toResetting}>
                 <Text style={LOGIN_STYLE.login__label}>Я не помню пароль</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => toRegistration()}>
