@@ -6,14 +6,16 @@ export const SetPasswordScreen = ({toAuthentication, toResetting}) => {
     return (
         <View style={LOGIN_STYLE.wrapper}>
             <Text style={LOGIN_STYLE.title}>Установить новый пароль</Text>
-            <TextInput 
-                style={LOGIN_STYLE.input} 
-                placeholder="Новый пароль" 
+            <TextInput
+                style={LOGIN_STYLE.input}
+                secureTextEntry={true}
+                placeholder="Новый пароль"
                 placeholderTextColor={THEME.PLACEHOLDER_COLOR}
             />
-            <TextInput 
-                style={LOGIN_STYLE.input} 
-                placeholder="Подтвердите пароль" 
+            <TextInput
+                style={LOGIN_STYLE.input}
+                secureTextEntry={true}
+                placeholder="Подтвердите пароль"
                 placeholderTextColor={THEME.PLACEHOLDER_COLOR}
             />
 

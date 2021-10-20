@@ -6,19 +6,20 @@ export const RegistrationScreen = ({toAuthentication}) => {
     return (
         <View style={LOGIN_STYLE.wrapper}>
             <Text style={LOGIN_STYLE.title}>Регистрация</Text>
-            <TextInput 
-                style={LOGIN_STYLE.input} 
-                placeholder="Логин" 
+            <TextInput
+                style={LOGIN_STYLE.input}
+                placeholder="Логин"
                 placeholderTextColor={THEME.PLACEHOLDER_COLOR}
             />
-            <TextInput 
-                style={LOGIN_STYLE.input} 
-                placeholder="Пароль" 
+            <TextInput
+                style={LOGIN_STYLE.input}
+                secureTextEntry={true}
+                placeholder="Пароль"
                 placeholderTextColor={THEME.PLACEHOLDER_COLOR}
             />
-            <TextInput 
-                style={LOGIN_STYLE.input} 
-                placeholder="E-mail" 
+            <TextInput
+                style={LOGIN_STYLE.input}
+                placeholder="E-mail"
                 placeholderTextColor={THEME.PLACEHOLDER_COLOR}
             />
             <Pressable style={LOGIN_STYLE.button}>
