@@ -6,14 +6,14 @@ export const ResetPasswordScreen = ({toAuthentication, toRegistration, toPasswor
     return (
         <View style={LOGIN_STYLE.wrapper}>
             <Text style={LOGIN_STYLE.title}>Восстановление пароля</Text>
-            <TextInput 
-                style={LOGIN_STYLE.input} 
-                placeholder="E-mail" 
+            <TextInput
+                style={LOGIN_STYLE.input}
+                placeholder="E-mail"
                 placeholderTextColor={THEME.PLACEHOLDER_COLOR}
             />
-            <Pressable 
-                style={LOGIN_STYLE.button} 
-                onPress={() => {toPasswordSetting()}}
+            <Pressable
+                style={LOGIN_STYLE.button}
+                onPress={toPasswordSetting}
             >
                 <Text style={LOGIN_STYLE.button__text}>Восстановить</Text>
             </Pressable>

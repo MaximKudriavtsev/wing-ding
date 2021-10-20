@@ -7,7 +7,8 @@ import { api } from './src/config';
 import { AuthenticationScreen } from './screens/AuthenticationScreen';
 import { RegistrationScreen  } from './screens/RegistrationScreen';
 import { ResetPasswordScreen } from './screens/ResetPasswordScreen';
-import { SetPasswordScreen } from './screens/SetPasswodScreen';
+import { SetPasswordScreen } from './screens/SetPasswordScreen';
+import { THEME } from '../../../Products/wing-ding/client/components/theme';
 
 export default function App() {
 
@@ -23,7 +24,7 @@ export default function App() {
     />
   )
   const resetPasswordScreen = (
-    <ResetPasswordScreen 
+    <ResetPasswordScreen
       toAuthentication={() => setCurrentScreen(authenticationScreen)}
       toRegistration={() => setCurrentScreen(registrationScreen)}
       toPasswordSetting={() => setCurrentScreen(setNewPasswordScreen)}
@@ -37,24 +38,22 @@ export default function App() {
     />
   )
 
-  const someCaсhe = '12'; 
+  const someCaсhe = '';
   const [currentScreen, setCurrentScreen] = useState(someCaсhe ? authenticationScreen : registrationScreen)
 
   return (
-    <>
-      <ContextProvider inject={{ api }}>
-        <View style={styles.container}>
-          {currentScreen}
-        </View>
-      </ContextProvider>
-    </>
+    <ContextProvider inject={{ api }}>
+      <View style={styles.container}>
+        {currentScreen}
+      </View>
+    </ContextProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1b162a',
+    backgroundColor: THEME.BACKGROUND_COLOR,
     alignItems: 'center',
     justifyContent: 'center',
   },

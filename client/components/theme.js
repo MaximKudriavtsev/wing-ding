@@ -1,15 +1,18 @@
 import { StyleSheet } from "react-native"
 
 export const THEME = {
+  //General
     FONT_COLOR: '#ddd',
-    PLACEHOLDER_COLOR: '#666',
     BACKGROUND_COLOR: '#1b162a',
     DARKER_COLOR: '#181327',
+    TITLE_FONT_SIZE: 28,
+    LABEL_FONT_SIZE: 16,
+  //Button
     BUTTON_COLOR: '#0df5e3',
     BUTTON_FONT_COLOR: '#1a1523',
     BUTTON_FONT_SIZE: 18,
-    TITLE_FONT_SIZE: 28,
-    LABEL_FONT_SIZE: 16
+  //Input
+    PLACEHOLDER_COLOR: '#666',
 }
 
 export const LOGIN_STYLE = StyleSheet.create({
