@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('/user')->group(function () {
-    Route::post('/auth');
-    Route::post('/registration');
+    Route::post('/auth', [AuthController::class, 'login']);
+    Route::post('/registration', [AuthController::class, 'register']);
     Route::post('/profile/get')->middleware('auth');
     Route::post('/profile/change')->middleware('auth');
     Route::post('/friends/get')->middleware('auth');
