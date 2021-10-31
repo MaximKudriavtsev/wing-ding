@@ -1,30 +1,22 @@
-import React from "react";
-import { View, Text, TextInput, Pressable, TouchableOpacity} from 'react-native'
-import { THEME, LOGIN_STYLE } from "../components/theme";
+import React from 'react';
+import { View, TextInput } from 'react-native';
+import { AppTitle } from '../components/ui/AppTitle';
+import { AppButton } from '../components/ui/AppButton';
+import { AppTextInput } from '../components/ui/AppTextInput';
+import { THEME, SCREEN_STYLE } from '../components/theme';
 
-export const SetPasswordScreen = ({toAuthentication, toResetting}) => {
-    return (
-        <View style={LOGIN_STYLE.wrapper}>
-            <Text style={LOGIN_STYLE.title}>Установить новый пароль</Text>
-            <TextInput
-                style={LOGIN_STYLE.input}
-                secureTextEntry={true}
-                placeholder="Новый пароль"
-                placeholderTextColor={THEME.PLACEHOLDER_COLOR}
-            />
-            <TextInput
-                style={LOGIN_STYLE.input}
-                secureTextEntry={true}
-                placeholder="Подтвердите пароль"
-                placeholderTextColor={THEME.PLACEHOLDER_COLOR}
-            />
-
-            <Pressable style={LOGIN_STYLE.button} onPress={toAuthentication}>
-                <Text style={LOGIN_STYLE.button__text}>Установить</Text>
-            </Pressable>
-            <TouchableOpacity onPress={toResetting}>
-                <Text style={LOGIN_STYLE.label}>Я не получил сообщение</Text>
-            </TouchableOpacity>
-        </View>
-    )
-}
+export const SetPasswordScreen = ({ toAuthentication, toResetting }) => {
+  return (
+    <View style={SCREEN_STYLE.wrapper}>
+      <AppTitle>Установить новый пароль</AppTitle>
+      <AppTextInput iconName={'unlock-alt'}>Новый пароль</AppTextInput>
+      <AppTextInput iconName={'lock'}>Подтвердите пароль</AppTextInput>
+      <AppButton fontColor={THEME.BACKGROUND_COLOR} onPress={toAuthentication}>
+        Установить
+      </AppButton>
+      <AppButton backgroundColor={'transparent'} onPress={toResetting}>
+        Я не получил сообщение
+      </AppButton>
+    </View>
+  );
+};

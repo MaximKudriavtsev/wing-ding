@@ -1,28 +1,24 @@
-import React from "react";
-import { View, Text, TextInput, Pressable, TouchableOpacity} from 'react-native'
-import { THEME, LOGIN_STYLE } from "../components/theme";
+import React from 'react';
+import { View, TextInput } from 'react-native';
+import { AppTitle } from '../components/ui/AppTitle';
+import { AppButton } from '../components/ui/AppButton';
+import { AppTextInput } from '../components/ui/AppTextInput';
+import { THEME, SCREEN_STYLE } from '../components/theme';
 
-export const ResetPasswordScreen = ({toAuthentication, toRegistration, toPasswordSetting }) => {
-    return (
-        <View style={LOGIN_STYLE.wrapper}>
-            <Text style={LOGIN_STYLE.title}>Восстановление пароля</Text>
-            <TextInput
-                style={LOGIN_STYLE.input}
-                placeholder="E-mail"
-                placeholderTextColor={THEME.PLACEHOLDER_COLOR}
-            />
-            <Pressable
-                style={LOGIN_STYLE.button}
-                onPress={toPasswordSetting}
-            >
-                <Text style={LOGIN_STYLE.button__text}>Восстановить</Text>
-            </Pressable>
-            <TouchableOpacity onPress={toAuthentication}>
-                <Text style={LOGIN_STYLE.label}>Я помню свой пароль</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={toRegistration}>
-                <Text style={LOGIN_STYLE.label}>Создать новый аккаунт</Text>
-            </TouchableOpacity>
-        </View>
-    )
-}
+export const ResetPasswordScreen = ({ toAuthentication, toRegistration, toPasswordSetting }) => {
+  return (
+    <View style={SCREEN_STYLE.wrapper}>
+      <AppTitle>Восстановление пароля</AppTitle>
+      <AppTextInput iconName={'envelope-o'}>E-mail</AppTextInput>
+      <AppButton fontColor={THEME.BACKGROUND_COLOR} onPress={toPasswordSetting}>
+        Восстановить
+      </AppButton>
+      <AppButton backgroundColor={'transparent'} onPress={toAuthentication}>
+        Я помню свой пароль
+      </AppButton>
+      <AppButton backgroundColor={'transparent'} onPress={toRegistration}>
+        Создать новый аккаунт
+      </AppButton>
+    </View>
+  );
+};
