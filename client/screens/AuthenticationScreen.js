@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput } from 'react-native';
+import { View } from 'react-native';
 import { AppTitle } from '../components/ui/AppTitle';
 import { AppButton } from '../components/ui/AppButton';
 import { AppTextInput } from '../components/ui/AppTextInput';
@@ -9,8 +9,8 @@ export const AuthenticationScreen = ({ toRegistration, toResetting }) => {
   return (
     <View style={SCREEN_STYLE.wrapper}>
       <AppTitle>Добро пожаловать!</AppTitle>
-      <AppTextInput iconName={'user-o'}>Логин</AppTextInput>
-      <AppTextInput iconName={'lock'}>Пароль</AppTextInput>
+      <AppTextInput iconName={THEME.ICON_USER}>Логин</AppTextInput>
+      <AppTextInput iconName={THEME.ICON_LOCK}>Пароль</AppTextInput>
       <AppButton
         fontColor={THEME.BACKGROUND_COLOR}
         onPress={() => {

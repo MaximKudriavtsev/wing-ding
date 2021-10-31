@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput } from 'react-native';
+import { View } from 'react-native';
 import { AppTitle } from '../components/ui/AppTitle';
 import { AppButton } from '../components/ui/AppButton';
 import { AppTextInput } from '../components/ui/AppTextInput';
@@ -9,8 +9,8 @@ export const SetPasswordScreen = ({ toAuthentication, toResetting }) => {
   return (
     <View style={SCREEN_STYLE.wrapper}>
       <AppTitle>Установить новый пароль</AppTitle>
-      <AppTextInput iconName={'unlock-alt'}>Новый пароль</AppTextInput>
-      <AppTextInput iconName={'lock'}>Подтвердите пароль</AppTextInput>
+      <AppTextInput iconName={THEME.ICON_UNLOCK}>Новый пароль</AppTextInput>
+      <AppTextInput iconName={THEME.ICON_LOCK}>Подтвердите пароль</AppTextInput>
       <AppButton fontColor={THEME.BACKGROUND_COLOR} onPress={toAuthentication}>
         Установить
       </AppButton>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput } from 'react-native';
+import { View } from 'react-native';
 import { AppTitle } from '../components/ui/AppTitle';
 import { AppButton } from '../components/ui/AppButton';
 import { AppTextInput } from '../components/ui/AppTextInput';
@@ -9,7 +9,7 @@ export const ResetPasswordScreen = ({ toAuthentication, toRegistration, toPasswo
   return (
     <View style={SCREEN_STYLE.wrapper}>
       <AppTitle>Восстановление пароля</AppTitle>
-      <AppTextInput iconName={'envelope-o'}>E-mail</AppTextInput>
+      <AppTextInput iconName={THEME.ICON_ENVELOPE}>E-mail</AppTextInput>
       <AppButton fontColor={THEME.BACKGROUND_COLOR} onPress={toPasswordSetting}>
         Восстановить
       </AppButton>

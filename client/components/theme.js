@@ -16,6 +16,11 @@ export const THEME = {
   ACTIVE_OPACITY: 0.7,
   //Input
   PLACEHOLDER_COLOR: '#666',
+  //Icons
+  ICON_USER: 'user-o',
+  ICON_ENVELOPE: 'envelope-o',
+  ICON_LOCK: 'lock',
+  ICON_UNLOCK: 'unlock-alt',
 };
 
 export const SCREEN_STYLE = StyleSheet.create({
