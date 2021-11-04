@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { THEME } from '../theme';
-import { AppTextBold } from './AppTextBold';
+import { Text } from './Text';
 
-export const AppButton = ({
+export const Button = ({
   children,
   onPress,
   backgroundColor = THEME.BUTTON_COLOR,
@@ -13,9 +13,9 @@ export const AppButton = ({
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={THEME.ACTIVE_OPACITY}>
       <View style={{ ...styles.button, backgroundColor }}>
-        <AppTextBold fontColor={fontColor} fontSize={fontSize}>
+        <Text style={{ color: fontColor, fontSize }} bold={true}>
           {children}
-        </AppTextBold>
+        </Text>
       </View>
     </TouchableOpacity>
   );

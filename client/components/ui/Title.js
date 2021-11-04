@@ -1,13 +1,18 @@
 import React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Text } from './Text';
 import { THEME } from '../theme';
 
-export const AppTextBold = ({ children, fontColor = THEME.FONT_COLOR, fontSize = 14 }) => {
+export const Title = ({
+  children,
+  fontColor = THEME.FONT_COLOR,
+  fontSize = THEME.TITLE_FONT_SIZE,
+}) => {
   return <Text style={{ ...styles.default, color: fontColor, fontSize }}>{children}</Text>;
 };
 
 const styles = StyleSheet.create({
   default: {
-    fontFamily: THEME.BOLD_FONT,
+    marginBottom: 30,
   },
 });

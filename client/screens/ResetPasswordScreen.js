@@ -1,24 +1,24 @@
 import React from 'react';
 import { View } from 'react-native';
-import { AppTitle } from '../components/ui/AppTitle';
-import { AppButton } from '../components/ui/AppButton';
-import { AppTextInput } from '../components/ui/AppTextInput';
+import { Title } from '../components/ui/Title';
+import { Button } from '../components/ui/Button';
+import { TextInput } from '../components/ui/TextInput';
 import { THEME, SCREEN_STYLE } from '../components/theme';
 
 export const ResetPasswordScreen = ({ toAuthentication, toRegistration, toPasswordSetting }) => {
   return (
     <View style={SCREEN_STYLE.wrapper}>
-      <AppTitle>Восстановление пароля</AppTitle>
-      <AppTextInput iconName={THEME.ICON_ENVELOPE}>E-mail</AppTextInput>
-      <AppButton fontColor={THEME.BACKGROUND_COLOR} onPress={toPasswordSetting}>
+      <Title>Восстановление пароля</Title>
+      <TextInput iconName={THEME.ICON_ENVELOPE}>E-mail</TextInput>
+      <Button fontColor={THEME.BACKGROUND_COLOR} onPress={toPasswordSetting}>
         Восстановить
-      </AppButton>
-      <AppButton backgroundColor={'transparent'} onPress={toAuthentication}>
+      </Button>
+      <Button backgroundColor={'transparent'} onPress={toAuthentication}>
         Я помню свой пароль
-      </AppButton>
-      <AppButton backgroundColor={'transparent'} onPress={toRegistration}>
+      </Button>
+      <Button backgroundColor={'transparent'} onPress={toRegistration}>
         Создать новый аккаунт
-      </AppButton>
+      </Button>
     </View>
   );
 };

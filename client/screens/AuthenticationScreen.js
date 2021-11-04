@@ -1,30 +1,30 @@
 import React from 'react';
 import { View } from 'react-native';
-import { AppTitle } from '../components/ui/AppTitle';
-import { AppButton } from '../components/ui/AppButton';
-import { AppTextInput } from '../components/ui/AppTextInput';
+import { Title } from '../components/ui/Title';
+import { Button } from '../components/ui/Button';
+import { TextInput } from '../components/ui/TextInput';
 import { THEME, SCREEN_STYLE } from '../components/theme.js';
 
 export const AuthenticationScreen = ({ toRegistration, toResetting }) => {
   return (
     <View style={SCREEN_STYLE.wrapper}>
-      <AppTitle>Добро пожаловать!</AppTitle>
-      <AppTextInput iconName={THEME.ICON_USER}>Логин</AppTextInput>
-      <AppTextInput iconName={THEME.ICON_LOCK}>Пароль</AppTextInput>
-      <AppButton
+      <Title>Добро пожаловать!</Title>
+      <TextInput iconName={THEME.ICON_USER}>Логин</TextInput>
+      <TextInput iconName={THEME.ICON_LOCK}>Пароль</TextInput>
+      <Button
         fontColor={THEME.BACKGROUND_COLOR}
         onPress={() => {
           console.log('Log In');
         }}
       >
         Войти
-      </AppButton>
-      <AppButton backgroundColor={'transparent'} onPress={toResetting}>
+      </Button>
+      <Button backgroundColor={'transparent'} onPress={toResetting}>
         Я не помню пароль
-      </AppButton>
-      <AppButton backgroundColor={'transparent'} onPress={toRegistration}>
+      </Button>
+      <Button backgroundColor={'transparent'} onPress={toRegistration}>
         Еще не с нами? Зарегистрируйтесь!
-      </AppButton>
+      </Button>
     </View>
   );
 };

@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
+import { View, TextInput as DefaultTextInput, StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { THEME } from '../theme';
 
-export const AppTextInput = ({
+export const TextInput = ({
   iconName,
   iconColor = THEME.PLACEHOLDER_COLOR,
   iconSize = 20,
@@ -12,7 +12,7 @@ export const AppTextInput = ({
   return (
     <View style={styles.inputSection}>
       <FontAwesome style={styles.inputIcon} name={iconName} size={iconSize} color={iconColor} />
-      <TextInput
+      <DefaultTextInput
         style={styles.input}
         placeholder={children}
         placeholderTextColor={THEME.PLACEHOLDER_COLOR}
