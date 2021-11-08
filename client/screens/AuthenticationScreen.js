@@ -1,31 +1,30 @@
-import React from "react";
-import { View, Text, TextInput, Pressable, TouchableOpacity} from 'react-native'
-import { THEME, LOGIN_STYLE } from "../components/theme";
+import React from 'react';
+import { View } from 'react-native';
+import { Title } from '../components/ui/Title';
+import { Button } from '../components/ui/Button';
+import { TextInput } from '../components/ui/TextInput';
+import { THEME, SCREEN_STYLE } from '../components/theme.js';
 
-export const AuthenticationScreen = ({toRegistration, toResetting}) => {
-    return (
-        <View style={LOGIN_STYLE.wrapper}>
-            <Text style={LOGIN_STYLE.title}>Добро пожаловать!</Text>
-            <TextInput
-                style={LOGIN_STYLE.input}
-                placeholder="Логин"
-                placeholderTextColor={THEME.PLACEHOLDER_COLOR}
-            />
-            <TextInput
-                style={LOGIN_STYLE.input}
-                secureTextEntry={true}
-                placeholder="Пароль"
-                placeholderTextColor={THEME.PLACEHOLDER_COLOR}
-            />
-            <Pressable style={LOGIN_STYLE.button}>
-                <Text style={LOGIN_STYLE.button__text}>Войти</Text>
-            </Pressable>
-            <TouchableOpacity onPress={toResetting}>
-                <Text style={LOGIN_STYLE.label}>Я не помню пароль</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={toRegistration}>
-                <Text style={LOGIN_STYLE.label}>Еще не с нами? Зарегистрируйтесь!</Text>
-            </TouchableOpacity>
-        </View>
-    )
-}
+export const AuthenticationScreen = ({ toRegistration, toResetting }) => {
+  return (
+    <View style={SCREEN_STYLE.wrapper}>
+      <Title>Добро пожаловать!</Title>
+      <TextInput iconName={THEME.ICON_USER}>Логин</TextInput>
+      <TextInput iconName={THEME.ICON_LOCK}>Пароль</TextInput>
+      <Button
+        fontColor={THEME.BACKGROUND_COLOR}
+        onPress={() => {
+          console.log('Log In');
+        }}
+      >
+        Войти
+      </Button>
+      <Button backgroundColor={'transparent'} onPress={toResetting}>
+        Я не помню пароль
+      </Button>
+      <Button backgroundColor={'transparent'} onPress={toRegistration}>
+        Еще не с нами? Зарегистрируйтесь!
+      </Button>
+    </View>
+  );
+};
