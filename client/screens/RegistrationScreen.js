@@ -5,7 +5,7 @@ import { Button } from '../components/ui/Button';
 import { TextInput } from '../components/ui/TextInput';
 import { THEME, SCREEN_STYLE } from '../components/theme';
 
-export const RegistrationScreen = ({ toAuthentication }) => {
+export const RegistrationScreen = ({ navigation }) => {
   return (
     <View style={SCREEN_STYLE.wrapper}>
       <Title>Регистрация</Title>
@@ -20,7 +20,7 @@ export const RegistrationScreen = ({ toAuthentication }) => {
       >
         Зарегистрироваться
       </Button>
-      <Button backgroundColor={'transparent'} onPress={toAuthentication}>
+      <Button backgroundColor={'transparent'} onPress={() => navigation.navigate('Authentication')}>
         Уже есть аккаунт? Войти
       </Button>
     </View>

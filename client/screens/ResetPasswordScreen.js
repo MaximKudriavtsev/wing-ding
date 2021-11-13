@@ -5,18 +5,21 @@ import { Button } from '../components/ui/Button';
 import { TextInput } from '../components/ui/TextInput';
 import { THEME, SCREEN_STYLE } from '../components/theme';
 
-export const ResetPasswordScreen = ({ toAuthentication, toRegistration, toPasswordSetting }) => {
+export const ResetPasswordScreen = ({ navigation }) => {
   return (
     <View style={SCREEN_STYLE.wrapper}>
       <Title>Восстановление пароля</Title>
       <TextInput iconName={THEME.ICON_ENVELOPE}>E-mail</TextInput>
-      <Button fontColor={THEME.BACKGROUND_COLOR} onPress={toPasswordSetting}>
+      <Button
+        fontColor={THEME.BACKGROUND_COLOR}
+        onPress={() => navigation.navigate('SettingPassword')}
+      >
         Восстановить
       </Button>
-      <Button backgroundColor={'transparent'} onPress={toAuthentication}>
+      <Button backgroundColor={'transparent'} onPress={() => navigation.navigate('Authentication')}>
         Я помню свой пароль
       </Button>
-      <Button backgroundColor={'transparent'} onPress={toRegistration}>
+      <Button backgroundColor={'transparent'} onPress={() => navigation.navigate('Registration')}>
         Создать новый аккаунт
       </Button>
     </View>

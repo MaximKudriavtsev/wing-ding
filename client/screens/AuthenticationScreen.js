@@ -5,7 +5,7 @@ import { Button } from '../components/ui/Button';
 import { TextInput } from '../components/ui/TextInput';
 import { THEME, SCREEN_STYLE } from '../components/theme.js';
 
-export const AuthenticationScreen = ({ toRegistration, toResetting }) => {
+export const AuthenticationScreen = ({ navigation }) => {
   return (
     <View style={SCREEN_STYLE.wrapper}>
       <Title>Добро пожаловать!</Title>
@@ -19,10 +19,13 @@ export const AuthenticationScreen = ({ toRegistration, toResetting }) => {
       >
         Войти
       </Button>
-      <Button backgroundColor={'transparent'} onPress={toResetting}>
+      <Button
+        backgroundColor={'transparent'}
+        onPress={() => navigation.navigate('RestoringPassword')}
+      >
         Я не помню пароль
       </Button>
-      <Button backgroundColor={'transparent'} onPress={toRegistration}>
+      <Button backgroundColor={'transparent'} onPress={() => navigation.navigate('Registration')}>
         Еще не с нами? Зарегистрируйтесь!
       </Button>
     </View>
