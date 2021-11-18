@@ -3,22 +3,38 @@ import { View, StyleSheet } from 'react-native';
 import { UserIcon } from './UserIcon';
 import { Text } from './Text';
 
-export const MemberTab = ({ members }) => {
+export const MemberTab = ({ members, reverse }) => {
   const membersIcons = [];
+  const membersTab = [];
 
   for (let i = 0; i < members.length; i++) {
     if (i >= 3) break;
-    membersIcons.push(<UserIcon key={i} userId={members[i]} style={{ right: 20 * i }} />);
+    membersIcons.push(
+      <UserIcon
+        key={'icon-' + i}
+        userId={members[i]}
+        style={reverse ? { marginLeft: -10 } : { marginRight: -10 }}
+      />,
+    );
   }
 
+  membersTab.push(
+    <View key={'member_icons'} style={styles.icons}>
+      {membersIcons}
+    </View>,
+  );
+
+  membersTab.push(
+    <View style={styles.text} key={'members_count'}>
+      <Text key={'count_wrapper'} bold={true} style={styles.counter}>
+        <Text key={'count_text'}>{members.length}</Text> участника(ов)
+      </Text>
+    </View>,
+  );
+
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.text}>
-        <Text bold={true} style={styles.counter}>
-          <Text>{members.length}</Text> участника(ов)
-        </Text>
-      </View>
-      <View style={styles.icons}>{membersIcons}</View>
+    <View key={'members_icons'} style={reverse ? styles.reversedWrapper : styles.wrapper}>
+      {reverse ? membersTab.reverse() : membersTab}
     </View>
   );
 };
@@ -27,14 +43,20 @@ const styles = StyleSheet.create({
   wrapper: {
     display: 'flex',
     flexDirection: 'row',
-    padding: 10,
+    paddingVertical: 10,
+    justifyContent: 'flex-start',
+    width: 220,
+  },
+  reversedWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
     justifyContent: 'flex-end',
     width: 220,
   },
   icons: {
     display: 'flex',
-    alignItems: 'flex-end',
-    width: '35%',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   text: {
     display: 'flex',

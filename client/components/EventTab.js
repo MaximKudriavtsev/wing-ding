@@ -24,7 +24,7 @@ export const EventTab = ({ event, onOpen }) => {
         </Row>
         <ImageBackground style={styles.image} source={{ uri: event.img }} />
         <Row style={{ padding: 10, height: 45, justifyContent: 'flex-end' }}>
-          <MemberTab members={event.membersIds}></MemberTab>
+          <MemberTab reverse={true} members={event.membersIds} />
         </Row>
 
         <Row

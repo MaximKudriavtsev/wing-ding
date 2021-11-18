@@ -18,9 +18,6 @@ export const UserIcon = ({ userId, style, iconSize = 34 }) => {
 };
 
 const styles = StyleSheet.create({
-  icon: {
-    position: 'absolute',
-  },
   iconImage: {
     borderRadius: 50,
     borderColor: THEME.DARKER_COLOR,

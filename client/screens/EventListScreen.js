@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { EventList } from './../components/EventList';
 import { FilterButton } from '../components/ui/FilterButton';
@@ -6,9 +6,9 @@ import { DATA, ME } from './../components/data';
 import { THEME } from './../components/theme';
 import { Row } from '../components/Row';
 
-export const EventListScreen = () => {
+export const EventListScreen = ({ navigation }) => {
   const openEventHandler = event => {
-    navigation.navigate('Event', { eventId: event.id, date: event.date });
+    navigation.navigate('EventDetails', { eventId: event.id });
   };
 
   const [events, setEvents] = useState(DATA);
@@ -30,8 +30,14 @@ export const EventListScreen = () => {
     setFilter('friends');
   };
 
+  useEffect(() => {
+    navigation.setOptions({
+      title: 'Wing-Ding',
+    });
+  }, [navigation]);
+
   return (
-    <View style={{ backgroundColor: THEME.BACKGROUND_COLOR, flex: 1, paddingTop: 40 }}>
+    <View style={{ backgroundColor: THEME.BACKGROUND_COLOR, flex: 1 }}>
       <Row style={styles.filterRow}>
         <FilterButton
           backgroundColor={filter === 'all' ? THEME.BRIGHTER_COLOR : THEME.DARKER_COLOR}
@@ -50,7 +56,7 @@ export const EventListScreen = () => {
           События друзей
         </FilterButton>
       </Row>
-      <EventList data={events} onOpen={openEventHandler} />
+      <EventList events={events} onOpen={openEventHandler} />
     </View>
   );
 };
