@@ -1,24 +1,14 @@
 import React from 'react';
-import { View, StyleSheet, ImageBackground } from 'react-native';
-import { THEME } from '../theme';
+import { View, StyleSheet } from 'react-native';
+import { UserIcon } from './UserIcon';
 import { Text } from './Text';
-import { USERS } from '../data';
 
 export const MemberTab = ({ members }) => {
   const membersIcons = [];
-  const findUserById = id => {
-    return USERS.find(user => user.id == id);
-  };
+
   for (let i = 0; i < members.length; i++) {
     if (i >= 3) break;
-    membersIcons.push(
-      <ImageBackground
-        key={i}
-        style={{ ...styles.icon, right: 20 * i }}
-        imageStyle={styles.iconImage}
-        source={{ uri: findUserById(members[i]).photo }}
-      />,
-    );
+    membersIcons.push(<UserIcon key={i} userId={members[i]} style={{ right: 20 * i }} />);
   }
 
   return (
@@ -45,16 +35,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'flex-end',
     width: '35%',
-  },
-  icon: {
-    position: 'absolute',
-    width: 34,
-    height: 34,
-  },
-  iconImage: {
-    borderRadius: 50,
-    borderColor: THEME.DARKER_COLOR,
-    borderWidth: 2,
   },
   text: {
     display: 'flex',
