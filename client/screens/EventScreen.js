@@ -9,10 +9,11 @@ import { THEME } from '../components/theme.js';
 import { DATA, USERS, ME } from '../components/data';
 
 export const EventScreen = ({ navigation, route }) => {
+  const correctTimeFormat = num => (num < 10 ? '0' + num : num);
+
   const eventId = route.params['eventId'];
   const event = DATA.find(e => e.id === eventId);
   const date = new Date(event.date);
-  const correctTimeFormat = num => (num < 10 ? '0' + num : num);
   const dateString =
     date.getDate() +
     '.' +
@@ -55,9 +56,9 @@ export const EventScreen = ({ navigation, route }) => {
       <Text style={styles.text}>{event.text}</Text>
       <Text style={styles.text}>{event.text}</Text>
       <Button
-        fontColor={amIMember ? THEME.FONT_COLOR : THEME.BACKGROUND_COLOR}
-        backgroundColor={amIMember ? THEME.DANGER_COLOR : THEME.BUTTON_COLOR}
-        style={{ marginBottom: 25 }}
+        fontColor={amIMember ? THEME.BUTTON_COLOR : THEME.BACKGROUND_COLOR}
+        backgroundColor={amIMember ? THEME.BACKGROUND_COLOR : THEME.BUTTON_COLOR}
+        style={{ marginBottom: 25, borderWidth: 2, borderColor: THEME.BUTTON_COLOR }}
         onPress={amIMember ? leaveEvent : enterEvent}
       >
         {amIMember ? 'Отказаться от участия' : 'Принять участие'}

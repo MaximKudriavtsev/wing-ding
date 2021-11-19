@@ -11,11 +11,9 @@ export const EventTab = ({ event, onOpen }) => {
   return (
     <TouchableOpacity activeOpacity={0.7} onPress={() => onOpen(event)}>
       <View style={styles.event}>
-        <Row
-          style={{ padding: 15, height: 80, justifyContent: 'flex-start', alignItems: 'center' }}
-        >
+        <Row style={styles.headerRow}>
           <DateTab date={event.date} />
-          <Column style={{ marginLeft: 15, height: 100, justifyContent: 'center' }}>
+          <Column style={styles.headerColumn}>
             <Text bold={true} style={styles.title}>
               {event.title}
             </Text>
@@ -23,13 +21,10 @@ export const EventTab = ({ event, onOpen }) => {
           </Column>
         </Row>
         <ImageBackground style={styles.image} source={{ uri: event.img }} />
-        <Row style={{ padding: 10, height: 45, justifyContent: 'flex-end' }}>
+        <Row style={styles.membersWrapper}>
           <MemberTab reverse={true} members={event.membersIds} />
         </Row>
-
-        <Row
-          style={{ padding: 10, height: 80, justifyContent: 'flex-start', alignItems: 'center' }}
-        >
+        <Row style={styles.textWrapper}>
           <Text numberOfLines={2} style={styles.text}>
             {event.text}
           </Text>
@@ -55,6 +50,17 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 200,
   },
+  headerRow: {
+    padding: 15,
+    height: 80,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  headerColumn: {
+    marginLeft: 15,
+    height: 100,
+    justifyContent: 'center',
+  },
   title: {
     color: THEME.FONT_COLOR,
     fontSize: 16,
@@ -62,6 +68,17 @@ const styles = StyleSheet.create({
   place: {
     color: THEME.PLACEHOLDER_COLOR,
     fontSize: 14,
+  },
+  membersWrapper: {
+    padding: 10,
+    height: 45,
+    justifyContent: 'flex-end',
+  },
+  textWrapper: {
+    padding: 10,
+    height: 80,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   text: {
     color: THEME.PLACEHOLDER_COLOR,
