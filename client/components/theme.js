@@ -24,7 +24,7 @@ export const THEME = {
   ICON_LOCK: 'lock',
   ICON_UNLOCK: 'unlock-alt',
   ICON_SEARCH: 'search',
-  ICON_FRIENDS: 'users',
+  ICON_EVENTS: 'home',
 };
 
 export const SCREEN_STYLE = StyleSheet.create({

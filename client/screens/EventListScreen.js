@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { EventList } from './../components/EventList';
-import { FilterButton } from '../components/ui/FilterButton';
+import { ToggleButton } from '../components/ui/ToggleButton';
 import { DATA, ME } from './../components/data';
 import { THEME } from './../components/theme';
 import { Row } from '../components/Row';
@@ -39,22 +39,16 @@ export const EventListScreen = ({ navigation }) => {
   return (
     <View style={{ backgroundColor: THEME.BACKGROUND_COLOR, flex: 1 }}>
       <Row style={styles.filterRow}>
-        <FilterButton
-          backgroundColor={filter === 'all' ? THEME.BRIGHTER_COLOR : THEME.DARKER_COLOR}
-          fontColor={filter === 'all' ? THEME.FONT_COLOR : THEME.PLACEHOLDER_COLOR}
-          style={styles.filterButton}
-          onPress={showAllEvents}
-        >
+        <ToggleButton active={filter === 'all'} style={styles.filterButton} onPress={showAllEvents}>
           Все события
-        </FilterButton>
-        <FilterButton
-          backgroundColor={filter === 'friends' ? THEME.BRIGHTER_COLOR : THEME.DARKER_COLOR}
-          fontColor={filter === 'friends' ? THEME.FONT_COLOR : THEME.PLACEHOLDER_COLOR}
+        </ToggleButton>
+        <ToggleButton
+          active={filter === 'friends'}
           style={styles.filterButton}
           onPress={showFriendsEvents}
         >
           События друзей
-        </FilterButton>
+        </ToggleButton>
       </Row>
       <EventList events={events} onOpen={openEventHandler} />
     </View>

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 import { ScrollView, ImageBackground, StyleSheet } from 'react-native';
 import { UserIcon } from '../components/ui/UserIcon';
 import { MemberTab } from '../components/ui/MemberTab';
@@ -8,20 +10,13 @@ import { Button } from '../components/ui/Button';
 import { THEME } from '../components/theme.js';
 import { DATA, USERS, ME } from '../components/data';
 
-export const EventScreen = ({ navigation, route }) => {
-  const correctTimeFormat = num => (num < 10 ? '0' + num : num);
+dayjs.locale('ru');
 
+export const EventScreen = ({ navigation, route }) => {
   const eventId = route.params['eventId'];
   const event = DATA.find(e => e.id === eventId);
-  const date = new Date(event.date);
-  const dateString =
-    date.getDate() +
-    '.' +
-    date.getMonth() +
-    ' Начало в ' +
-    correctTimeFormat(date.getHours()) +
-    ':' +
-    correctTimeFormat(date.getMinutes());
+  const date = dayjs(new Date(event.date));
+  const dateString = date.format('DD.MM') + ' начало в ' + date.format('HH:MM');
 
   const [members, setMembers] = useState(event.membersIds);
   const amIMember = members.find(user => user === ME.id) ? true : false;
@@ -31,8 +26,7 @@ export const EventScreen = ({ navigation, route }) => {
   };
 
   const leaveEvent = () => {
-    const myIndex = members.find(id => id === ME.id);
-    setMembers(members.filter(index => index !== myIndex));
+    setMembers(members.filter(index => index !== ME.id));
   };
 
   useEffect(() => {

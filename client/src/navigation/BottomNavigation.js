@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome } from '@expo/vector-icons';
 import { LoginScreenNavigation } from './LoginScreenNavigation';
 import { EventScreenNavigation } from './EventScreenNavigation';
-import { FriendListScreen } from '../../screens/FriendListScreen';
+import { ProfileScreen } from '../../screens/ProfileScreen';
 import { THEME } from '../../components/theme';
 
 const BottomTab = createBottomTabNavigator();
@@ -28,9 +28,9 @@ export const BottomNavigation = () => {
         name='Profile'
         component={LoginScreenNavigation}
         options={{
-          tabBarLabel: 'Профиль',
+          tabBarLabel: 'Поиск',
           tabBarIcon: ({ color }) => {
-            return <FontAwesome name={THEME.ICON_USER} size={25} color={color} />;
+            return <FontAwesome name={THEME.ICON_SEARCH} size={25} color={color} />;
           },
         }}
       />
@@ -40,17 +40,17 @@ export const BottomNavigation = () => {
         options={{
           tabBarLabel: 'События',
           tabBarIcon: ({ color }) => {
-            return <FontAwesome name={THEME.ICON_SEARCH} size={25} color={color} />;
+            return <FontAwesome name={THEME.ICON_EVENTS} size={25} color={color} />;
           },
         }}
       />
       <BottomTab.Screen
         name='Friends'
-        component={FriendListScreen}
+        component={ProfileScreen}
         options={{
-          tabBarLabel: 'Друзья',
+          tabBarLabel: 'Профиль',
           tabBarIcon: ({ color }) => {
-            return <FontAwesome name={THEME.ICON_FRIENDS} size={25} color={color} />;
+            return <FontAwesome name={THEME.ICON_USER} size={25} color={color} />;
           },
         }}
       />

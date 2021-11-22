@@ -3,11 +3,9 @@ import { StyleSheet, ImageBackground } from 'react-native';
 import { USERS } from '../data';
 import { THEME } from '../theme';
 
-export const UserIcon = ({ userId, style, iconSize = 34 }) => {
-  const findUserById = id => {
-    return USERS.find(user => user.id == id);
-  };
+const findUserById = id => USERS.find(user => user.id == id);
 
+export const UserIcon = ({ userId, style, iconSize = 34 }) => {
   return (
     <ImageBackground
       style={{ ...styles.icon, height: iconSize, width: iconSize, ...style }}

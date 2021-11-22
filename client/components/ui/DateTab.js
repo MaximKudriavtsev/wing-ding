@@ -1,23 +1,14 @@
 import React from 'react';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 import { View, StyleSheet } from 'react-native';
 import { Text } from './Text';
 import { THEME } from '../theme';
 
+dayjs.locale('ru');
+
 export const DateTab = ({ date }) => {
-  const monthNames = [
-    'ЯНВ',
-    'ФЕВ',
-    'МАРТ',
-    'АПР',
-    'МАЙ',
-    'ИЮНЬ',
-    'ИЮЛЬ',
-    'АВГ',
-    'СЕН',
-    'ОКТ',
-    'НОЯ',
-    'ДЕК',
-  ];
+  const shortMonth = dayjs(date).format('MMM').slice(0, -1).toUpperCase();
 
   return (
     <View style={styles.wrapper}>
@@ -25,7 +16,7 @@ export const DateTab = ({ date }) => {
         {new Date(date).getDate()}
       </Text>
       <Text bold={true} style={styles.month}>
-        {monthNames[new Date(date).getMonth()]}
+        {shortMonth}
       </Text>
     </View>
   );

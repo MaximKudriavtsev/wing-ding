@@ -4,37 +4,24 @@ import { UserIcon } from './UserIcon';
 import { Text } from './Text';
 
 export const MemberTab = ({ members, reverse }) => {
-  const membersIcons = [];
-  const membersTab = [];
-
-  for (let i = 0; i < members.length; i++) {
-    if (i >= 3) break;
-    membersIcons.push(
+  const membersIcons = members
+    .slice(0, 3)
+    .map(member => (
       <UserIcon
-        key={'icon-' + i}
-        userId={members[i]}
+        key={member}
+        userId={member}
         style={reverse ? { marginLeft: -10 } : { marginRight: -10 }}
-      />,
-    );
-  }
-
-  membersTab.push(
-    <View key={'member_icons'} style={styles.icons}>
-      {membersIcons}
-    </View>,
-  );
-
-  membersTab.push(
-    <View style={styles.text} key={'members_count'}>
-      <Text key={'count_wrapper'} bold={true} style={styles.counter}>
-        <Text key={'count_text'}>{members.length}</Text> участника(ов)
-      </Text>
-    </View>,
-  );
+      />
+    ));
 
   return (
-    <View key={'members_icons'} style={reverse ? styles.reversedWrapper : styles.wrapper}>
-      {reverse ? membersTab.reverse() : membersTab}
+    <View style={reverse ? styles.reversedWrapper : styles.wrapper}>
+      <View style={styles.icons}>{membersIcons}</View>
+      <View style={styles.text} key={'members_count'}>
+        <Text bold={true} style={styles.counter}>
+          <Text>{members.length}</Text> участника(ов)
+        </Text>
+      </View>
     </View>
   );
 };
@@ -49,7 +36,7 @@ const styles = StyleSheet.create({
   },
   reversedWrapper: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     justifyContent: 'flex-end',
     width: 220,
   },
