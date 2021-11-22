@@ -6,13 +6,14 @@ import { Text } from './Text';
 export const Button = ({
   children,
   onPress,
+  style,
   backgroundColor = THEME.BUTTON_COLOR,
   fontColor = THEME.FONT_COLOR,
   fontSize = 14,
 }) => {
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={THEME.ACTIVE_OPACITY}>
-      <View style={{ ...styles.button, backgroundColor }}>
+      <View style={{ ...styles.button, backgroundColor, ...style }}>
         <Text style={{ color: fontColor, fontSize }} bold={true}>
           {children}
         </Text>
