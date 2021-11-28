@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome } from '@expo/vector-icons';
 import { LoginScreenNavigation } from './LoginScreenNavigation';
 import { EventScreenNavigation } from './EventScreenNavigation';
-import { ProfileScreen } from '../../screens/ProfileScreen';
+import { ProfileScreenNavigation } from './ProfileScreenNavigation';
 import { THEME } from '../../components/theme';
 
 const BottomTab = createBottomTabNavigator();
@@ -25,7 +25,7 @@ export const BottomNavigation = () => {
       })}
     >
       <BottomTab.Screen
-        name='Profile'
+        name='Search'
         component={LoginScreenNavigation}
         options={{
           tabBarLabel: 'Поиск',
@@ -45,8 +45,8 @@ export const BottomNavigation = () => {
         }}
       />
       <BottomTab.Screen
-        name='Friends'
-        component={ProfileScreen}
+        name='Profile'
+        component={ProfileScreenNavigation}
         options={{
           tabBarLabel: 'Профиль',
           tabBarIcon: ({ color }) => {
