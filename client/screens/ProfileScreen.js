@@ -17,10 +17,10 @@ export const ProfileScreen = ({ navigation }) => {
     navigation.navigate('EventDetails', { eventId: event.id });
   };
 
-  const [events, setEvents] = useState(DATA);
-  const [filter, setFilter] = useState('upcoming');
-
   const myEvents = DATA.filter(event => event.membersIds.includes(ME.id));
+
+  const [events, setEvents] = useState(myEvents);
+  const [filter, setFilter] = useState('all');
 
   const showAllEvents = () => {
     setEvents(myEvents);
