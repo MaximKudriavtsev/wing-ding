@@ -13,7 +13,7 @@ import { DATA, USERS, ME } from '../components/data';
 dayjs.locale('ru');
 
 export const EventScreen = ({ navigation, route }) => {
-  const eventId = route.params['eventId'];
+  const { eventId } = route.params;
   const event = DATA.find(e => e.id === eventId);
   const date = dayjs(new Date(event.date));
   const dateString = date.format('DD.MM') + ' начало в ' + date.format('HH:MM');

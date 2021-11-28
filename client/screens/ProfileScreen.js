@@ -10,24 +10,26 @@ import { Button } from '../components/ui/Button';
 import { ToggleButton } from '../components/ui/ToggleButton';
 import { Text } from '../components/ui/Text';
 import { SCREEN_STYLE, THEME } from '../components/theme.js';
-import { DATA, ME } from '../components/data';
+import { DATA } from '../components/data';
 
-export const ProfileScreen = ({ navigation }) => {
+export const ProfileScreen = ({ navigation, route }) => {
+  const { user } = route.params;
+
   const openEventHandler = event => {
     navigation.navigate('EventDetails', { eventId: event.id });
   };
 
-  const myEvents = DATA.filter(event => event.membersIds.includes(ME.id));
+  const userEvents = DATA.filter(event => event.membersIds.includes(user.id));
 
-  const [events, setEvents] = useState(myEvents);
+  const [events, setEvents] = useState(userEvents);
   const [filter, setFilter] = useState('all');
 
   const showAllEvents = () => {
-    setEvents(myEvents);
+    setEvents(userEvents);
     setFilter('all');
   };
   const showUpcomingEvents = () => {
-    setEvents(myEvents.filter(event => new Date(event.date).getTime() > new Date().getTime()));
+    setEvents(userEvents.filter(event => new Date(event.date).getTime() > new Date().getTime()));
     setFilter('upcoming');
   };
 
@@ -47,7 +49,7 @@ export const ProfileScreen = ({ navigation }) => {
           />
         </HeaderButtons>
       ),
-      title: ME.name,
+      title: user.name,
     });
   }, [navigation]);
 
@@ -61,17 +63,17 @@ export const ProfileScreen = ({ navigation }) => {
       <Column style={styles.userBar}>
         <Row style={{ height: 'auto', marginBottom: 10 }}>
           <View style={{ width: '20%' }}>
-            <UserIcon userId={ME.id} iconSize={82} />
+            <UserIcon userId={user.id} iconSize={82} />
           </View>
           <Row style={styles.buttonsRow}>
-            <Text>{`Событий: ${myEvents.length}`}</Text>
+            <Text>{`Событий: ${userEvents.length}`}</Text>
             <Button
               backgroundColor={'transparent'}
               fontColor={THEME.BUTTON_COLOR}
-            >{`Друзей: ${ME.friendsId.length}`}</Button>
+            >{`Друзей: ${user.friendsId.length}`}</Button>
           </Row>
         </Row>
-        <Text>{ME.status ? ME.status : 'Текст о себе...'}</Text>
+        <Text>{user.status ? user.status : 'Текст о себе...'}</Text>
       </Column>
       <Row style={styles.filterRow}>
         <ToggleButton active={filter === 'all'} style={styles.filterButton} onPress={showAllEvents}>
