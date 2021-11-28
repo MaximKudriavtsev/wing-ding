@@ -52,7 +52,7 @@ export const EventScreen = ({ navigation, route }) => {
       <Button
         fontColor={amIMember ? THEME.BUTTON_COLOR : THEME.BACKGROUND_COLOR}
         backgroundColor={amIMember ? THEME.BACKGROUND_COLOR : THEME.BUTTON_COLOR}
-        style={{ marginBottom: 25, borderWidth: 2, borderColor: THEME.BUTTON_COLOR }}
+        style={styles.button}
         onPress={amIMember ? leaveEvent : enterEvent}
       >
         {amIMember ? 'Отказаться от участия' : 'Принять участие'}
@@ -94,5 +94,10 @@ const styles = StyleSheet.create({
     color: THEME.FONT_COLOR,
     fontSize: 16,
     marginTop: 30,
+  },
+  button: {
+    marginVertical: 25,
+    borderWidth: 2,
+    borderColor: THEME.BUTTON_COLOR,
   },
 });

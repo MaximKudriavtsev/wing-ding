@@ -12,6 +12,7 @@ export const AuthenticationScreen = ({ navigation }) => {
       <TextInput iconName={THEME.ICON_USER}>Логин</TextInput>
       <TextInput iconName={THEME.ICON_LOCK}>Пароль</TextInput>
       <Button
+        style={{ marginVertical: 25 }}
         fontColor={THEME.BACKGROUND_COLOR}
         onPress={() => {
           console.log('Log In');
