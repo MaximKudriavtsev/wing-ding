@@ -1,7 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ProfileScreen } from '../../screens/ProfileScreen';
-import { ProfileEditScreen } from '../../screens/ProfileEditScreen';
 import { EventScreen } from '../../screens/EventScreen';
 import { THEME } from '../../components/theme';
 import { ME } from '../../components/data';

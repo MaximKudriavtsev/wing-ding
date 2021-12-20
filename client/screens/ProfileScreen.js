@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { dateRu } from '../src/utils';
 import { View, StyleSheet } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { Row } from '../components/Row';
@@ -29,7 +30,7 @@ export const ProfileScreen = ({ navigation, route }) => {
     setFilter('all');
   };
   const showUpcomingEvents = () => {
-    setEvents(userEvents.filter(event => new Date(event.date).getTime() > new Date().getTime()));
+    setEvents(userEvents.filter(event => dateRu(event.date).isAfter(dateRu())));
     setFilter('upcoming');
   };
 
@@ -76,11 +77,15 @@ export const ProfileScreen = ({ navigation, route }) => {
         <Text>{user.status ? user.status : 'Текст о себе...'}</Text>
       </Column>
       <Row style={styles.filterRow}>
-        <ToggleButton active={filter === 'all'} style={styles.filterButton} onPress={showAllEvents}>
+        <ToggleButton
+          isActive={filter === 'all'}
+          style={styles.filterButton}
+          onPress={showAllEvents}
+        >
           Мои события
         </ToggleButton>
         <ToggleButton
-          active={filter === 'upcoming'}
+          isActive={filter === 'upcoming'}
           style={styles.filterButton}
           onPress={showUpcomingEvents}
         >

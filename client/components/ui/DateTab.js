@@ -1,19 +1,16 @@
 import React from 'react';
-import dayjs from 'dayjs';
-import 'dayjs/locale/ru';
+import { dateRu } from '../../src/utils';
 import { View, StyleSheet } from 'react-native';
 import { Text } from './Text';
 import { THEME } from '../theme';
 
-dayjs.locale('ru');
-
 export const DateTab = ({ date }) => {
-  const shortMonth = dayjs(date).format('MMM').slice(0, -1).toUpperCase();
+  const shortMonth = dateRu(date).format('MMM').slice(0, -1).toUpperCase();
 
   return (
     <View style={styles.wrapper}>
       <Text bold={true} style={styles.day}>
-        {new Date(date).getDate()}
+        {dateRu(date).date()}
       </Text>
       <Text bold={true} style={styles.month}>
         {shortMonth}

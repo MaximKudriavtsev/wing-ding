@@ -39,11 +39,15 @@ export const EventListScreen = ({ navigation }) => {
   return (
     <View style={{ backgroundColor: THEME.BACKGROUND_COLOR, flex: 1 }}>
       <Row style={styles.filterRow}>
-        <ToggleButton active={filter === 'all'} style={styles.filterButton} onPress={showAllEvents}>
+        <ToggleButton
+          isActive={filter === 'all'}
+          style={styles.filterButton}
+          onPress={showAllEvents}
+        >
           Все события
         </ToggleButton>
         <ToggleButton
-          active={filter === 'friends'}
+          isActive={filter === 'friends'}
           style={styles.filterButton}
           onPress={showFriendsEvents}
         >
