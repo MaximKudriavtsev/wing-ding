@@ -13,6 +13,7 @@ export const RegistrationScreen = ({ navigation }) => {
       <TextInput iconName={THEME.ICON_LOCK}>Пароль</TextInput>
       <TextInput iconName={THEME.ICON_ENVELOPE}>E-mail</TextInput>
       <Button
+        style={{ marginVertical: 25 }}
         fontColor={THEME.BACKGROUND_COLOR}
         onPress={() => {
           console.log('Sign In');

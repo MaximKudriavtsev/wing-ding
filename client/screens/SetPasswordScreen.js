@@ -12,6 +12,7 @@ export const SetPasswordScreen = ({ navigation }) => {
       <TextInput iconName={THEME.ICON_UNLOCK}>Новый пароль</TextInput>
       <TextInput iconName={THEME.ICON_LOCK}>Подтвердите пароль</TextInput>
       <Button
+        style={{ marginVertical: 25 }}
         fontColor={THEME.BACKGROUND_COLOR}
         onPress={() => navigation.navigate('Authentication')}
       >

@@ -6,7 +6,7 @@ export const DATA = [
     place: 'Искра',
     text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui ea blanditiis alias quaerat aperiam, beatae, quam sed dolorum temporibus dolorem, nemo omnis? Necessitatibus asperiores eaque eos totam perferendis excepturi quasi ipsam ut doloremque vero sunt rem culpa dolor dicta facilis similique nulla ad, soluta iure quisquam sed! Optio, dolorem at?',
     hostId: '1',
-    date: new Date().toJSON(),
+    date: new Date(2021, 11, 12, 22, 0).toJSON(),
     membersIds: ['1', '4', '5'],
   },
   {
@@ -16,7 +16,7 @@ export const DATA = [
     place: 'Петелино, ул. Антохи, д. 69',
     text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui ea blanditiis alias quaerat aperiam, beatae, quam sed dolorum temporibus dolorem, nemo omnis? Necessitatibus asperiores eaque eos totam perferendis excepturi quasi ipsam ut doloremque vero sunt rem culpa dolor dicta facilis similique nulla ad, soluta iure quisquam sed! Optio, dolorem at?',
     hostId: '2',
-    date: new Date().toJSON(),
+    date: new Date(2021, 11, 12, 20, 0).toJSON(),
     membersIds: ['2', '3'],
   },
   {
@@ -26,7 +26,7 @@ export const DATA = [
     place: 'Костомарово, ул. Димона, д. 1',
     text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui ea blanditiis alias quaerat aperiam, beatae, quam sed dolorum temporibus dolorem, nemo omnis? Necessitatibus asperiores eaque eos totam perferendis excepturi quasi ipsam ut doloremque vero sunt rem culpa dolor dicta facilis similique nulla ad, soluta iure quisquam sed! Optio, dolorem at?',
     hostId: '3',
-    date: new Date().toJSON(),
+    date: new Date(2022, 5, 8, 16, 0).toJSON(),
     membersIds: ['1', '4', '5'],
   },
   {
@@ -36,7 +36,7 @@ export const DATA = [
     place: 'Ликерка Лофт',
     text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui ea blanditiis alias quaerat aperiam, beatae, quam sed dolorum temporibus dolorem, nemo omnis? Necessitatibus asperiores eaque eos totam perferendis excepturi quasi ipsam ut doloremque vero sunt rem culpa dolor dicta facilis similique nulla ad, soluta iure quisquam sed! Optio, dolorem at?',
     hostId: '4',
-    date: new Date().toJSON(),
+    date: new Date(2022, 0, 3, 21, 0).toJSON(),
     membersIds: ['4', '5', '1', '2'],
   },
   {
@@ -46,7 +46,7 @@ export const DATA = [
     place: 'Клуб BackStage',
     text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui ea blanditiis alias quaerat aperiam, beatae, quam sed dolorum temporibus dolorem, nemo omnis? Necessitatibus asperiores eaque eos totam perferendis excepturi quasi ipsam ut doloremque vero sunt rem culpa dolor dicta facilis similique nulla ad, soluta iure quisquam sed! Optio, dolorem at?',
     hostId: '5',
-    date: new Date().toJSON(),
+    date: new Date(2021, 3, 21, 19, 0).toJSON(),
     membersIds: ['5', '1'],
   },
   {
@@ -56,7 +56,7 @@ export const DATA = [
     place: 'Гастрономичксий Паб Правда',
     text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui ea blanditiis alias quaerat aperiam, beatae, quam sed dolorum temporibus dolorem, nemo omnis? Necessitatibus asperiores eaque eos totam perferendis excepturi quasi ipsam ut doloremque vero sunt rem culpa dolor dicta facilis similique nulla ad, soluta iure quisquam sed! Optio, dolorem at?',
     hostId: '1',
-    date: new Date().toJSON(),
+    date: new Date(2020, 11, 12, 22, 0).toJSON(),
     membersIds: ['1', '2'],
   },
 ];
@@ -101,6 +101,7 @@ export const USERS = [
 
 export const ME = {
   id: '1',
+  name: 'Морозов Дмитрий',
   photo:
     'https://sun9-21.userapi.com/impf/ZXkl3z8HooeDiupO_Nrc3mET12ujJ_QAK5qTug/1z6fJl3A4EQ.jpg?size=2560x2063&quality=96&sign=3496e261aeb92e8441b9a2ff8627fdf0&type=album',
   friendsId: ['2', '3'],

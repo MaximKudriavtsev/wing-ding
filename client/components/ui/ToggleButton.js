@@ -3,7 +3,7 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { THEME } from '../theme';
 import { Text } from './Text';
 
-export const ToggleButton = ({ children, onPress, style, active, fontSize = 14 }) => {
+export const ToggleButton = ({ children, onPress, style, isActive, fontSize = 14 }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -11,7 +11,7 @@ export const ToggleButton = ({ children, onPress, style, active, fontSize = 14 }
       style={{
         ...styles.button,
         ...style,
-        ...(active
+        ...(isActive
           ? { backgroundColor: THEME.BRIGHTER_COLOR }
           : { backgroundColor: THEME.DARKER_COLOR }),
       }}
@@ -20,7 +20,7 @@ export const ToggleButton = ({ children, onPress, style, active, fontSize = 14 }
         <Text
           style={{
             fontSize,
-            ...(active ? { color: THEME.FONT_COLOR } : { color: THEME.PLACEHOLDER_COLOR }),
+            ...(isActive ? { color: THEME.FONT_COLOR } : { color: THEME.PLACEHOLDER_COLOR }),
           }}
           bold={true}
         >

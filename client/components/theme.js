@@ -25,6 +25,8 @@ export const THEME = {
   ICON_UNLOCK: 'unlock-alt',
   ICON_SEARCH: 'search',
   ICON_EVENTS: 'home',
+  ICON_APPEND: 'plus-square-o',
+  ICON_EDIT: 'edit',
 };
 
 export const SCREEN_STYLE = StyleSheet.create({

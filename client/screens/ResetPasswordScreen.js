@@ -11,6 +11,7 @@ export const ResetPasswordScreen = ({ navigation }) => {
       <Title>Восстановление пароля</Title>
       <TextInput iconName={THEME.ICON_ENVELOPE}>E-mail</TextInput>
       <Button
+        style={{ marginVertical: 25 }}
         fontColor={THEME.BACKGROUND_COLOR}
         onPress={() => navigation.navigate('SettingPassword')}
       >
