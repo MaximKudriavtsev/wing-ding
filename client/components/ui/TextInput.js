@@ -7,6 +7,7 @@ export const TextInput = ({
   iconName,
   iconColor = THEME.PLACEHOLDER_COLOR,
   iconSize = 20,
+  placeholder,
   children,
 }) => {
   return (
@@ -14,7 +15,8 @@ export const TextInput = ({
       <FontAwesome style={styles.inputIcon} name={iconName} size={iconSize} color={iconColor} />
       <DefaultTextInput
         style={styles.input}
-        placeholder={children}
+        placeholder={placeholder}
+        value={children}
         placeholderTextColor={THEME.PLACEHOLDER_COLOR}
       />
     </View>

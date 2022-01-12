@@ -9,7 +9,7 @@ export const ResetPasswordScreen = ({ navigation }) => {
   return (
     <View style={SCREEN_STYLE.wrapper}>
       <Title>Восстановление пароля</Title>
-      <TextInput iconName={THEME.ICON_ENVELOPE}>E-mail</TextInput>
+      <TextInput iconName={THEME.ICON_ENVELOPE} placeholder={'E-mail'} />
       <Button
         style={{ marginVertical: 25 }}
         fontColor={THEME.BACKGROUND_COLOR}

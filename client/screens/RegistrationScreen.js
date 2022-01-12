@@ -9,9 +9,9 @@ export const RegistrationScreen = ({ navigation }) => {
   return (
     <View style={SCREEN_STYLE.wrapper}>
       <Title>Регистрация</Title>
-      <TextInput iconName={THEME.ICON_USER}>Логин</TextInput>
-      <TextInput iconName={THEME.ICON_LOCK}>Пароль</TextInput>
-      <TextInput iconName={THEME.ICON_ENVELOPE}>E-mail</TextInput>
+      <TextInput iconName={THEME.ICON_USER} placeholder={'Логин'} />
+      <TextInput iconName={THEME.ICON_LOCK} placeholder={'Пароль'} />
+      <TextInput iconName={THEME.ICON_ENVELOPE} placeholder={'E-mail'} />
       <Button
         style={{ marginVertical: 25 }}
         fontColor={THEME.BACKGROUND_COLOR}
