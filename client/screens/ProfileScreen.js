@@ -20,6 +20,10 @@ export const ProfileScreen = ({ navigation, route }) => {
     navigation.navigate('EventDetails', { eventId: event.id });
   };
 
+  const editProfileHandler = () => {
+    navigation.navigate('ProfileEditScreen', { user });
+  };
+
   const userEvents = DATA.filter(event => event.membersIds.includes(user.id));
 
   const [events, setEvents] = useState(userEvents);
@@ -38,11 +42,7 @@ export const ProfileScreen = ({ navigation, route }) => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={HeaderIcon}>
-          <Item
-            title='Edit Profile'
-            iconName={THEME.ICON_EDIT}
-            onPress={() => console.log('Edit')}
-          />
+          <Item title='Edit Profile' iconName={THEME.ICON_EDIT} onPress={editProfileHandler} />
           <Item
             title='Create Event'
             iconName={THEME.ICON_APPEND}

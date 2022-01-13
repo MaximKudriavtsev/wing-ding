@@ -65,6 +65,7 @@ export const USERS = [
   {
     id: '1',
     name: 'Морозов Дмитрий',
+    birthDate: '08.06.1996',
     photo:
       'https://sun9-21.userapi.com/impf/ZXkl3z8HooeDiupO_Nrc3mET12ujJ_QAK5qTug/1z6fJl3A4EQ.jpg?size=2560x2063&quality=96&sign=3496e261aeb92e8441b9a2ff8627fdf0&type=album',
     friendsId: ['2', '3'],
@@ -72,6 +73,7 @@ export const USERS = [
   {
     id: '2',
     name: 'Шамордин Антон',
+    birthDate: '20.02.1996',
     photo:
       'https://sun9-16.userapi.com/impg/c858016/v858016841/224242/0bO_LIKjjW0.jpg?size=1620x2160&quality=96&sign=62ee0cfa9c24c32ec74f0203c49bb343&type=album',
     friendsId: ['3', '4'],
@@ -79,6 +81,7 @@ export const USERS = [
   {
     id: '3',
     name: 'Кудрявцев Максим',
+    birthDate: '29.01.1996',
     photo:
       'https://sun9-86.userapi.com/impg/3mge_x8OKZTJswN8w7XtPNxMuXYD7kabKtWzJQ/OEpwQcDow30.jpg?size=1439x2160&quality=96&sign=c4ab44275b5938d08f3ebc8f10cec423&type=album',
     friendsId: ['4', '5'],
@@ -86,6 +89,7 @@ export const USERS = [
   {
     id: '4',
     name: 'Мишина Анастасия',
+    birthDate: '31.10.1996',
     photo:
       'https://sun9-37.userapi.com/impf/c841234/v841234410/51658/2SmjB2IXHgE.jpg?size=960x1280&quality=96&sign=458314b860ba3d45cbef73cc433793de&type=album',
     friendsId: ['5', '1'],
@@ -93,6 +97,7 @@ export const USERS = [
   {
     id: '5',
     name: 'Максимчук Сергей',
+    birthDate: '16.02.1995',
     photo:
       'https://sun9-2.userapi.com/impf/9LgWHzbAApYCy30LawkRQcs1ye9Kiyxl3FJX0w/FDGr0EpC-AY.jpg?size=1440x2160&quality=96&sign=805b71d9f86685d3b357c73b85367f63&type=album',
     friendsId: ['1', '2'],
@@ -102,6 +107,7 @@ export const USERS = [
 export const ME = {
   id: '1',
   name: 'Морозов Дмитрий',
+  birthDate: '08.06.1996',
   photo:
     'https://sun9-21.userapi.com/impf/ZXkl3z8HooeDiupO_Nrc3mET12ujJ_QAK5qTug/1z6fJl3A4EQ.jpg?size=2560x2063&quality=96&sign=3496e261aeb92e8441b9a2ff8627fdf0&type=album',
   friendsId: ['2', '3'],
