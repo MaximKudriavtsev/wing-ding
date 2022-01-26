@@ -9,8 +9,8 @@ export const AuthenticationScreen = ({ navigation }) => {
   return (
     <View style={SCREEN_STYLE.wrapper}>
       <Title>Добро пожаловать!</Title>
-      <TextInput iconName={THEME.ICON_USER}>Логин</TextInput>
-      <TextInput iconName={THEME.ICON_LOCK}>Пароль</TextInput>
+      <TextInput iconName={THEME.ICON_USER} placeholder={'Логин'} />
+      <TextInput iconName={THEME.ICON_LOCK} placeholder={'Пароль'} />
       <Button
         style={{ marginVertical: 25 }}
         fontColor={THEME.BACKGROUND_COLOR}

@@ -27,6 +27,7 @@ export const THEME = {
   ICON_EVENTS: 'home',
   ICON_APPEND: 'plus-square-o',
   ICON_EDIT: 'edit',
+  ICON_CHECK: 'check',
 };
 
 export const SCREEN_STYLE = StyleSheet.create({

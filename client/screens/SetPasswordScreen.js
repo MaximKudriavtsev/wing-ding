@@ -9,8 +9,8 @@ export const SetPasswordScreen = ({ navigation }) => {
   return (
     <View style={SCREEN_STYLE.wrapper}>
       <Title>Установить новый пароль</Title>
-      <TextInput iconName={THEME.ICON_UNLOCK}>Новый пароль</TextInput>
-      <TextInput iconName={THEME.ICON_LOCK}>Подтвердите пароль</TextInput>
+      <TextInput iconName={THEME.ICON_UNLOCK} placeholder={'Новый пароль'} />
+      <TextInput iconName={THEME.ICON_LOCK} placeholder={'Подтвердите пароль'} />
       <Button
         style={{ marginVertical: 25 }}
         fontColor={THEME.BACKGROUND_COLOR}
