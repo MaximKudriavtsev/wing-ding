@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\EventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,16 +20,16 @@ use App\Http\Controllers\AuthController;
 Route::prefix('/user')->group(function () {
     Route::post('/auth', [AuthController::class, 'login']);
     Route::post('/registration', [AuthController::class, 'register']);
-    Route::post('/profile/get')->middleware('auth');
+    Route::post('/profile/get', [UserController::class, 'getProfile'])->middleware('auth');
     Route::post('/profile/change')->middleware('auth');
     Route::post('/friends/get')->middleware('auth');
     Route::post('/friends/add')->middleware('auth');
 });
 
 Route::prefix('/event')->group(function () {
-    Route::post('/create')->middleware('auth');
+    Route::post('/create', [EventController::class, 'create'])->middleware('auth');
     Route::post('/join')->middleware('auth');
     Route::post('/leave')->middleware('auth');
-    Route::post('/get')->middleware('auth');
+    Route::post('/get/{id}', [EventController::class, 'get'])->middleware('auth');
     Route::post('/list/get')->middleware('auth');
 });
