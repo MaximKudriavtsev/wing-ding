@@ -1,22 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
 
-import { AuthenticationForm } from './src/AuthenticationForm';
+import AppLoading from 'expo-app-loading';
+import useFont from './components/hooks/useFont';
+
+import { AppNavigation } from './src/navigation/AppNavigation';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <AuthenticationForm/>
-    </View>
-  );
-}
+  const [isReady, setIsReady] = useState(false);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#1a1523',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  const LoadFonts = async () => {
+    await useFont();
+  };
+
+  if (!isReady) {
+    return (
+      <AppLoading
+        startAsync={LoadFonts}
+        onError={err => console.log(err)}
+        onFinish={() => setIsReady(true)}
+      />
+    );
+  }
+
+  return <AppNavigation />;
+}
