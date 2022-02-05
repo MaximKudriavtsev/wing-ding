@@ -7,15 +7,23 @@ import { SetPasswordScreen } from '../../screens/SetPasswordScreen';
 
 const LoginStack = createNativeStackNavigator();
 
-export const LoginScreenNavigation = () => {
+export const LoginScreenNavigation = ({ onSetToken }) => {
   return (
     <LoginStack.Navigator
       screenOptions={() => ({
         headerShown: false,
       })}
     >
-      <LoginStack.Screen name='Authentication' component={AuthenticationScreen} />
-      <LoginStack.Screen name='Registration' component={RegistrationScreen} />
+      <LoginStack.Screen
+        name='Authentication'
+        component={AuthenticationScreen}
+        initialParams={{ onSetToken }}
+      />
+      <LoginStack.Screen
+        name='Registration'
+        component={RegistrationScreen}
+        initialParams={{ onSetToken }}
+      />
       <LoginStack.Screen name='RestoringPassword' component={ResetPasswordScreen} />
       <LoginStack.Screen name='SettingPassword' component={SetPasswordScreen} />
     </LoginStack.Navigator>

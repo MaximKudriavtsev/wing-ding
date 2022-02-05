@@ -11,7 +11,7 @@ import { TopAlert } from '../components/ui/TopAlert';
 import { SCREEN_STYLE, THEME } from '../components/theme.js';
 
 export const ProfileEditScreen = ({ navigation, route }) => {
-  const { user } = route.params;
+  const { user, onSetToken } = route.params;
   const [isAlertVisible, setAlertVisible] = useState(false);
 
   const applyChanges = () => {
@@ -58,6 +58,13 @@ export const ProfileEditScreen = ({ navigation, route }) => {
         <TextInput>{user.birthDate}</TextInput>
         <Text style={styles.label}>О себе</Text>
         <TextInput>Веселый парень, люблю бухать</TextInput>
+        <Button
+          backgroundColor='transparent'
+          fontColor={THEME.DANGER_COLOR}
+          onPress={() => onSetToken(null)}
+        >
+          Выйти из профиля
+        </Button>
       </Column>
     </View>
   );

@@ -8,7 +8,8 @@ import { TextInput } from '../components/ui/TextInput';
 import { ValidationHint } from '../components/ui/ValidationHint';
 import { THEME, SCREEN_STYLE } from '../components/theme';
 
-export const RegistrationScreen = ({ navigation }) => {
+export const RegistrationScreen = ({ route, navigation }) => {
+  const { onSetToken } = route.params;
   const [login, setLogin] = useState(''),
     [password, setPassword] = useState(''),
     [email, setEmail] = useState(''),
@@ -19,7 +20,14 @@ export const RegistrationScreen = ({ navigation }) => {
   const onSignUp = () => {
     if (!loginValidations || !passwordValidations || !emailValidations) return;
     if (loginValidations.isValid && passwordValidations.isValid && emailValidations.isValid) {
-      console.log('Sign Up');
+      userApi
+        .registration({ login, email, password })
+        .then(response => response.json())
+        .then(json => {
+          if (json.status == 'ok') {
+            onSetToken(json['access_token']);
+          }
+        });
     }
   };
 

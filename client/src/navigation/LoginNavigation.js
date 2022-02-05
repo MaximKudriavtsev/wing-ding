@@ -2,10 +2,10 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { LoginScreenNavigation } from './LoginScreenNavigation';
 
-export const LoginNavigation = () => {
+export const LoginNavigation = ({ onSetToken }) => {
   return (
     <NavigationContainer>
-      <LoginScreenNavigation />
+      <LoginScreenNavigation onSetToken={onSetToken} />
     </NavigationContainer>
   );
 };

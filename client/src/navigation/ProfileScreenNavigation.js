@@ -8,7 +8,8 @@ import { ME } from '../../components/data';
 
 const ProfileStack = createNativeStackNavigator();
 
-export const ProfileScreenNavigation = () => {
+export const ProfileScreenNavigation = ({ route }) => {
+  const { onSetToken } = route.params;
   return (
     <ProfileStack.Navigator
       screenOptions={() => ({
@@ -24,9 +25,17 @@ export const ProfileScreenNavigation = () => {
       <ProfileStack.Screen
         name='ProfileScreen'
         component={ProfileScreen}
-        initialParams={{ user: ME }}
+        initialParams={{
+          user: ME,
+        }}
       />
-      <ProfileStack.Screen name='ProfileEditScreen' component={ProfileEditScreen} />
+      <ProfileStack.Screen
+        name='ProfileEditScreen'
+        component={ProfileEditScreen}
+        initialParams={{
+          onSetToken,
+        }}
+      />
       <ProfileStack.Screen name='EventDetails' component={EventScreen} />
     </ProfileStack.Navigator>
   );

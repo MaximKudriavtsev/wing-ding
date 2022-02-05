@@ -8,7 +8,7 @@ import { LoginNavigation } from './src/navigation/LoginNavigation';
 
 export default function App() {
   const [isReady, setIsReady] = useState(false),
-    [userToken, setUserToken] = useState(null);
+    [userToken, setUserToken] = useState('');
 
   const LoadFonts = async () => {
     await useFont();
@@ -25,7 +25,7 @@ export default function App() {
   }
 
   if (!userToken) {
-    return <LoginNavigation />;
+    return <LoginNavigation onSetToken={setUserToken} />;
   }
-  return <AppNavigation userToken={userToken} />;
+  return <AppNavigation userToken={userToken} onSetToken={setUserToken} />;
 }

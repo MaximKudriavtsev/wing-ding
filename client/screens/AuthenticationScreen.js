@@ -8,7 +8,8 @@ import { TextInput } from '../components/ui/TextInput';
 import { ValidationHint } from '../components/ui/ValidationHint';
 import { THEME, SCREEN_STYLE } from '../components/theme.js';
 
-export const AuthenticationScreen = ({ navigation }) => {
+export const AuthenticationScreen = ({ route, navigation }) => {
+  const { onSetToken } = route.params;
   const [login, setLogin] = useState(''),
     [password, setPassword] = useState(''),
     [loginValidations, setLoginValidations] = useState(null),
@@ -17,7 +18,14 @@ export const AuthenticationScreen = ({ navigation }) => {
   const onSignIn = () => {
     if (!loginValidations || !passwordValidations) return;
     if (loginValidations.isValid && passwordValidations.isValid) {
-      console.log('Sign In');
+      userApi
+        .auth({ login, password })
+        .then(response => response.json())
+        .then(json => {
+          if (json.status == 'ok') {
+            onSetToken(json['access_token']);
+          }
+        });
     }
   };
 

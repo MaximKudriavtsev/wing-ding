@@ -8,7 +8,7 @@ import { THEME } from '../../components/theme';
 
 const BottomTab = createBottomTabNavigator();
 
-export const BottomNavigation = () => {
+export const BottomNavigation = ({ userToken, onSetToken }) => {
   return (
     <BottomTab.Navigator
       screenOptions={() => ({
@@ -43,6 +43,7 @@ export const BottomNavigation = () => {
             return <FontAwesome name={THEME.ICON_EVENTS} size={25} color={color} />;
           },
         }}
+        initialParams={{ userToken }}
       />
       <BottomTab.Screen
         name='Profile'
@@ -53,6 +54,7 @@ export const BottomNavigation = () => {
             return <FontAwesome name={THEME.ICON_USER} size={25} color={color} />;
           },
         }}
+        initialParams={{ userToken, onSetToken }}
       />
     </BottomTab.Navigator>
   );
