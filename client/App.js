@@ -4,9 +4,11 @@ import AppLoading from 'expo-app-loading';
 import useFont from './components/hooks/useFont';
 
 import { AppNavigation } from './src/navigation/AppNavigation';
+import { LoginNavigation } from './src/navigation/LoginNavigation';
 
 export default function App() {
-  const [isReady, setIsReady] = useState(false);
+  const [isReady, setIsReady] = useState(false),
+    [userToken, setUserToken] = useState(null);
 
   const LoadFonts = async () => {
     await useFont();
@@ -22,5 +24,8 @@ export default function App() {
     );
   }
 
-  return <AppNavigation />;
+  if (!userToken) {
+    return <LoginNavigation />;
+  }
+  return <AppNavigation userToken={userToken} />;
 }
