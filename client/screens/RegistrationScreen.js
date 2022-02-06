@@ -8,6 +8,7 @@ import { TextInput } from '../components/ui/TextInput';
 import { ValidationHint } from '../components/ui/ValidationHint';
 import { TopAlert } from '../components/ui/TopAlert';
 import { THEME, SCREEN_STYLE } from '../components/theme';
+import { TOKEN_PROP } from '../src/config';
 
 export const RegistrationScreen = ({ route, navigation }) => {
   const { onSetToken } = route.params;
@@ -28,7 +29,7 @@ export const RegistrationScreen = ({ route, navigation }) => {
         .then(response => response.json())
         .then(json => {
           if (json.status == 'ok') {
-            onSetToken(json['access_token']);
+            onSetToken(json[TOKEN_PROP]);
           }
           if (json.status == 'error') {
             setAlertMessage(decodeError(json.error));
