@@ -8,10 +8,10 @@ import { ValidationHint } from '../components/ui/ValidationHint';
 import { THEME, SCREEN_STYLE } from '../components/theme';
 
 export const SetPasswordScreen = ({ navigation }) => {
-  const [password, setPassword] = useState(''),
-    [confirming, setConfirming] = useState(''),
-    [passwordValidations, setPasswordValidations] = useState(null),
-    [confirmingValidations, setConfirmingValidations] = useState(null);
+  const [password, setPassword] = useState('');
+  const [confirming, setConfirming] = useState('');
+  const [passwordValidations, setPasswordValidations] = useState(null);
+  const [confirmingValidations, setConfirmingValidations] = useState(null);
 
   const onSet = () => {
     if (!confirmingValidations || !passwordValidations) return;

@@ -6,7 +6,7 @@ import { THEME } from '../../components/theme';
 
 const EventStack = createNativeStackNavigator();
 
-export const EventScreenNavigation = ({ route }) => {
+export const EventScreenNavigation = () => {
   return (
     <EventStack.Navigator
       screenOptions={() => ({

@@ -1,51 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AlertContext } from '../src/context/AlertContext';
+import { TokenContext } from '../src/context/TokenContext';
 import { userApi } from '../src/api/user/apiProduction';
-import { validate, decodeError, blinkView } from '../src/utils';
+import { validate, decodeError, showAlertMessage } from '../src/utils';
 import { View } from 'react-native';
 import { Title } from '../components/ui/Title';
 import { Button } from '../components/ui/Button';
 import { TextInput } from '../components/ui/TextInput';
 import { ValidationHint } from '../components/ui/ValidationHint';
-import { TopAlert } from '../components/ui/TopAlert';
 import { THEME, SCREEN_STYLE } from '../components/theme';
 import { TOKEN_PROP } from '../src/config';
 
-export const RegistrationScreen = ({ route, navigation }) => {
-  const { onSetToken } = route.params;
-  const [isAlertVisible, setAlertVisible] = useState(false),
-    [alertMessage, setAlertMessage] = useState(''),
-    [login, setLogin] = useState(''),
-    [password, setPassword] = useState(''),
-    [email, setEmail] = useState(''),
-    [loginValidations, setLoginValidations] = useState(null),
-    [passwordValidations, setPasswordValidations] = useState(null),
-    [emailValidations, setEmailValidations] = useState(null);
+export const RegistrationScreen = ({ navigation }) => {
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [loginValidations, setLoginValidations] = useState(null);
+  const [passwordValidations, setPasswordValidations] = useState(null);
+  const [emailValidations, setEmailValidations] = useState(null);
+  const { setAlertVisible, setAlertMessage, setAlertIcon } = useContext(AlertContext);
+  const { setUserToken } = useContext(TokenContext);
 
   const onSignUp = () => {
     if (!loginValidations || !passwordValidations || !emailValidations) return;
     if (loginValidations.isValid && passwordValidations.isValid && emailValidations.isValid) {
       userApi
         .registration({ login, email, password })
-        .then(response => response.json())
-        .then(json => {
-          if (json.status == 'ok') {
-            onSetToken(json[TOKEN_PROP]);
-          }
-          if (json.status == 'error') {
-            setAlertMessage(decodeError(json.error));
-            blinkView(setAlertVisible);
+        .then(response => {
+          const { data, status } = response;
+          if (status === 200) {
+            setUserToken(data[TOKEN_PROP]);
           }
         })
         .catch(error => {
-          setAlertMessage('Ошибка сервера. Пожалуйста, попробуйте позже');
-          blinkView(setAlertVisible);
+          const errorMessage = decodeError(error.response.data.error);
+          showAlertMessage(
+            setAlertVisible,
+            setAlertMessage,
+            errorMessage,
+            setAlertIcon,
+            THEME.ICON_CROSS,
+          );
         });
     }
   };
 
   return (
     <View style={SCREEN_STYLE.wrapper}>
-      <TopAlert message={alertMessage} iconName={THEME.ICON_CROSS} isVisible={isAlertVisible} />
       <Title>Регистрация</Title>
       <ValidationHint validations={loginValidations} />
       <TextInput

@@ -1,16 +1,31 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
+import axios from 'axios';
+import { BASE_URL } from './config';
+
+export const api = axios.create({
+  baseURL: `${BASE_URL}/api`,
+});
+
+api.interceptors.response.use(response => {
+  if (response.data.status === 'error') {
+    const error = Error(response.data.error);
+    error.response = response;
+    throw error;
+  }
+  return response;
+});
 
 dayjs.locale('ru');
 
 export const dateRu = dayjs;
 
 export const validate = (value, validations) => {
-  let isLengthy = true,
-    isFilled = true,
-    isEmail = true,
-    isSame = true,
-    isValid = true;
+  let isLengthy = true;
+  let isFilled = true;
+  let isEmail = true;
+  let isSame = true;
+  let isValid = true;
 
   for (const validation in validations) {
     switch (validation) {
@@ -56,7 +71,9 @@ export const decodeError = error => {
   return message;
 };
 
-export const blinkView = onShow => {
+export const showAlertMessage = (onShow, onSetText, text, onSetAlertIcon, icon) => {
+  onSetText(text);
+  onSetAlertIcon(icon);
   onShow(true);
   setTimeout(() => {
     onShow(false);

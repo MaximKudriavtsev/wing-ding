@@ -8,8 +8,8 @@ import { ValidationHint } from '../components/ui/ValidationHint';
 import { THEME, SCREEN_STYLE } from '../components/theme';
 
 export const ResetPasswordScreen = ({ navigation }) => {
-  const [email, setEmail] = useState(''),
-    [emailValidations, setEmailValidations] = useState(null);
+  const [email, setEmail] = useState('');
+  const [emailValidations, setEmailValidations] = useState(null);
 
   const onReset = () => {
     if (!emailValidations) return;
