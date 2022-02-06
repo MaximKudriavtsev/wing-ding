@@ -24,7 +24,9 @@ export const ProfileScreenNavigation = () => {
       <ProfileStack.Screen
         name='ProfileScreen'
         component={ProfileScreen}
-        initialParams={{ user: ME }}
+        initialParams={{
+          user: ME,
+        }}
       />
       <ProfileStack.Screen name='ProfileEditScreen' component={ProfileEditScreen} />
       <ProfileStack.Screen name='EventDetails' component={EventScreen} />

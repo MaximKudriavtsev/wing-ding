@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { AlertContext } from '../src/context/AlertContext';
+import { TokenContext } from '../src/context/TokenContext';
+import { showAlertMessage } from '../src/utils';
 import { View, StyleSheet } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { HeaderIcon } from '../components/HeaderIcon';
@@ -7,18 +10,21 @@ import { UserIcon } from '../components/ui/UserIcon';
 import { Button } from '../components/ui/Button';
 import { Text } from '../components/ui/Text';
 import { TextInput } from '../components/ui/TextInput';
-import { TopAlert } from '../components/ui/TopAlert';
 import { SCREEN_STYLE, THEME } from '../components/theme.js';
 
 export const ProfileEditScreen = ({ navigation, route }) => {
   const { user } = route.params;
-  const [isAlertVisible, setAlertVisible] = useState(false);
+  const { setAlertVisible, setAlertMessage, setAlertIcon } = useContext(AlertContext);
+  const { setUserToken } = useContext(TokenContext);
 
   const applyChanges = () => {
-    setAlertVisible(true);
-    setTimeout(() => {
-      setAlertVisible(false);
-    }, 1500);
+    showAlertMessage(
+      setAlertVisible,
+      setAlertMessage,
+      'Данные изменены',
+      setAlertIcon,
+      THEME.ICON_CHECK,
+    );
   };
 
   useEffect(() => {
@@ -37,11 +43,6 @@ export const ProfileEditScreen = ({ navigation, route }) => {
 
   return (
     <View style={SCREEN_STYLE.wrapper}>
-      <TopAlert
-        message={'Данные успешно сохранены'}
-        iconName={THEME.ICON_CHECK}
-        isVisible={isAlertVisible}
-      />
       <Column style={{ alignItems: 'center' }}>
         <UserIcon userId={user.id} iconSize={105} />
         <Button
@@ -58,6 +59,13 @@ export const ProfileEditScreen = ({ navigation, route }) => {
         <TextInput>{user.birthDate}</TextInput>
         <Text style={styles.label}>О себе</Text>
         <TextInput>Веселый парень, люблю бухать</TextInput>
+        <Button
+          backgroundColor='transparent'
+          fontColor={THEME.DANGER_COLOR}
+          onPress={() => setUserToken(null)}
+        >
+          Выйти из аккаунта
+        </Button>
       </Column>
     </View>
   );

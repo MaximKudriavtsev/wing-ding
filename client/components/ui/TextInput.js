@@ -8,6 +8,8 @@ export const TextInput = ({
   iconColor = THEME.PLACEHOLDER_COLOR,
   iconSize = 20,
   placeholder,
+  onChangeText,
+  secureTextEntry = false,
   children,
 }) => {
   return (
@@ -18,6 +20,9 @@ export const TextInput = ({
         placeholder={placeholder}
         value={children}
         placeholderTextColor={THEME.PLACEHOLDER_COLOR}
+        autoCapitalize={'none'}
+        secureTextEntry={secureTextEntry}
+        onChangeText={onChangeText}
       />
     </View>
   );
