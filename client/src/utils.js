@@ -38,3 +38,27 @@ export const validate = (value, validations) => {
     isValid,
   };
 };
+
+export const decodeError = error => {
+  let message = 'Неизвестная ошибка. Попробуйте позже';
+  switch (error) {
+    case 'Unauthorized':
+      message = 'Неверный логин или пароль';
+      break;
+    case 'login already exist':
+      message = 'Пользователь с таким логином уже существует';
+      break;
+    case 'email already exist':
+      message = 'Данная почта уже используется';
+      break;
+  }
+
+  return message;
+};
+
+export const blinkView = onShow => {
+  onShow(true);
+  setTimeout(() => {
+    onShow(false);
+  }, 2500);
+};
