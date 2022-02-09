@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { EventList } from './../components/EventList';
+import { List } from '../components/List';
+import { EventTab } from '../components/EventTab';
 import { ToggleButton } from '../components/ui/ToggleButton';
 import { DATA, ME } from './../components/data';
 import { THEME } from './../components/theme';
@@ -54,7 +55,7 @@ export const EventListScreen = ({ navigation }) => {
           События друзей
         </ToggleButton>
       </Row>
-      <EventList events={events} onOpen={openEventHandler} />
+      <List data={events} Component={EventTab} onOpen={openEventHandler} />
     </View>
   );
 };
