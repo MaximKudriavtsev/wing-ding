@@ -13,11 +13,13 @@ class EventController extends Controller
         try {
             $req = \request();
 
+            $user = auth()->user();
+
             $event = new Event();
             $event->title = $req['title'];
             $event->place = $req['place'];
-            $event->host_id = 1;
-            $event->date = now();
+            $event->host_id = $user->id;
+            $event->date = $req['date'];
             $event->save();
 
             return \response()->json([

@@ -6,20 +6,26 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
     public function register(Request $request) {
-//        $credentials = \request(['email', 'password']);
 
-        $request->validate([
-            'email' => 'email',
-            'login' => 'required|max:50',
-            'password' => 'required'
-        ]);
+        try {
+            $request->validate([
+                'email' => 'email',
+            ]);
+        } catch (\Throwable $exception) {
+            return response()->json([
+                'status' => 'error',
+                'error' => 'email not valid'
+            ]);
+        }
 
-        $login = $request->get('login');
         $email = $request->get('email');
+        $first_name = $request->get('first_name');
+        $last_name = $request->get('last_name');
 
         $user = User::where('email', $email)->first();
         if ($user) {
@@ -28,18 +34,12 @@ class AuthController extends Controller
                 'error' => 'email already exist'
             ]);
         }
-        $user = User::where('login', $login)->first();
-        if ($user) {
-            return response()->json([
-                'status' => 'error',
-                'error' => 'login already exist'
-            ]);
-        }
 
         $user = new User();
-        $user->login = $login;
         $user->email = $email;
         $user->password = Hash::make($request->get('password'));
+        $user->first_name = $first_name;
+        $user->last_name = $last_name;
         $user->save();
 
         $token = auth()->login($user);
@@ -48,7 +48,7 @@ class AuthController extends Controller
     }
 
     public function login() {
-        $credentials = \request(['login', 'password']);
+        $credentials = \request(['email', 'password']);
 
         if (!$token = auth()->attempt($credentials)) {
             return response()->json(['status' => 'error', 'error' => 'Unauthorized'], 401);
