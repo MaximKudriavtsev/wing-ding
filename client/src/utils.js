@@ -1,3 +1,4 @@
+import { USERS } from '../components/data';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import axios from 'axios';
@@ -70,6 +71,8 @@ export const decodeError = error => {
 
   return message;
 };
+
+export const findUserById = id => USERS.find(user => user.id == id);
 
 export const showAlertMessage = (onShow, onSetText, text, onSetAlertIcon, icon) => {
   onSetText(text);
