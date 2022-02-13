@@ -79,6 +79,7 @@ export const RegistrationScreen = ({ navigation }) => {
       <TextInput
         iconName={THEME.ICON_USER}
         placeholder={'Имя'}
+        autoCapitalize={'words'}
         onChangeText={firstName => {
           setFirstName(firstName);
           setFirstNameValidations(validate(firstName, { isFilled: true, isName: true }));
@@ -88,6 +89,7 @@ export const RegistrationScreen = ({ navigation }) => {
       <TextInput
         iconName={THEME.ICON_USER}
         placeholder={'Фамилия'}
+        autoCapitalize={'words'}
         onChangeText={lastName => {
           setLastName(lastName);
           setLastNameValidations(validate(lastName, { isFilled: true, isName: true }));
