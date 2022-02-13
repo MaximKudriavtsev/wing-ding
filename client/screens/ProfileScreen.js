@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { dateRu } from '../src/utils';
+import { dateRu, findUserById } from '../src/utils';
 import { View, StyleSheet } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { Row } from '../components/Row';
@@ -26,8 +26,24 @@ export const ProfileScreen = ({ navigation, route }) => {
     navigation.navigate('EventDetails', { eventId: event.id });
   };
 
+  const showMembersHandler = membersId => {
+    const members = [];
+    membersId.forEach(userId => {
+      members.push(findUserById(userId));
+    });
+    navigation.navigate('UserListScreen', { users: members });
+  };
+
   const editProfileHandler = () => {
     navigation.navigate('ProfileEditScreen', { user });
+  };
+
+  const showFriendsHandler = () => {
+    const friends = [];
+    user.friendsId.forEach(userId => {
+      friends.push(findUserById(userId));
+    });
+    navigation.navigate('UserListScreen', { users: friends });
   };
 
   const showAllEvents = () => {
@@ -88,6 +104,7 @@ export const ProfileScreen = ({ navigation, route }) => {
             <Button
               backgroundColor={'transparent'}
               fontColor={THEME.BUTTON_COLOR}
+              onPress={showFriendsHandler}
             >{`Друзей: ${user.friendsId.length}`}</Button>
           </Row>
         </Row>
@@ -109,7 +126,12 @@ export const ProfileScreen = ({ navigation, route }) => {
           Будущие события
         </ToggleButton>
       </Row>
-      <List data={events} Component={EventTab} onOpen={openEventHandler} />
+      <List
+        data={events}
+        Component={EventTab}
+        onOpen={openEventHandler}
+        onShowMembers={showMembersHandler}
+      />
     </View>
   );
 };

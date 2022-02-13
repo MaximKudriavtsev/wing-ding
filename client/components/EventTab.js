@@ -7,7 +7,7 @@ import { MemberTab } from './ui/MemberTab';
 import { Text } from './ui/Text';
 import { THEME } from './theme';
 
-export const EventTab = ({ item, onOpen }) => {
+export const EventTab = ({ item, onOpen, onShowMembers }) => {
   return (
     <TouchableOpacity activeOpacity={0.7} onPress={() => onOpen(item)}>
       <View style={styles.event}>
@@ -22,7 +22,7 @@ export const EventTab = ({ item, onOpen }) => {
         </Row>
         <ImageBackground style={styles.image} source={{ uri: item.img }} />
         <Row style={styles.membersWrapper}>
-          <MemberTab reverse={true} members={item.membersIds} />
+          <MemberTab reverse={true} members={item.membersIds} onOpen={onShowMembers} />
         </Row>
         <Row style={styles.textWrapper}>
           <Text numberOfLines={2} style={styles.text}>

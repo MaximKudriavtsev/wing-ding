@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { UserIcon } from './UserIcon';
 import { Text } from './Text';
 
-export const MemberTab = ({ members, reverse }) => {
+export const MemberTab = ({ members, reverse, onOpen }) => {
   const membersIcons = members
     .slice(0, 3)
     .map(member => (
@@ -15,14 +15,16 @@ export const MemberTab = ({ members, reverse }) => {
     ));
 
   return (
-    <View style={reverse ? styles.reversedWrapper : styles.wrapper}>
-      <View style={styles.icons}>{membersIcons}</View>
-      <View style={styles.text} key={'members_count'}>
-        <Text bold={true} style={styles.counter}>
-          <Text>{members.length}</Text> участника(ов)
-        </Text>
+    <TouchableOpacity activeOpacity={0.7} onPress={() => onOpen(members)}>
+      <View style={reverse ? styles.reversedWrapper : styles.wrapper}>
+        <View style={styles.icons}>{membersIcons}</View>
+        <View style={styles.text} key={'members_count'}>
+          <Text bold={true} style={styles.counter}>
+            <Text>{members.length}</Text> участника(ов)
+          </Text>
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

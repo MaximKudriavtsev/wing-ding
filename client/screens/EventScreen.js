@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { dateRu } from '../src/utils';
+import { dateRu, findUserById } from '../src/utils';
 import { ScrollView, ImageBackground, StyleSheet } from 'react-native';
 import { UserIcon } from '../components/ui/UserIcon';
 import { MemberTab } from '../components/ui/MemberTab';
@@ -17,6 +17,14 @@ export const EventScreen = ({ navigation, route }) => {
 
   const [members, setMembers] = useState(event.membersIds);
   const amIMember = members.find(user => user === ME.id) ? true : false;
+
+  const showMembersHandler = membersId => {
+    const members = [];
+    membersId.forEach(userId => {
+      members.push(findUserById(userId));
+    });
+    navigation.navigate('UserListScreen', { users: members });
+  };
 
   const enterEvent = () => {
     setMembers([...members, ME.id]);
@@ -41,7 +49,7 @@ export const EventScreen = ({ navigation, route }) => {
         </Text>
       </Row>
       <ImageBackground style={styles.image} source={{ uri: event.img }} />
-      <MemberTab members={members} />
+      <MemberTab members={members} onOpen={showMembersHandler} />
       <Text style={styles.place}>{event.place}</Text>
       <Text style={styles.date}>{dateString}</Text>
       <Text style={styles.text}>{event.text}</Text>
