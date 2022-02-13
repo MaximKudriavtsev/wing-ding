@@ -31,7 +31,7 @@ export const ProfileScreen = ({ navigation, route }) => {
     membersId.forEach(userId => {
       members.push(findUserById(userId));
     });
-    navigation.navigate('UserListScreen', { users: members });
+    navigation.navigate('UserListScreen', { users: members, title: 'Участники' });
   };
 
   const editProfileHandler = () => {
@@ -43,7 +43,7 @@ export const ProfileScreen = ({ navigation, route }) => {
     user.friendsId.forEach(userId => {
       friends.push(findUserById(userId));
     });
-    navigation.navigate('UserListScreen', { users: friends });
+    navigation.navigate('UserListScreen', { users: friends, title: 'Друзья' });
   };
 
   const showAllEvents = () => {

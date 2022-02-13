@@ -29,7 +29,7 @@ export const EventListScreen = ({ navigation }) => {
     membersId.forEach(userId => {
       members.push(findUserById(userId));
     });
-    navigation.navigate('UserListScreen', { users: members });
+    navigation.navigate('UserListScreen', { users: members, title: 'Участники' });
   };
 
   const showAllEvents = () => {

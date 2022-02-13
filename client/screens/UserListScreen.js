@@ -5,7 +5,7 @@ import { UserTab } from '../components/UserTab';
 import { THEME } from './../components/theme';
 
 export const UserListScreen = ({ route, navigation }) => {
-  const { users } = route.params;
+  const { users, title } = route.params;
 
   const openProfileHandler = user => {
     navigation.navigate('ProfileScreen', { user: user });
@@ -13,7 +13,7 @@ export const UserListScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     navigation.setOptions({
-      title: 'Wing-Ding',
+      title,
     });
   }, [navigation]);
 
