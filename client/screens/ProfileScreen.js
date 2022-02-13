@@ -4,17 +4,23 @@ import { View, StyleSheet } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { Row } from '../components/Row';
 import { Column } from '../components/Column';
-import { EventList } from '../components/EventList';
+import { List } from '../components/List';
+import { EventTab } from '../components/EventTab';
 import { HeaderIcon } from '../components/HeaderIcon';
 import { UserIcon } from '../components/ui/UserIcon';
 import { Button } from '../components/ui/Button';
 import { ToggleButton } from '../components/ui/ToggleButton';
 import { Text } from '../components/ui/Text';
 import { SCREEN_STYLE, THEME } from '../components/theme.js';
-import { DATA } from '../components/data';
+import { DATA, ME } from '../components/data';
 
 export const ProfileScreen = ({ navigation, route }) => {
   const { user } = route.params;
+
+  const userEvents = DATA.filter(event => event.membersIds.includes(user.id));
+
+  const [events, setEvents] = useState(userEvents);
+  const [filter, setFilter] = useState('all');
 
   const openEventHandler = event => {
     navigation.navigate('EventDetails', { eventId: event.id });
@@ -23,11 +29,6 @@ export const ProfileScreen = ({ navigation, route }) => {
   const editProfileHandler = () => {
     navigation.navigate('ProfileEditScreen', { user });
   };
-
-  const userEvents = DATA.filter(event => event.membersIds.includes(user.id));
-
-  const [events, setEvents] = useState(userEvents);
-  const [filter, setFilter] = useState('all');
 
   const showAllEvents = () => {
     setEvents(userEvents);
@@ -39,8 +40,10 @@ export const ProfileScreen = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
+    setEvents(userEvents);
+    let header;
+    if (user.id === ME.id) {
+      header = (
         <HeaderButtons HeaderButtonComponent={HeaderIcon}>
           <Item title='Edit Profile' iconName={THEME.ICON_EDIT} onPress={editProfileHandler} />
           <Item
@@ -49,10 +52,24 @@ export const ProfileScreen = ({ navigation, route }) => {
             onPress={() => console.log('Create Event')}
           />
         </HeaderButtons>
-      ),
+      );
+    } else {
+      const isFriend = ME.friendsId.includes(user.id);
+      header = (
+        <HeaderButtons HeaderButtonComponent={HeaderIcon}>
+          <Item
+            title='Toggle friend'
+            iconName={isFriend ? THEME.ICON_CROSS : THEME.ICON_CHECK}
+            onPress={() => console.log('Toggle friend')}
+          />
+        </HeaderButtons>
+      );
+    }
+    navigation.setOptions({
+      headerRight: () => header,
       title: user.name,
     });
-  }, [navigation]);
+  }, [navigation, user]);
 
   return (
     <View
@@ -82,7 +99,7 @@ export const ProfileScreen = ({ navigation, route }) => {
           style={styles.filterButton}
           onPress={showAllEvents}
         >
-          Мои события
+          {user.id === ME.id ? `Мои события` : `События`}
         </ToggleButton>
         <ToggleButton
           isActive={filter === 'upcoming'}
@@ -92,7 +109,7 @@ export const ProfileScreen = ({ navigation, route }) => {
           Будущие события
         </ToggleButton>
       </Row>
-      <EventList events={events} onOpen={openEventHandler} />
+      <List data={events} Component={EventTab} onOpen={openEventHandler} />
     </View>
   );
 };
