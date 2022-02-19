@@ -1,9 +1,7 @@
 import React from 'react';
 import { StyleSheet, ImageBackground } from 'react-native';
-import { USERS } from '../data';
 import { THEME } from '../theme';
-
-const findUserById = id => USERS.find(user => user.id == id);
+import { findUserById } from '../../src/utils';
 
 export const UserIcon = ({ userId, style, iconSize = 34 }) => {
   return (

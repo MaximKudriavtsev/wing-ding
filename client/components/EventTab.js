@@ -7,26 +7,26 @@ import { MemberTab } from './ui/MemberTab';
 import { Text } from './ui/Text';
 import { THEME } from './theme';
 
-export const EventTab = ({ event, onOpen }) => {
+export const EventTab = ({ item, onOpen, onShowMembers }) => {
   return (
-    <TouchableOpacity activeOpacity={0.7} onPress={() => onOpen(event)}>
+    <TouchableOpacity activeOpacity={0.7} onPress={() => onOpen(item)}>
       <View style={styles.event}>
         <Row style={styles.headerRow}>
-          <DateTab date={event.date} />
+          <DateTab date={item.date} />
           <Column style={styles.headerColumn}>
             <Text bold={true} style={styles.title}>
-              {event.title}
+              {item.title}
             </Text>
-            <Text style={styles.place}>{event.place}</Text>
+            <Text style={styles.place}>{item.place}</Text>
           </Column>
         </Row>
-        <ImageBackground style={styles.image} source={{ uri: event.img }} />
+        <ImageBackground style={styles.image} source={{ uri: item.img }} />
         <Row style={styles.membersWrapper}>
-          <MemberTab reverse={true} members={event.membersIds} />
+          <MemberTab reverse={true} members={item.membersIds} onOpen={onShowMembers} />
         </Row>
         <Row style={styles.textWrapper}>
           <Text numberOfLines={2} style={styles.text}>
-            {event.text}
+            {item.text}
           </Text>
         </Row>
       </View>

@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { EventList } from './../components/EventList';
+import { List } from '../components/List';
+import { EventTab } from '../components/EventTab';
 import { ToggleButton } from '../components/ui/ToggleButton';
 import { DATA, ME } from './../components/data';
 import { THEME } from './../components/theme';
 import { Row } from '../components/Row';
+import { findUserById } from '../src/utils';
 
 export const EventListScreen = ({ navigation }) => {
-  const openEventHandler = event => {
-    navigation.navigate('EventDetails', { eventId: event.id });
-  };
-
   const [events, setEvents] = useState(DATA);
   const [filter, setFilter] = useState('all');
 
@@ -21,10 +19,21 @@ export const EventListScreen = ({ navigation }) => {
       }
     }
   };
+
+  const openEventHandler = event => {
+    navigation.navigate('EventDetails', { eventId: event.id });
+  };
+
+  const showMembersHandler = membersId => {
+    const members = membersId.map(findUserById);
+    navigation.navigate('UserListScreen', { users: members, title: 'Участники' });
+  };
+
   const showAllEvents = () => {
     setEvents(DATA);
     setFilter('all');
   };
+
   const showFriendsEvents = () => {
     setEvents(DATA.filter(areFriendsThere));
     setFilter('friends');
@@ -54,7 +63,12 @@ export const EventListScreen = ({ navigation }) => {
           События друзей
         </ToggleButton>
       </Row>
-      <EventList events={events} onOpen={openEventHandler} />
+      <List
+        data={events}
+        Component={EventTab}
+        onOpen={openEventHandler}
+        onShowMembers={showMembersHandler}
+      />
     </View>
   );
 };
