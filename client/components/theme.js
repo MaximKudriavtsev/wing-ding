@@ -29,6 +29,7 @@ export const THEME = {
   ICON_EDIT: 'edit',
   ICON_CHECK: 'check',
   ICON_CROSS: 'remove',
+  ICON_WARNING: 'warning',
 };
 
 export const SCREEN_STYLE = StyleSheet.create({

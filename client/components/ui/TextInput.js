@@ -9,6 +9,7 @@ export const TextInput = ({
   iconSize = 20,
   placeholder,
   onChangeText,
+  autoCapitalize = 'none',
   secureTextEntry = false,
   children,
 }) => {
@@ -20,7 +21,7 @@ export const TextInput = ({
         placeholder={placeholder}
         value={children}
         placeholderTextColor={THEME.PLACEHOLDER_COLOR}
-        autoCapitalize={'none'}
+        autoCapitalize={autoCapitalize}
         secureTextEntry={secureTextEntry}
         onChangeText={onChangeText}
       />

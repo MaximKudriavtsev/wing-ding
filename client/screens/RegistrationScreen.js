@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { AlertContext } from '../src/context/AlertContext';
 import { TokenContext } from '../src/context/TokenContext';
 import { userApi } from '../src/api/user/apiProduction';
-import { validate, decodeError, showAlertMessage } from '../src/utils';
+import { validate, decodeError } from '../src/utils';
 import { View } from 'react-native';
 import { Title } from '../components/ui/Title';
 import { Button } from '../components/ui/Button';
@@ -12,20 +12,28 @@ import { THEME, SCREEN_STYLE } from '../components/theme';
 import { TOKEN_PROP } from '../src/config';
 
 export const RegistrationScreen = ({ navigation }) => {
-  const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [loginValidations, setLoginValidations] = useState(null);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [passwordValidations, setPasswordValidations] = useState(null);
   const [emailValidations, setEmailValidations] = useState(null);
-  const { setAlertVisible, setAlertMessage, setAlertIcon } = useContext(AlertContext);
+  const [firstNameValidations, setFirstNameValidations] = useState(null);
+  const [lastNameValidations, setLastNameValidations] = useState(null);
+  const { showAlertMessage } = useContext(AlertContext);
   const { setUserToken } = useContext(TokenContext);
 
   const onSignUp = () => {
-    if (!loginValidations || !passwordValidations || !emailValidations) return;
-    if (loginValidations.isValid && passwordValidations.isValid && emailValidations.isValid) {
+    if (!emailValidations || !passwordValidations || !firstNameValidations || !lastNameValidations)
+      return;
+    if (
+      emailValidations.isValid &&
+      passwordValidations.isValid &&
+      firstNameValidations.isValid &&
+      lastNameValidations.isValid
+    ) {
       userApi
-        .registration({ login, email, password })
+        .registration({ email, password, firstName, lastName })
         .then(response => {
           const { data, status } = response;
           if (status === 200) {
@@ -34,13 +42,7 @@ export const RegistrationScreen = ({ navigation }) => {
         })
         .catch(error => {
           const errorMessage = decodeError(error.response.data.error);
-          showAlertMessage(
-            setAlertVisible,
-            setAlertMessage,
-            errorMessage,
-            setAlertIcon,
-            THEME.ICON_CROSS,
-          );
+          showAlertMessage(errorMessage, 'ERROR');
         });
     }
   };
@@ -48,13 +50,13 @@ export const RegistrationScreen = ({ navigation }) => {
   return (
     <View style={SCREEN_STYLE.wrapper}>
       <Title>Регистрация</Title>
-      <ValidationHint validations={loginValidations} />
+      <ValidationHint validations={emailValidations} />
       <TextInput
-        iconName={THEME.ICON_USER}
-        placeholder={'Логин'}
-        onChangeText={login => {
-          setLogin(login);
-          setLoginValidations(validate(login, { isFilled: true, minLength: 3 }));
+        iconName={THEME.ICON_ENVELOPE}
+        placeholder={'E-mail'}
+        onChangeText={email => {
+          setEmail(email);
+          setEmailValidations(validate(email, { isEmail: true, minLength: 5 }));
         }}
       />
       <ValidationHint validations={passwordValidations} />
@@ -67,13 +69,24 @@ export const RegistrationScreen = ({ navigation }) => {
           setPasswordValidations(validate(password, { isFilled: true }));
         }}
       />
-      <ValidationHint validations={emailValidations} />
+      <ValidationHint validations={firstNameValidations} />
       <TextInput
-        iconName={THEME.ICON_ENVELOPE}
-        placeholder={'E-mail'}
-        onChangeText={email => {
-          setEmail(email);
-          setEmailValidations(validate(email, { isEmail: true, minLength: 5 }));
+        iconName={THEME.ICON_USER}
+        placeholder={'Имя'}
+        autoCapitalize={'words'}
+        onChangeText={firstName => {
+          setFirstName(firstName);
+          setFirstNameValidations(validate(firstName, { isFilled: true, isName: true }));
+        }}
+      />
+      <ValidationHint validations={lastNameValidations} />
+      <TextInput
+        iconName={THEME.ICON_USER}
+        placeholder={'Фамилия'}
+        autoCapitalize={'words'}
+        onChangeText={lastName => {
+          setLastName(lastName);
+          setLastNameValidations(validate(lastName, { isFilled: true, isName: true }));
         }}
       />
       <Button style={{ marginVertical: 25 }} fontColor={THEME.BACKGROUND_COLOR} onPress={onSignUp}>

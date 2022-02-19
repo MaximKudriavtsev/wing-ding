@@ -27,6 +27,7 @@ export const validate = (value, validations) => {
   let isEmail = true;
   let isSame = true;
   let isValid = true;
+  let isName = true;
 
   for (const validation in validations) {
     switch (validation) {
@@ -43,6 +44,10 @@ export const validate = (value, validations) => {
         break;
       case 'isSame':
         value == validations[validation] ? (isSame = true) : ((isSame = false), (isValid = false));
+      case 'isName':
+        /^([А-Я]{1}[а-яё]{1,23}|[A-Z]{1}[a-z]{1,23})$/.test(value)
+          ? (isName = true)
+          : ((isName = false), (isValid = false));
     }
   }
 
@@ -51,6 +56,7 @@ export const validate = (value, validations) => {
     isLengthy,
     isEmail,
     isSame,
+    isName,
     isValid,
   };
 };
@@ -74,11 +80,3 @@ export const decodeError = error => {
 
 export const findUserById = id => USERS.find(user => user.id == id);
 
-export const showAlertMessage = (onShow, onSetText, text, onSetAlertIcon, icon) => {
-  onSetText(text);
-  onSetAlertIcon(icon);
-  onShow(true);
-  setTimeout(() => {
-    onShow(false);
-  }, 2500);
-};
