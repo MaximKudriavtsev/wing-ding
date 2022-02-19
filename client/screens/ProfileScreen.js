@@ -36,7 +36,7 @@ export const ProfileScreen = ({ navigation, route }) => {
   };
 
   const showFriendsHandler = () => {
-    const friends = membersId.map(findUserById);
+    const friends = user.friendsId.map(findUserById);
     navigation.navigate('UserListScreen', { users: friends, title: 'Друзья' });
   };
 

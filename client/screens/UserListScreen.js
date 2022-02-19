@@ -8,7 +8,7 @@ export const UserListScreen = ({ route, navigation }) => {
   const { users, title } = route.params;
 
   const openProfileHandler = user => {
-    navigation.navigate('ProfileScreen', { user: user });
+    navigation.push('ProfileScreen', { user: user });
   };
 
   useEffect(() => {

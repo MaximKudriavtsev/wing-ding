@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: THEME.BACKGROUND_COLOR,
     paddingHorizontal: 10,
+    paddingVertical: 5,
     flex: 1,
   },
   eventHost: {
