@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { AlertContext } from '../src/context/AlertContext';
 import { TokenContext } from '../src/context/TokenContext';
-import { validate, decodeError, showAlertMessage } from '../src/utils';
+import { validate, decodeError } from '../src/utils';
 import { userApi } from '../src/api/user/apiProduction';
 import { View } from 'react-native';
 import { Title } from '../components/ui/Title';
@@ -16,7 +16,7 @@ export const AuthenticationScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [emailValidations, setEmailValidations] = useState(null);
   const [passwordValidations, setPasswordValidations] = useState(null);
-  const { setAlertVisible, setAlertMessage, setAlertIcon } = useContext(AlertContext);
+  const { showAlertMessage } = useContext(AlertContext);
   const { setUserToken } = useContext(TokenContext);
 
   const onSignIn = () => {
@@ -32,13 +32,8 @@ export const AuthenticationScreen = ({ navigation }) => {
         })
         .catch(error => {
           const errorMessage = decodeError(error.response.data.error);
-          showAlertMessage(
-            setAlertVisible,
-            setAlertMessage,
-            errorMessage,
-            setAlertIcon,
-            THEME.ICON_CROSS,
-          );
+          console.log(error.response);
+          showAlertMessage(errorMessage, 'ERROR');
         });
     }
   };

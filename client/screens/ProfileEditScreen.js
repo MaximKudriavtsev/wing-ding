@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AlertContext } from '../src/context/AlertContext';
 import { TokenContext } from '../src/context/TokenContext';
-import { showAlertMessage } from '../src/utils';
 import { View, StyleSheet } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { HeaderIcon } from '../components/HeaderIcon';
@@ -14,17 +13,11 @@ import { SCREEN_STYLE, THEME } from '../components/theme.js';
 
 export const ProfileEditScreen = ({ navigation, route }) => {
   const { user } = route.params;
-  const { setAlertVisible, setAlertMessage, setAlertIcon } = useContext(AlertContext);
+  const { showAlertMessage } = useContext(AlertContext);
   const { setUserToken } = useContext(TokenContext);
 
   const applyChanges = () => {
-    showAlertMessage(
-      setAlertVisible,
-      setAlertMessage,
-      'Данные изменены',
-      setAlertIcon,
-      THEME.ICON_CHECK,
-    );
+    showAlertMessage('Данные изменены', 'INFO');
   };
 
   useEffect(() => {

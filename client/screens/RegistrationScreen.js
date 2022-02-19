@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { AlertContext } from '../src/context/AlertContext';
 import { TokenContext } from '../src/context/TokenContext';
 import { userApi } from '../src/api/user/apiProduction';
-import { validate, decodeError, showAlertMessage } from '../src/utils';
+import { validate, decodeError } from '../src/utils';
 import { View } from 'react-native';
 import { Title } from '../components/ui/Title';
 import { Button } from '../components/ui/Button';
@@ -20,7 +20,7 @@ export const RegistrationScreen = ({ navigation }) => {
   const [emailValidations, setEmailValidations] = useState(null);
   const [firstNameValidations, setFirstNameValidations] = useState(null);
   const [lastNameValidations, setLastNameValidations] = useState(null);
-  const { setAlertVisible, setAlertMessage, setAlertIcon } = useContext(AlertContext);
+  const { showAlertMessage } = useContext(AlertContext);
   const { setUserToken } = useContext(TokenContext);
 
   const onSignUp = () => {
@@ -42,13 +42,7 @@ export const RegistrationScreen = ({ navigation }) => {
         })
         .catch(error => {
           const errorMessage = decodeError(error.response.data.error);
-          showAlertMessage(
-            setAlertVisible,
-            setAlertMessage,
-            errorMessage,
-            setAlertIcon,
-            THEME.ICON_CROSS,
-          );
+          showAlertMessage(errorMessage, 'ERROR');
         });
     }
   };

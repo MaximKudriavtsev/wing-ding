@@ -76,12 +76,3 @@ export const decodeError = error => {
 
   return message;
 };
-
-export const showAlertMessage = (onShow, onSetText, text, onSetAlertIcon, icon) => {
-  onSetText(text);
-  onSetAlertIcon(icon);
-  onShow(true);
-  setTimeout(() => {
-    onShow(false);
-  }, 2500);
-};
