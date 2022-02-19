@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { AlertContext } from '../src/context/AlertContext';
 import { TokenContext } from '../src/context/TokenContext';
-import { validate, decodeError, showAlertMessage } from '../src/utils';
+import { validate, decodeError } from '../src/utils';
 import { userApi } from '../src/api/user/apiProduction';
 import { View } from 'react-native';
 import { Title } from '../components/ui/Title';
@@ -12,18 +12,18 @@ import { THEME, SCREEN_STYLE } from '../components/theme.js';
 import { TOKEN_PROP } from '../src/config';
 
 export const AuthenticationScreen = ({ navigation }) => {
-  const [login, setLogin] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loginValidations, setLoginValidations] = useState(null);
+  const [emailValidations, setEmailValidations] = useState(null);
   const [passwordValidations, setPasswordValidations] = useState(null);
-  const { setAlertVisible, setAlertMessage, setAlertIcon } = useContext(AlertContext);
+  const { showAlertMessage } = useContext(AlertContext);
   const { setUserToken } = useContext(TokenContext);
 
   const onSignIn = () => {
-    if (!loginValidations || !passwordValidations) return;
-    if (loginValidations.isValid && passwordValidations.isValid) {
+    if (!emailValidations || !passwordValidations) return;
+    if (emailValidations.isValid && passwordValidations.isValid) {
       userApi
-        .auth({ login, password })
+        .auth({ email, password })
         .then(response => {
           const { data, status } = response;
           if (status === 200) {
@@ -32,13 +32,8 @@ export const AuthenticationScreen = ({ navigation }) => {
         })
         .catch(error => {
           const errorMessage = decodeError(error.response.data.error);
-          showAlertMessage(
-            setAlertVisible,
-            setAlertMessage,
-            errorMessage,
-            setAlertIcon,
-            THEME.ICON_CROSS,
-          );
+          console.log(error.response);
+          showAlertMessage(errorMessage, 'ERROR');
         });
     }
   };
@@ -46,13 +41,13 @@ export const AuthenticationScreen = ({ navigation }) => {
   return (
     <View style={SCREEN_STYLE.wrapper}>
       <Title>Добро пожаловать!</Title>
-      <ValidationHint validations={loginValidations} />
+      <ValidationHint validations={emailValidations} />
       <TextInput
-        iconName={THEME.ICON_USER}
-        placeholder={'Логин'}
-        onChangeText={login => {
-          setLogin(login);
-          setLoginValidations(validate(login, { isFilled: true, minLength: 3 }));
+        iconName={THEME.ICON_ENVELOPE}
+        placeholder={'E-mail'}
+        onChangeText={email => {
+          setEmail(email);
+          setEmailValidations(validate(email, { isEmail: true, minLength: 3 }));
         }}
       />
       <ValidationHint validations={passwordValidations} />
