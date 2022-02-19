@@ -19,10 +19,7 @@ export const EventScreen = ({ navigation, route }) => {
   const amIMember = members.find(user => user === ME.id) ? true : false;
 
   const showMembersHandler = membersId => {
-    const members = [];
-    membersId.forEach(userId => {
-      members.push(findUserById(userId));
-    });
+    const members = membersId.map(findUserById);
     navigation.navigate('UserListScreen', { users: members, title: 'Участники' });
   };
 

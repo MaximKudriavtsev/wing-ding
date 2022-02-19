@@ -27,10 +27,7 @@ export const ProfileScreen = ({ navigation, route }) => {
   };
 
   const showMembersHandler = membersId => {
-    const members = [];
-    membersId.forEach(userId => {
-      members.push(findUserById(userId));
-    });
+    const members = membersId.map(findUserById);
     navigation.navigate('UserListScreen', { users: members, title: 'Участники' });
   };
 
@@ -39,10 +36,7 @@ export const ProfileScreen = ({ navigation, route }) => {
   };
 
   const showFriendsHandler = () => {
-    const friends = [];
-    user.friendsId.forEach(userId => {
-      friends.push(findUserById(userId));
-    });
+    const friends = membersId.map(findUserById);
     navigation.navigate('UserListScreen', { users: friends, title: 'Друзья' });
   };
 
@@ -57,9 +51,9 @@ export const ProfileScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     setEvents(userEvents);
-    let header;
+    let Header;
     if (user.id === ME.id) {
-      header = (
+      Header = (
         <HeaderButtons HeaderButtonComponent={HeaderIcon}>
           <Item title='Edit Profile' iconName={THEME.ICON_EDIT} onPress={editProfileHandler} />
           <Item
@@ -71,7 +65,7 @@ export const ProfileScreen = ({ navigation, route }) => {
       );
     } else {
       const isFriend = ME.friendsId.includes(user.id);
-      header = (
+      Header = (
         <HeaderButtons HeaderButtonComponent={HeaderIcon}>
           <Item
             title='Toggle friend'
@@ -82,7 +76,7 @@ export const ProfileScreen = ({ navigation, route }) => {
       );
     }
     navigation.setOptions({
-      headerRight: () => header,
+      headerRight: () => Header,
       title: user.name,
     });
   }, [navigation, user]);
