@@ -14,4 +14,8 @@ export const userApi = {
       last_name: lastName,
     });
   },
+
+  getUser: () => {
+    return api.post(`${USER_BASE_URL}/profile/get`);
+  },
 };

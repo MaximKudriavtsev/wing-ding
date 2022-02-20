@@ -17,6 +17,13 @@ api.interceptors.response.use(response => {
   return response;
 });
 
+export const setAuthorizationInterceptor = token => {
+  api.interceptors.request.use(config => {
+    config.headers.Authorization = token;
+    return config;
+  });
+};
+
 dayjs.locale('ru');
 
 export const dateRu = dayjs;
@@ -79,4 +86,3 @@ export const decodeError = error => {
 };
 
 export const findUserById = id => USERS.find(user => user.id == id);
-
