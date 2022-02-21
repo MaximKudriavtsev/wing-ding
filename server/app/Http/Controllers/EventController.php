@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\User;
+use App\Models\Participation;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -34,7 +36,51 @@ class EventController extends Controller
         }
     }
 
+    public function join($id) {
+        try {
+            $user = auth()->user();
+
+            if (Participation::whereEventId($id)->whereUserId($user->id)->exists()) {
+                return \response()->json([
+                    'status' => 'error',
+                    'error' => 'user exist'
+                ]);
+            }
+
+            $event = Event::find($id);
+            $event->joinUser($user->id);
+            $event->increment('users_count');
+            User::whereId($user->id)->increment('events');
+            return \response()->json([
+                'status' => 'success',
+            ]);
+        } catch (\Throwable $ex) {
+            return \response()->json([
+                'status' => 'error',
+                'error' => $ex->getMessage(),
+            ]);
+        }
+    }
+
+    public function getUsers($id) {
+        try {
+            $ids = Participation::whereEventId($id)->pluck('user_id');
+            return \response([
+                'status' => 'success',
+                'users' => User::whereIn('id', $ids)->get()
+            ]);
+        } catch (\Throwable $ex) {
+            return \response()->json([
+               'status' => 'error',
+               'error' => $ex->getMessage()
+            ]);
+        }
+    }
+
     public function get($id) {
-        return \response()->json(Event::find($id));
+        $event = Event::find($id);
+        $event['host_photo'] = $event->host()->select('photo')->first();
+        $event['users_photo'] = $event->users()->take(3)->pluck('photo');
+        return \response()->json($event);
     }
 }

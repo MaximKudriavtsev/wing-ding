@@ -24,12 +24,14 @@ Route::prefix('/user')->group(function () {
     Route::post('/profile/change')->middleware('auth');
     Route::post('/friends/get')->middleware('auth');
     Route::post('/friends/add')->middleware('auth');
+    Route::post('/events', [UserController::class, 'selfEvents'])->middleware('auth');
 });
 
 Route::prefix('/event')->group(function () {
     Route::post('/create', [EventController::class, 'create'])->middleware('auth');
-    Route::post('/join')->middleware('auth');
+    Route::post('/join/{id}', [EventController::class, 'join'])->middleware('auth');
     Route::post('/leave')->middleware('auth');
     Route::post('/get/{id}', [EventController::class, 'get'])->middleware('auth');
     Route::post('/list/get')->middleware('auth');
+    Route::post('/get/{id}/users', [EventController::class, 'getUsers'])->middleware('auth');
 });

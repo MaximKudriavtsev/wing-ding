@@ -6,8 +6,10 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Log;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Models\Event;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -41,6 +43,15 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function events() {
+        return $this->belongsToMany(
+            Event::class,
+            'participation',
+            'user_id',
+            'event_id')
+            ->using(Participation::class);
+    }
 
     public function getJWTIdentifier()
     {
