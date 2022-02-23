@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { UserContext } from '../src/context/UserContext';
 import { dateRu, findUserById } from '../src/utils';
 import { View, StyleSheet } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -16,6 +17,7 @@ import { DATA, ME } from '../components/data';
 
 export const ProfileScreen = ({ navigation, route }) => {
   const { user } = route.params;
+  const { authorizedUser } = useContext(UserContext);
 
   const userEvents = DATA.filter(event => event.membersIds.includes(user.id));
 
@@ -31,13 +33,9 @@ export const ProfileScreen = ({ navigation, route }) => {
     navigation.navigate('UserListScreen', { users: members, title: 'Участники' });
   };
 
-  const editProfileHandler = () => {
-    navigation.navigate('ProfileEditScreen', { user });
-  };
-
   const showFriendsHandler = () => {
-    const friends = user.friendsId.map(findUserById);
-    navigation.navigate('UserListScreen', { users: friends, title: 'Друзья' });
+    // const friends = user.friendsId.map(findUserById);
+    navigation.navigate('UserListScreen', { users: [], title: 'Друзья' });
   };
 
   const showAllEvents = () => {
@@ -52,10 +50,14 @@ export const ProfileScreen = ({ navigation, route }) => {
   useEffect(() => {
     setEvents(userEvents);
     let Header;
-    if (user.id === ME.id) {
+    if (user.id === authorizedUser.id) {
       Header = (
         <HeaderButtons HeaderButtonComponent={HeaderIcon}>
-          <Item title='Edit Profile' iconName={THEME.ICON_EDIT} onPress={editProfileHandler} />
+          <Item
+            title='Edit Profile'
+            iconName={THEME.ICON_EDIT}
+            onPress={() => navigation.navigate('ProfileEditScreen')}
+          />
           <Item
             title='Create Event'
             iconName={THEME.ICON_APPEND}
@@ -64,7 +66,7 @@ export const ProfileScreen = ({ navigation, route }) => {
         </HeaderButtons>
       );
     } else {
-      const isFriend = ME.friendsId.includes(user.id);
+      const isFriend = authorizedUser.friendsId.includes(user.id);
       Header = (
         <HeaderButtons HeaderButtonComponent={HeaderIcon}>
           <Item
@@ -77,7 +79,7 @@ export const ProfileScreen = ({ navigation, route }) => {
     }
     navigation.setOptions({
       headerRight: () => Header,
-      title: user.name,
+      title: `${user.firstName} ${user.lastName}`,
     });
   }, [navigation, user]);
 
@@ -94,15 +96,15 @@ export const ProfileScreen = ({ navigation, route }) => {
             <UserIcon userId={user.id} iconSize={82} />
           </View>
           <Row style={styles.buttonsRow}>
-            <Text>{`Событий: ${userEvents.length}`}</Text>
+            <Text>{`Событий: ${user.events}`}</Text>
             <Button
               backgroundColor={'transparent'}
               fontColor={THEME.BUTTON_COLOR}
               onPress={showFriendsHandler}
-            >{`Друзей: ${user.friendsId.length}`}</Button>
+            >{`Друзей: ${user.friends}`}</Button>
           </Row>
         </Row>
-        <Text>{user.status ? user.status : 'Текст о себе...'}</Text>
+        <Text>{user.description ? user.description : 'Текст о себе...'}</Text>
       </Column>
       <Row style={styles.filterRow}>
         <ToggleButton
@@ -110,7 +112,7 @@ export const ProfileScreen = ({ navigation, route }) => {
           style={styles.filterButton}
           onPress={showAllEvents}
         >
-          {user.id === ME.id ? `Мои события` : `События`}
+          {user.id === authorizedUser.id ? `Мои события` : `События`}
         </ToggleButton>
         <ToggleButton
           isActive={filter === 'upcoming'}

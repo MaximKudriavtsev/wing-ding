@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { AlertContext } from '../src/context/AlertContext';
-import { TokenContext } from '../src/context/TokenContext';
-import { View, StyleSheet } from 'react-native';
+import { UserContext } from '../src/context/UserContext';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { HeaderIcon } from '../components/HeaderIcon';
 import { Column } from '../components/Column';
@@ -11,10 +11,9 @@ import { Text } from '../components/ui/Text';
 import { TextInput } from '../components/ui/TextInput';
 import { SCREEN_STYLE, THEME } from '../components/theme.js';
 
-export const ProfileEditScreen = ({ navigation, route }) => {
-  const { user } = route.params;
+export const ProfileEditScreen = ({ navigation }) => {
   const { showAlertMessage } = useContext(AlertContext);
-  const { setUserToken } = useContext(TokenContext);
+  const { authorizedUser, setAuthorizedUser } = useContext(UserContext);
 
   const applyChanges = () => {
     showAlertMessage('Данные изменены', 'INFO');
@@ -35,31 +34,35 @@ export const ProfileEditScreen = ({ navigation, route }) => {
   }, [navigation]);
 
   return (
-    <View style={SCREEN_STYLE.wrapper}>
-      <Column style={{ alignItems: 'center' }}>
-        <UserIcon userId={user.id} iconSize={105} />
-        <Button
-          backgroundColor={'transparent'}
-          onPress={() => {
-            console.log('Load photo');
-          }}
-        >
-          Изменить фото профиля
-        </Button>
-        <Text style={styles.label}>Имя</Text>
-        <TextInput>{user.name}</TextInput>
-        <Text style={styles.label}>День рождения</Text>
-        <TextInput>{user.birthDate}</TextInput>
-        <Text style={styles.label}>О себе</Text>
-        <TextInput>Веселый парень, люблю бухать</TextInput>
-        <Button
-          backgroundColor='transparent'
-          fontColor={THEME.DANGER_COLOR}
-          onPress={() => setUserToken(null)}
-        >
-          Выйти из аккаунта
-        </Button>
-      </Column>
+    <View style={SCREEN_STYLE.listWrapper}>
+      <ScrollView>
+        <Column style={{ alignItems: 'center', padding: 15 }}>
+          <UserIcon userId={authorizedUser.id} iconSize={105} />
+          <Button
+            backgroundColor={'transparent'}
+            onPress={() => {
+              console.log('Load photo');
+            }}
+          >
+            Изменить фото профиля
+          </Button>
+          <Text style={styles.label}>Имя</Text>
+          <TextInput>{authorizedUser.firstName}</TextInput>
+          <Text style={styles.label}>Фамилия</Text>
+          <TextInput>{authorizedUser.lastName}</TextInput>
+          <Text style={styles.label}>День рождения</Text>
+          <TextInput>{authorizedUser.birthDate}</TextInput>
+          <Text style={styles.label}>О себе</Text>
+          <TextInput>{authorizedUser.description}</TextInput>
+          <Button
+            backgroundColor='transparent'
+            fontColor={THEME.DANGER_COLOR}
+            onPress={() => setAuthorizedUser(null)}
+          >
+            Выйти из аккаунта
+          </Button>
+        </Column>
+      </ScrollView>
     </View>
   );
 };
