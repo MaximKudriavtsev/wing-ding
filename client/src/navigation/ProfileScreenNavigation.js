@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { UserContext } from '../context/UserContext';
 import { ProfileScreen } from '../../screens/ProfileScreen';
 import { ProfileEditScreen } from '../../screens/ProfileEditScreen';
 import { UserListScreen } from '../../screens/UserListScreen';
 import { EventScreen } from '../../screens/EventScreen';
 import { THEME } from '../../components/theme';
-import { ME } from '../../components/data';
 
 const ProfileStack = createNativeStackNavigator();
 
 export const ProfileScreenNavigation = () => {
+  const { authorizedUser } = useContext(UserContext);
+
   return (
     <ProfileStack.Navigator
       screenOptions={() => ({
@@ -26,7 +28,7 @@ export const ProfileScreenNavigation = () => {
         name='ProfileScreen'
         component={ProfileScreen}
         initialParams={{
-          user: ME,
+          user: authorizedUser,
         }}
       />
       <ProfileStack.Screen name='UserListScreen' component={UserListScreen} />

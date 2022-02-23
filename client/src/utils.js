@@ -85,4 +85,23 @@ export const decodeError = error => {
   return message;
 };
 
+export const stringToCamel = s => {
+  return s.replace(/([-_][a-z])/gi, $1 => {
+    return $1.toUpperCase().replace('-', '').replace('_', '');
+  });
+};
+export const keysToCamel = object => {
+  if (Array.isArray(object) || typeof object != 'object' || object === null) {
+    return object;
+  }
+
+  const camelObject = {};
+
+  Object.keys(object).forEach(key => {
+    camelObject[stringToCamel(key)] = keysToCamel(object[key]);
+  });
+
+  return camelObject;
+};
+
 export const findUserById = id => USERS.find(user => user.id == id);
