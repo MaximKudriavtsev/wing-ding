@@ -85,12 +85,12 @@ export const decodeError = error => {
   return message;
 };
 
-export const stringToCamel = s => {
+export const camelizeString = s => {
   return s.replace(/([-_][a-z])/gi, $1 => {
     return $1.toUpperCase().replace('-', '').replace('_', '');
   });
 };
-export const keysToCamel = object => {
+export const camelizeKeys = object => {
   if (Array.isArray(object) || typeof object != 'object' || object === null) {
     return object;
   }
@@ -98,7 +98,7 @@ export const keysToCamel = object => {
   const camelObject = {};
 
   Object.keys(object).forEach(key => {
-    camelObject[stringToCamel(key)] = keysToCamel(object[key]);
+    camelObject[camelizeString(key)] = camelizeKeys(object[key]);
   });
 
   return camelObject;

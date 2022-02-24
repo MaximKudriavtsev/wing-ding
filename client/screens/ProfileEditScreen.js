@@ -37,7 +37,7 @@ export const ProfileEditScreen = ({ navigation }) => {
     <View style={SCREEN_STYLE.listWrapper}>
       <ScrollView>
         <Column style={{ alignItems: 'center', padding: 15 }}>
-          <UserIcon userId={authorizedUser.id} iconSize={105} />
+          <UserIcon userPhoto={authorizedUser.photo} iconSize={105} />
           <Button
             backgroundColor={'transparent'}
             onPress={() => {

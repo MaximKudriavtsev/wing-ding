@@ -1,4 +1,4 @@
-import { api } from './../../utils';
+import { api, camelizeKeys } from './../../utils';
 const USER_BASE_URL = '/user';
 
 export const userApi = {
@@ -17,5 +17,8 @@ export const userApi = {
 
   getUser: () => {
     return api.post(`${USER_BASE_URL}/profile/get`);
+  },
+  getUserEvents: () => {
+    return api.post(`${USER_BASE_URL}/events`);
   },
 };

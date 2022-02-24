@@ -6,7 +6,7 @@ import useFont from './components/hooks/useFont';
 import { AppNavigation } from './src/navigation/AppNavigation';
 import { LoginNavigation } from './src/navigation/LoginNavigation';
 import { TopAlert } from './components/ui/TopAlert';
-import { setAuthorizationInterceptor, keysToCamel } from './src/utils';
+import { setAuthorizationInterceptor, camelizeKeys } from './src/utils';
 import { userApi } from './src/api/user/apiProduction';
 import { THEME } from './components/theme';
 
@@ -44,10 +44,6 @@ export default function App() {
     }, 2500);
   };
 
-  const setAuthorizationToken = useCallback(() => {
-    setAuthorizationInterceptor(userToken);
-  }, [userToken]);
-
   const LoadFonts = async () => {
     await useFont();
   };
@@ -56,10 +52,10 @@ export default function App() {
     if (!userToken) {
       setAuthorizedUser(null);
     } else {
-      setAuthorizationToken(userToken);
+      setAuthorizationInterceptor(userToken);
       userApi
         .getUser()
-        .then(response => setAuthorizedUser(keysToCamel(response.data)))
+        .then(response => setAuthorizedUser(camelizeKeys(response.data)))
         .catch(error => {
           console.log(error);
         });

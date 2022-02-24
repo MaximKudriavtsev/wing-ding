@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { userApi } from '../src/api/user/apiProduction';
 import { UserContext } from '../src/context/UserContext';
-import { dateRu, findUserById } from '../src/utils';
+import { dateRu, findUserById, camelizeKeys } from '../src/utils';
 import { View, StyleSheet } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { Row } from '../components/Row';
@@ -12,16 +13,15 @@ import { UserIcon } from '../components/ui/UserIcon';
 import { Button } from '../components/ui/Button';
 import { ToggleButton } from '../components/ui/ToggleButton';
 import { Text } from '../components/ui/Text';
+import { Loader } from '../components/ui/Loader';
 import { SCREEN_STYLE, THEME } from '../components/theme.js';
-import { DATA, ME } from '../components/data';
 
 export const ProfileScreen = ({ navigation, route }) => {
   const { user } = route.params;
   const { authorizedUser } = useContext(UserContext);
 
-  const userEvents = DATA.filter(event => event.membersIds.includes(user.id));
-
-  const [events, setEvents] = useState(userEvents);
+  const [isLoading, setIsLoading] = useState(false);
+  const [events, setEvents] = useState([]);
   const [filter, setFilter] = useState('all');
 
   const openEventHandler = event => {
@@ -39,16 +39,29 @@ export const ProfileScreen = ({ navigation, route }) => {
   };
 
   const showAllEvents = () => {
-    setEvents(userEvents);
+    setEvents(events);
     setFilter('all');
   };
   const showUpcomingEvents = () => {
-    setEvents(userEvents.filter(event => dateRu(event.date).isAfter(dateRu())));
+    setEvents(events.filter(event => dateRu(event.date).isAfter(dateRu())));
     setFilter('upcoming');
   };
 
   useEffect(() => {
-    setEvents(userEvents);
+    setIsLoading(true);
+    userApi
+      .getUserEvents()
+      .then(response => {
+        setEvents(response.data.map(camelizeKeys));
+        setIsLoading(false);
+      })
+      .catch(error => {
+        console.log(error.response);
+        setIsLoading(false);
+      });
+  }, [user.id]);
+
+  useEffect(() => {
     let Header;
     if (user.id === authorizedUser.id) {
       Header = (
@@ -93,7 +106,7 @@ export const ProfileScreen = ({ navigation, route }) => {
       <Column style={styles.userBar}>
         <Row style={{ height: 'auto', marginBottom: 10 }}>
           <View style={{ width: '20%' }}>
-            <UserIcon userId={user.id} iconSize={82} />
+            <UserIcon userPhoto={user.photo} iconSize={82} />
           </View>
           <Row style={styles.buttonsRow}>
             <Text>{`Событий: ${user.events}`}</Text>
@@ -122,12 +135,16 @@ export const ProfileScreen = ({ navigation, route }) => {
           Будущие события
         </ToggleButton>
       </Row>
-      <List
-        data={events}
-        Component={EventTab}
-        onOpen={openEventHandler}
-        onShowMembers={showMembersHandler}
-      />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <List
+          data={events}
+          Component={EventTab}
+          onOpen={openEventHandler}
+          onShowMembers={showMembersHandler}
+        />
+      )}
     </View>
   );
 };

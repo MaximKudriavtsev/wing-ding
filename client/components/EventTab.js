@@ -22,7 +22,7 @@ export const EventTab = ({ item, onOpen, onShowMembers }) => {
         </Row>
         <ImageBackground style={styles.image} source={{ uri: item.img }} />
         <Row style={styles.membersWrapper}>
-          <MemberTab reverse={true} members={item.membersIds} onOpen={onShowMembers} />
+          <MemberTab reverse={true} membersPhoto={item.usersPhoto} onOpen={onShowMembers} />
         </Row>
         <Row style={styles.textWrapper}>
           <Text numberOfLines={2} style={styles.text}>
