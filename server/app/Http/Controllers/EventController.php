@@ -24,6 +24,11 @@ class EventController extends Controller
             $event->date = $req['date'];
             $event->save();
 
+            $event->joinUser($user->id);
+            $event->increment('members_count');
+            User::whereId($user->id)->increment('events');
+
+
             return \response()->json([
                 'status' => 'success',
                 'id' => $event->id
@@ -67,7 +72,7 @@ class EventController extends Controller
             $ids = Participation::whereEventId($id)->pluck('user_id');
             return \response([
                 'status' => 'success',
-                'users' => User::whereIn('id', $ids)->get()
+                'members' => User::whereIn('id', $ids)->get()
             ]);
         } catch (\Throwable $ex) {
             return \response()->json([
@@ -79,8 +84,8 @@ class EventController extends Controller
 
     public function get($id) {
         $event = Event::find($id);
-        $event['host_photo'] = $event->host()->select('photo')->first();
-        $event['users_photo'] = $event->users()->take(3)->pluck('photo');
+        $event['host'] = $event->host()->select('id', 'photo', 'name');
+        $event['members_photo'] = $event->users()->take(3)->pluck('photo');
         return \response()->json($event);
     }
 }

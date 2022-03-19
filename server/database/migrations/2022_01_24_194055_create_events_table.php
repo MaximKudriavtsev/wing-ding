@@ -21,6 +21,7 @@ class CreateEventsTable extends Migration
             $table->text('text')->nullable();
             $table->unsignedBigInteger('host_id');
             $table->timestamp('date');
+            $table->integer('members_count')->default(0);
             $table->timestamps();
         });
     }
