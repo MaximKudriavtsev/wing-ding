@@ -23,7 +23,7 @@ class UserController extends Controller
 
         foreach ($events as $key => $event) {
             $data[$key] = $event;
-            $data[$key]['users_photo'] = $event->users()->take(3)->pluck('photo');
+            $data[$key]['members_photo'] = $event->users()->take(3)->pluck('photo');
         }
 
         return $data;

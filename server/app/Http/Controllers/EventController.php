@@ -54,7 +54,7 @@ class EventController extends Controller
 
             $event = Event::find($id);
             $event->joinUser($user->id);
-            $event->increment('users_count');
+            $event->increment('members_count');
             User::whereId($user->id)->increment('events');
             return \response()->json([
                 'status' => 'success',
@@ -84,7 +84,7 @@ class EventController extends Controller
 
     public function get($id) {
         $event = Event::find($id);
-        $event['host'] = $event->host()->select('id', 'photo', 'first_name', 'last_name')->get();
+        $event['host'] = $event->host()->select('id', 'photo', 'first_name', 'last_name')->first();
         $event['members_photo'] = $event->users()->take(3)->pluck('photo');
         return \response()->json($event);
     }
