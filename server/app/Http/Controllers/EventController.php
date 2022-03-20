@@ -84,7 +84,7 @@ class EventController extends Controller
 
     public function get($id) {
         $event = Event::find($id);
-        $event['host'] = $event->host()->select('id', 'photo', 'name');
+        $event['host'] = $event->host()->select('id', 'photo', 'first_name', 'last_name')->get();
         $event['members_photo'] = $event->users()->take(3)->pluck('photo');
         return \response()->json($event);
     }
