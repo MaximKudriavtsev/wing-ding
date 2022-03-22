@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -9,9 +10,44 @@ use Illuminate\Support\Facades\Log;
 class UserController extends Controller
 {
     public function getProfile() {
-        $user = auth()->user();
+        try {
+            $user = auth()->user();
 
-        return response()->json($user);
+            return response()->json([
+                'status' => 'success',
+                'user' => $user
+            ]);
+        } catch (\Throwable $ex) {
+            return \response()->json([
+                'status' => 'error',
+                'error' => $ex->getMessage(),
+            ]);
+        }
+    }
+
+    public function get($id) {
+
+        try {
+            $user = User::find($id);
+
+            if ($user) {
+                return response()->json([
+                    'status' => 'success',
+                    'user' => $user
+                ]);
+            } else {
+                return \response()->json([
+                    'status' => 'error',
+                    'error' => 'no such user',
+                ]);
+        }
+
+        } catch (\Throwable $ex) {
+            return \response()->json([
+                'status' => 'error',
+                'error' => $ex->getMessage(),
+            ]);
+        }
     }
 
     public function selfEvents() {
