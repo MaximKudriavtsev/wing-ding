@@ -74,6 +74,31 @@ class UserController extends Controller
         }
     }
 
+    public function getAnotherUserFriends($id) {
+        try {
+
+            $another_user = User::find($id);
+
+            if ($another_user) {
+                return \response()->json([
+                    'status' => 'success',
+                    'friends' => $another_user->getFriendsShortData()
+                ]);
+            } else {
+                return \response()->json([
+                    'status' => 'error',
+                    'error' => 'no such user'
+                ]);
+            }
+
+        } catch (\Throwable $exception) {
+            return \response()->json([
+                'status' => 'error',
+                'error' => $exception->getMessage()
+            ]);
+        }
+    }
+
     public function selfEvents() {
         $user = auth()->user();
 
