@@ -53,6 +53,46 @@ class User extends Authenticatable implements JWTSubject
             ->using(Participation::class);
     }
 
+    public function friends() {
+        return $this->belongsToMany(
+            User::class,
+            'friendship',
+            'user_id',
+            'friend_id')
+            ->withPivot('created_at')
+            ->using(Friendship::class);
+    }
+
+    public function friendsData() {
+        return $this->hasManyThrough(
+            User::class,
+            Friendship::class,
+            'user_id',
+            'id',
+            'id',
+            'friend_id'
+        );
+    }
+
+    public function addFriend($id) {
+
+        $at = now();
+        $friend = User::find($id);
+
+
+        $this->friends()->attach($id, [
+            'created_at' => $at
+        ]);
+
+        $friend->friends()->attach($this->id, [
+            'created_at' => $at
+        ]);
+    }
+
+    public function getFriendsShortData() {
+        return $this->friendsData()->select('id', 'first_name', 'last_name', 'photo')->get();
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();

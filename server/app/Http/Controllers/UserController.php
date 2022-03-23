@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Friendship;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +32,12 @@ class UserController extends Controller
             $user = User::find($id);
 
             if ($user) {
+
+                $authorized = auth()->user();
+                $is_friend = Friendship::where('user_id', $authorized->id)->where('friend_id', $id)->exists();
+
+                $user['is_friend'] = $is_friend;
+
                 return response()->json([
                     'status' => 'success',
                     'user' => $user
@@ -50,6 +57,23 @@ class UserController extends Controller
         }
     }
 
+    public function getFriends() {
+        try {
+            $user = auth()->user();
+
+            return \response()->json([
+                'status' => 'success',
+                'friends' => $user->getFriendsShortData()
+            ]);
+
+        } catch (\Throwable $exception) {
+            return \response()->json([
+               'status' => 'error',
+               'error' => $exception->getMessage()
+            ]);
+        }
+    }
+
     public function selfEvents() {
         $user = auth()->user();
 
@@ -63,5 +87,30 @@ class UserController extends Controller
         }
 
         return $data;
+    }
+
+    public function addFriend($id) {
+        try {
+            $user = auth()->user();
+
+            if (Friendship::where('user_id', $user->id)->where('friend_id', $id)->exists()) {
+                return \response()->json([
+                    'status' => 'error',
+                    'error' => 'already is friend'
+                ]);
+            }
+
+            $user->addFriend($id);
+
+            return \response()->json([
+                'status' => 'success'
+            ]);
+
+        } catch (\Throwable $exception) {
+            Log::error($exception->getMessage());
+            return \response()->json([
+                'status' => 'error'
+            ]);
+        }
     }
 }
