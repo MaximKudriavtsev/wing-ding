@@ -25,6 +25,7 @@ Route::prefix('/user')->group(function () {
     Route::post('/profile/change')->middleware('auth');
     Route::post('/friends/get', [UserController::class, 'getFriends'])->middleware('auth');
     Route::post('/friends/add/{id}', [UserController::class, 'addFriend'])->middleware('auth');
+    Route::post('/friends/delete/{id}', [UserController::class, 'deleteFriend'])->middleware('auth');
     Route::post('/get/{id}/friends', [UserController::class, 'getAnotherUserFriends'])->middleware('auth');
     Route::post('/events', [UserController::class, 'selfEvents'])->middleware('auth');
 });
@@ -32,7 +33,7 @@ Route::prefix('/user')->group(function () {
 Route::prefix('/event')->group(function () {
     Route::post('/create', [EventController::class, 'create'])->middleware('auth');
     Route::post('/join/{id}', [EventController::class, 'join'])->middleware('auth');
-    Route::post('/leave')->middleware('auth');
+    Route::post('/leave/{id}', [EventController::class, 'leave'])->middleware('auth');
     Route::post('/get/{id}', [EventController::class, 'get'])->middleware('auth');
     Route::post('/list/get')->middleware('auth');
     Route::post('/get/{id}/users', [EventController::class, 'getUsers'])->middleware('auth');

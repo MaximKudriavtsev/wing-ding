@@ -87,6 +87,18 @@ class User extends Authenticatable implements JWTSubject
         $friend->friends()->attach($this->id, [
             'created_at' => $at
         ]);
+
+        $this->increment('friends');
+        $friend->increment('friends');
+    }
+
+    public function deleteFriend($id) {
+        $friend = User::find($id);
+
+        $this->friends()->detach($id);
+        $this->decrement('friends');
+        $friend->friends()->detach($this->id);
+        $friend->decrement('friends');
     }
 
     public function getFriendsShortData() {

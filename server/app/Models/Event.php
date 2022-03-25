@@ -29,4 +29,10 @@ class Event extends Model
     public function joinUser($id) {
         $this->users()->attach($id);
     }
+
+    public function leaveUser($id) {
+        $this->users()->detach($id);
+        User::whereId($id)->decrement('events');
+        $this->decrement('members_count');
+    }
 }

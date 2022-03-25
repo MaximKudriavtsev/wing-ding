@@ -132,9 +132,33 @@ class UserController extends Controller
             ]);
 
         } catch (\Throwable $exception) {
-            Log::error($exception->getMessage());
             return \response()->json([
-                'status' => 'error'
+                'status' => 'error',
+                'error' => $exception->getMessage()
+            ]);
+        }
+    }
+
+    public function deleteFriend($id) {
+        try {
+            $user = auth()->user();
+
+            if (!Friendship::where('user_id', $user->id)->where('friend_id', $id)->exists()) {
+                return \response()->json([
+                    'status' => 'error',
+                    'error' => 'users are not friends'
+                ]);
+            }
+
+            $user->deleteFriend($id);
+
+            return \response()->json([
+                'status' => 'success'
+            ]);
+        } catch (\Throwable $exception) {
+            return \response()->json([
+                'status' => 'error',
+                'error' => $exception->getMessage()
             ]);
         }
     }

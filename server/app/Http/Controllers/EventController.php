@@ -28,7 +28,6 @@ class EventController extends Controller
             $event->increment('members_count');
             User::whereId($user->id)->increment('events');
 
-
             return \response()->json([
                 'status' => 'success',
                 'id' => $event->id
@@ -63,6 +62,33 @@ class EventController extends Controller
             return \response()->json([
                 'status' => 'error',
                 'error' => $ex->getMessage(),
+            ]);
+        }
+    }
+
+    public function leave($id) {
+        try {
+            $user = auth()->user();
+            $event = Event::find($id);
+
+            if ($event) {
+                $event->leaveUser($user->id);
+
+
+                return \response()->json([
+                    'status' => 'success'
+                ]);
+            } else {
+                return \response()->json([
+                    'status' => 'error',
+                    'error' => 'no such event'
+                ]);
+            }
+
+        } catch (\Throwable $exception) {
+            return \response()->json([
+                'status' => 'error',
+                'error' => $exception->getMessage()
             ]);
         }
     }
