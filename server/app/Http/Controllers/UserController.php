@@ -99,6 +99,32 @@ class UserController extends Controller
         }
     }
 
+    public function getAnotherUserEvents($id) {
+
+        try {
+            $user = User::find($id);
+
+            if (!$user) {
+                return \response()->json([
+                    'status' => 'error',
+                    'error' => 'no such user'
+                ]);
+            }
+
+            return \response()->json([
+                'status' => 'success',
+                'events' => $user->events()->get()
+            ]);
+
+        } catch (\Throwable $exception) {
+            return \response()->json([
+               'status' => 'error',
+               'error' => $exception->getMessage()
+            ]);
+        }
+
+    }
+
     public function selfEvents() {
         $user = auth()->user();
 

@@ -27,6 +27,7 @@ Route::prefix('/user')->group(function () {
     Route::post('/friends/add/{id}', [UserController::class, 'addFriend'])->middleware('auth');
     Route::post('/friends/delete/{id}', [UserController::class, 'deleteFriend'])->middleware('auth');
     Route::post('/get/{id}/friends', [UserController::class, 'getAnotherUserFriends'])->middleware('auth');
+    Route::post('/get/{id}/events', [UserController::class, 'getAnotherUserEvents'])->middleware('auth');
     Route::post('/events', [UserController::class, 'selfEvents'])->middleware('auth');
 });
 
