@@ -111,9 +111,17 @@ class UserController extends Controller
                 ]);
             }
 
+            $events = $user->events()->get();
+            $data = [];
+
+            foreach ($events as $key => $event) {
+                $data[$key] = $event;
+                $data[$key]['members_photo'] = $event->users()->take(3)->pluck('photo');
+            }
+
             return \response()->json([
                 'status' => 'success',
-                'events' => $user->events()->get()
+                'events' => $data
             ]);
 
         } catch (\Throwable $exception) {
@@ -126,18 +134,30 @@ class UserController extends Controller
     }
 
     public function selfEvents() {
-        $user = auth()->user();
 
-        $events = $user->events()->get();
+        try {
+            $user = auth()->user();
 
-        $data = [];
+            $events = $user->events()->get();
 
-        foreach ($events as $key => $event) {
-            $data[$key] = $event;
-            $data[$key]['members_photo'] = $event->users()->take(3)->pluck('photo');
+            $data = [];
+
+            foreach ($events as $key => $event) {
+                $data[$key] = $event;
+                $data[$key]['members_photo'] = $event->users()->take(3)->pluck('photo');
+            }
+
+            return \response()->json([
+                'status' => 'success',
+                'events' => $data
+            ]);
+        } catch (\Throwable $exception) {
+            return \response()->json([
+                'status' => 'error',
+                'error' => $exception->getMessage()
+            ]);
         }
 
-        return $data;
     }
 
     public function addFriend($id) {
