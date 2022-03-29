@@ -35,6 +35,10 @@ class User extends Authenticatable implements JWTSubject
         'remember_token',
     ];
 
+    protected $dates = [
+        'birth_date'
+    ];
+
     /**
      * The attributes that should be cast.
      *

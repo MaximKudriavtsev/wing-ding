@@ -133,6 +133,46 @@ class UserController extends Controller
 
     }
 
+    public function changeProfile(Request $request) {
+
+        try {
+            $user = auth()->user();
+
+            $req_data = $request->toArray();
+
+            if (isset($req_data['first_name'])) {
+                $user->first_name = $request->get('first_name');
+            }
+
+            if (isset($req_data['last_name'])) {
+                $user->last_name = $request->get('last_name');
+            }
+
+            if (isset($req_data['description'])) {
+                $user->description = $request->get('description');
+            }
+
+            if (isset($req_data['photo'])) {
+                $user->photo = $request->get('photo');
+            }
+
+            if (isset($req_data['birth_date'])) {
+                $user->birth_date = $request->get('birth_date');
+            }
+
+            $user->save();
+
+            return \response()->json([
+                'status' => 'success'
+            ]);
+        } catch (\Throwable $exception) {
+            return \response()->json([
+               'status' => 'error',
+                'error' => $exception->getMessage()
+            ]);
+        }
+    }
+
     public function selfEvents() {
 
         try {
