@@ -1,65 +1,125 @@
-import React, { useEffect, useState } from 'react';
-import { dateRu, findUserById } from '../src/utils';
-import { ScrollView, ImageBackground, StyleSheet } from 'react-native';
+import React, { useEffect, useState, useContext } from 'react';
+import { eventApi } from '../src/api/event/apiProduction';
+import { dateRu, camelizeKeys } from '../src/utils';
+import { ScrollView, ImageBackground, StyleSheet, View } from 'react-native';
+import { Loader } from '../components/ui/Loader';
 import { UserIcon } from '../components/ui/UserIcon';
 import { MemberTab } from '../components/ui/MemberTab';
 import { Row } from '../components/Row';
 import { Text } from '../components/ui/Text';
 import { Button } from '../components/ui/Button';
 import { THEME } from '../components/theme.js';
-import { DATA, USERS, ME } from '../components/data';
 
 export const EventScreen = ({ navigation, route }) => {
   const { eventId } = route.params;
-  const event = DATA.find(e => e.id === eventId);
-  const date = dateRu(event.date);
-  const dateString = date.format('DD.MM') + ' начало в ' + date.format('HH:MM');
 
-  const [members, setMembers] = useState(event.membersIds);
-  const amIMember = members.find(user => user === ME.id) ? true : false;
+  const [isLoading, setIsLoading] = useState(true);
+  const [event, setEvent] = useState(null);
+  const [dateString, setDateString] = useState('');
+  const [amIMember, setMeMember] = useState(false);
 
-  const showMembersHandler = membersId => {
-    const members = membersId.map(findUserById);
-    navigation.navigate('UserListScreen', { users: members, title: 'Участники' });
+  const showMembersHandler = () => {
+    navigation.push('UserListScreen', {
+      eventId,
+      title: 'Участники',
+    });
   };
 
-  const enterEvent = () => {
-    setMembers([...members, ME.id]);
-  };
-
-  const leaveEvent = () => {
-    setMembers(members.filter(index => index !== ME.id));
+  const toggleMember = () => {
+    setIsLoading(true);
+    if (amIMember) {
+      eventApi
+        .leaveEvent(eventId)
+        .then(response => {
+          eventApi //Until I use useQuery
+            .getEvent(eventId)
+            .then(response => {
+              setEvent(camelizeKeys(response.data));
+              setIsLoading(false);
+            })
+            .catch(error => {
+              console.log(error.response.data);
+              setIsLoading(true);
+            });
+        })
+        .catch(error => console.log(error));
+    } else {
+      eventApi
+        .joinEvent(eventId)
+        .then(response => {
+          eventApi //Until I use useQuery
+            .getEvent(eventId)
+            .then(response => {
+              setEvent(camelizeKeys(response.data));
+              setIsLoading(false);
+            })
+            .catch(error => {
+              console.log(error.response.data);
+              setIsLoading(true);
+            });
+        })
+        .catch(error => console.log(error.response));
+    }
   };
 
   useEffect(() => {
-    navigation.setOptions({
-      title: event.title,
-    });
-  }, [navigation]);
+    setIsLoading(true);
+    eventApi
+      .getEvent(eventId)
+      .then(response => {
+        setEvent(camelizeKeys(response.data));
+        setIsLoading(false);
+      })
+      .catch(error => {
+        console.log(error.response.data);
+        setIsLoading(true);
+      });
+  }, [eventId]);
+
+  useEffect(() => {
+    if (event) {
+      navigation.setOptions({
+        title: event.title,
+      });
+      let date = null;
+      date = dateRu(event.date);
+      setDateString(date.format('DD.MM') + ' начало в ' + date.format('HH:MM'));
+      setMeMember(event.isMember);
+    }
+  }, [event]);
 
   return (
-    <ScrollView style={styles.wrapper}>
-      <Row style={{ height: 50 }}>
-        <UserIcon userId={event.hostId} />
-        <Text bold={true} style={{ marginLeft: 10 }}>
-          {USERS.find(user => user.id === event.hostId).name}
-        </Text>
-      </Row>
-      <ImageBackground style={styles.image} source={{ uri: event.img }} />
-      <MemberTab members={members} onOpen={showMembersHandler} />
-      <Text style={styles.place}>{event.place}</Text>
-      <Text style={styles.date}>{dateString}</Text>
-      <Text style={styles.text}>{event.text}</Text>
-      <Text style={styles.text}>{event.text}</Text>
-      <Button
-        fontColor={amIMember ? THEME.BUTTON_COLOR : THEME.BACKGROUND_COLOR}
-        backgroundColor={amIMember ? THEME.BACKGROUND_COLOR : THEME.BUTTON_COLOR}
-        style={styles.button}
-        onPress={amIMember ? leaveEvent : enterEvent}
-      >
-        {amIMember ? 'Отказаться от участия' : 'Принять участие'}
-      </Button>
-    </ScrollView>
+    <View style={styles.wrapper}>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <ScrollView>
+          <Row style={{ height: 50 }}>
+            <UserIcon userPhoto={event.host.photo} />
+            <Text bold={true} style={{ marginLeft: 10 }}>
+              {`${event.host.firstName} ${event.host.lastName}`}
+            </Text>
+          </Row>
+          <ImageBackground style={styles.image} source={{ uri: event.img }} />
+          <MemberTab
+            membersPhoto={event.membersPhoto}
+            membersCount={event.membersCount}
+            onOpen={showMembersHandler}
+          />
+          <Text style={styles.place}>{event.place}</Text>
+          <Text style={styles.date}>{dateString}</Text>
+          <Text style={styles.text}>{event.text}</Text>
+          <Button
+            fontColor={amIMember ? THEME.BUTTON_COLOR : THEME.BACKGROUND_COLOR}
+            backgroundColor={amIMember ? THEME.BACKGROUND_COLOR : THEME.BUTTON_COLOR}
+            style={styles.button}
+            onPress={() => toggleMember()}
+          >
+            {amIMember ? 'Отказаться от участия' : 'Принять участие'}
+          </Button>
+        </ScrollView>
+      )}
+    </View>
   );
 };
 

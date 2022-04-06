@@ -16,7 +16,7 @@ export const List = ({ data, Component, onOpen, onShowMembers }) => {
       <FlatList
         style={{ flex: 1, paddingHorizontal: 15 }}
         data={data}
-        kayExtractor={data => data.id.toString()}
+        keyExtractor={item => item.id.toString()}
         renderItem={({ item }) => (
           <Component item={item} onOpen={onOpen} onShowMembers={onShowMembers} />
         )}

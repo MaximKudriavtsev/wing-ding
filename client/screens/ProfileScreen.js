@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { userApi } from '../src/api/user/apiProduction';
 import { UserContext } from '../src/context/UserContext';
-import { dateRu, findUserById, camelizeKeys } from '../src/utils';
+import { dateRu, camelizeKeys } from '../src/utils';
 import { View, StyleSheet } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { Row } from '../components/Row';
@@ -17,51 +17,87 @@ import { Loader } from '../components/ui/Loader';
 import { SCREEN_STYLE, THEME } from '../components/theme.js';
 
 export const ProfileScreen = ({ navigation, route }) => {
-  const { user } = route.params;
+  const { userId } = route.params;
   const { authorizedUser } = useContext(UserContext);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState({});
+  const [isFriend, setIsFriend] = useState(false);
+  const [isUserLoading, setIsUserLoading] = useState(false);
+  const [isEventLoading, setIsEventLoading] = useState(false);
+  const [friendsCount, setFriendsCount] = useState(0);
   const [events, setEvents] = useState([]);
   const [filter, setFilter] = useState('all');
 
   const openEventHandler = event => {
-    navigation.navigate('EventDetails', { eventId: event.id });
-  };
-
-  const showMembersHandler = membersId => {
-    const members = membersId.map(findUserById);
-    navigation.navigate('UserListScreen', { users: members, title: 'Участники' });
+    navigation.push('EventDetails', { eventId: event.id });
   };
 
   const showFriendsHandler = () => {
-    // const friends = user.friendsId.map(findUserById);
-    navigation.navigate('UserListScreen', { users: [], title: 'Друзья' });
+    navigation.push('UserListScreen', { userId: user.id, title: 'Друзья' });
   };
 
   const showAllEvents = () => {
     setEvents(events);
     setFilter('all');
   };
+
   const showUpcomingEvents = () => {
     setEvents(events.filter(event => dateRu(event.date).isAfter(dateRu())));
     setFilter('upcoming');
   };
 
+  const toggleFriend = () => {
+    setIsUserLoading(true);
+    if (isFriend) {
+      userApi
+        .deleteFromFriends(user.id)
+        .then(response => {
+          setIsFriend(false);
+          setFriendsCount(friendsCount - 1);
+          setIsUserLoading(false);
+        })
+        .catch(error => console.log(error));
+    } else {
+      userApi
+        .addToFriends(user.id)
+        .then(response => {
+          setIsFriend(true);
+          setFriendsCount(friendsCount + 1);
+          setIsUserLoading(false);
+        })
+        .catch(error => console.log(error.response));
+    }
+  };
+
   useEffect(() => {
-    setIsLoading(true);
+    setIsUserLoading(true);
     userApi
-      .getUserEvents()
+      .getUser(userId)
       .then(response => {
-        setEvents(response.data.map(camelizeKeys));
-        setIsLoading(false);
+        setUser(camelizeKeys(response.data.user));
+        setIsUserLoading(false);
+      })
+      .catch(error => console.log(error.response));
+  }, [userId]);
+
+  useEffect(() => {
+    setIsEventLoading(true);
+    if (!user.id) return;
+    setIsFriend(user.isFriend);
+    setFriendsCount(+user.friends);
+    userApi
+      .getUserEvents(userId)
+      .then(response => {
+        setEvents(response.data.events.map(camelizeKeys));
+        setIsEventLoading(false);
       })
       .catch(error => {
-        console.log(error.response);
-        setIsLoading(false);
+        setIsEventLoading(false);
       });
   }, [user.id]);
 
   useEffect(() => {
+    if (!user.id) return;
     let Header;
     if (user.id === authorizedUser.id) {
       Header = (
@@ -79,23 +115,24 @@ export const ProfileScreen = ({ navigation, route }) => {
         </HeaderButtons>
       );
     } else {
-      const isFriend = authorizedUser.friendsId.includes(user.id);
       Header = (
         <HeaderButtons HeaderButtonComponent={HeaderIcon}>
           <Item
             title='Toggle friend'
             iconName={isFriend ? THEME.ICON_CROSS : THEME.ICON_CHECK}
-            onPress={() => console.log('Toggle friend')}
+            onPress={() => toggleFriend()}
           />
         </HeaderButtons>
       );
     }
+
     navigation.setOptions({
       headerRight: () => Header,
       title: `${user.firstName} ${user.lastName}`,
     });
-  }, [navigation, user]);
+  }, [isUserLoading, isFriend]);
 
+  useEffect(() => {}, [friendsCount]);
   return (
     <View
       style={{
@@ -103,22 +140,28 @@ export const ProfileScreen = ({ navigation, route }) => {
         ...styles.wrapper,
       }}
     >
-      <Column style={styles.userBar}>
-        <Row style={{ height: 'auto', marginBottom: 10 }}>
-          <View style={{ width: '20%' }}>
-            <UserIcon userPhoto={user.photo} iconSize={82} />
-          </View>
-          <Row style={styles.buttonsRow}>
-            <Text>{`Событий: ${user.events}`}</Text>
-            <Button
-              backgroundColor={'transparent'}
-              fontColor={THEME.BUTTON_COLOR}
-              onPress={showFriendsHandler}
-            >{`Друзей: ${user.friends}`}</Button>
+      {isUserLoading ? (
+        <View style={styles.userBar}>
+          <Loader />
+        </View>
+      ) : (
+        <Column style={styles.userBar}>
+          <Row style={{ height: 'auto', marginBottom: 10 }}>
+            <View style={{ width: '20%' }}>
+              <UserIcon userPhoto={user.photo} iconSize={82} />
+            </View>
+            <Row style={styles.buttonsRow}>
+              <Text>{`Событий: ${user.events}`}</Text>
+              <Button
+                backgroundColor={'transparent'}
+                fontColor={THEME.BUTTON_COLOR}
+                onPress={showFriendsHandler}
+              >{`Друзей: ${friendsCount}`}</Button>
+            </Row>
           </Row>
-        </Row>
-        <Text>{user.description ? user.description : 'Текст о себе...'}</Text>
-      </Column>
+          <Text>{user.description ? user.description : 'Текст о себе...'}</Text>
+        </Column>
+      )}
       <Row style={styles.filterRow}>
         <ToggleButton
           isActive={filter === 'all'}
@@ -135,15 +178,10 @@ export const ProfileScreen = ({ navigation, route }) => {
           Будущие события
         </ToggleButton>
       </Row>
-      {isLoading ? (
+      {isEventLoading ? (
         <Loader />
       ) : (
-        <List
-          data={events}
-          Component={EventTab}
-          onOpen={openEventHandler}
-          onShowMembers={showMembersHandler}
-        />
+        <List data={events} Component={EventTab} onOpen={openEventHandler} />
       )}
     </View>
   );
@@ -156,7 +194,7 @@ const styles = StyleSheet.create({
     paddingTop: 0,
   },
   userBar: {
-    height: 'auto',
+    height: 130,
     backgroundColor: THEME.DARKER_COLOR,
     paddingHorizontal: 10,
     paddingBottom: 20,

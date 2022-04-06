@@ -22,9 +22,9 @@ export const EventScreenNavigation = () => {
       })}
     >
       <EventStack.Screen name='EventList' component={EventListScreen} />
-      <EventStack.Screen name='EventDetails' component={EventScreen} />
+      <EventStack.Screen name='EventDetails' component={EventScreen} options={{ title: '' }} />
       <EventStack.Screen name='UserListScreen' component={UserListScreen} />
-      <EventStack.Screen name='ProfileScreen' component={ProfileScreen} />
+      <EventStack.Screen name='ProfileScreen' component={ProfileScreen} options={{ title: '' }} />
     </EventStack.Navigator>
   );
 };

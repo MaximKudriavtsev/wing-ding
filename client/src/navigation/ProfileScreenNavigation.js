@@ -28,12 +28,13 @@ export const ProfileScreenNavigation = () => {
         name='ProfileScreen'
         component={ProfileScreen}
         initialParams={{
-          user: authorizedUser,
+          userId: authorizedUser.id,
         }}
+        options={{ title: '' }}
       />
       <ProfileStack.Screen name='UserListScreen' component={UserListScreen} />
       <ProfileStack.Screen name='ProfileEditScreen' component={ProfileEditScreen} />
-      <ProfileStack.Screen name='EventDetails' component={EventScreen} />
+      <ProfileStack.Screen name='EventDetails' component={EventScreen} options={{ title: '' }} />
     </ProfileStack.Navigator>
   );
 };

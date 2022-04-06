@@ -54,10 +54,10 @@ export default function App() {
     } else {
       setAuthorizationInterceptor(userToken);
       userApi
-        .getUser()
-        .then(response => setAuthorizedUser(camelizeKeys(response.data)))
+        .getAuthorizedUser()
+        .then(response => setAuthorizedUser(camelizeKeys(response.data.user)))
         .catch(error => {
-          console.log(error);
+          console.log(error.response);
         });
     }
   }, [userToken]);

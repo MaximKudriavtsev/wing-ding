@@ -9,11 +9,14 @@ import { UserIcon } from '../components/ui/UserIcon';
 import { Button } from '../components/ui/Button';
 import { Text } from '../components/ui/Text';
 import { TextInput } from '../components/ui/TextInput';
+import { dateRu } from '../src/utils';
 import { SCREEN_STYLE, THEME } from '../components/theme.js';
 
 export const ProfileEditScreen = ({ navigation }) => {
   const { showAlertMessage } = useContext(AlertContext);
   const { authorizedUser, setAuthorizedUser } = useContext(UserContext);
+
+  const date = dateRu(authorizedUser.birthDate);
 
   const applyChanges = () => {
     showAlertMessage('Данные изменены', 'INFO');
@@ -51,7 +54,7 @@ export const ProfileEditScreen = ({ navigation }) => {
           <Text style={styles.label}>Фамилия</Text>
           <TextInput>{authorizedUser.lastName}</TextInput>
           <Text style={styles.label}>День рождения</Text>
-          <TextInput>{authorizedUser.birthDate}</TextInput>
+          <TextInput>{date.format('DD.MM.YYYY')}</TextInput>
           <Text style={styles.label}>О себе</Text>
           <TextInput>{authorizedUser.description}</TextInput>
           <Button

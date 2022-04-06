@@ -7,11 +7,11 @@ import { THEME } from './theme';
 
 export const UserTab = ({ item, onOpen }) => {
   return (
-    <TouchableOpacity activeOpacity={0.7} onPress={() => onOpen(item)}>
+    <TouchableOpacity activeOpacity={0.7} onPress={() => onOpen(item.id)}>
       <View style={styles.wrapper}>
         <Row style={styles.row}>
-          <UserIcon userId={item.id} iconSize={46} />
-          <Text style={{ marginLeft: 15 }}>{item.name}</Text>
+          <UserIcon userPhoto={item.photo} iconSize={46} />
+          <Text style={{ marginLeft: 15 }}>{`${item.firstName} ${item.lastName}`}</Text>
         </Row>
       </View>
     </TouchableOpacity>

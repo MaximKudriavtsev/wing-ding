@@ -30,13 +30,12 @@ const userMockApi = {
     });
   },
 
-  registration({ firstName, lastName, email, birthDate }) {
+  registration({ email, password, firstName, lastName }) {
     return delay({
       ...user,
       firstName,
       lastName,
       email,
-      birthDate,
     });
   },
 
