@@ -284,7 +284,18 @@ class UserController extends Controller
             $user = auth()->user();
             $code = $request->get('code');
 
-            if (Cache::get("email_verify_$user->id") === $code) {
+            $true_code = Cache::get("email_verify_$user->id");
+
+            if (!$true_code) {
+
+                return \response()->json([
+                    'status' => 'error',
+                    'error' => 'verification has not started yet'
+                ]);
+
+            }
+
+            if ($true_code === $code) {
 
                 $user->email_verified_at = now();
                 $user->save();
