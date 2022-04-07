@@ -29,6 +29,8 @@ Route::prefix('/user')->group(function () {
     Route::post('/get/{id}/friends', [UserController::class, 'getAnotherUserFriends'])->middleware('auth');
     Route::post('/get/{id}/events', [UserController::class, 'getAnotherUserEvents'])->middleware('auth');
     Route::post('/events', [UserController::class, 'selfEvents'])->middleware('auth');
+    Route::post('/email/verify', [UserController::class, 'emailVerify'])->middleware('auth');
+    Route::post('/email/check', [UserController::class, 'emailCheck'])->middleware('auth');
 });
 
 Route::prefix('/event')->group(function () {

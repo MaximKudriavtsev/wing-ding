@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\EmailVerification;
 use App\Models\Friendship;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -247,5 +250,65 @@ class UserController extends Controller
                 'error' => $exception->getMessage()
             ]);
         }
+    }
+
+    public function emailVerify() {
+
+        try {
+            $user = auth()->user();
+
+            $code = random_int(0, 999999);
+            $code = strval($code);
+            $code = str_repeat('0', 6 - strlen($code)) . $code;
+
+            Cache::put("email_verify_$user->id", $code);
+
+            Mail::to($user)->send(new EmailVerification($code));
+
+            return \response()->json(['status' => 'success']);
+
+        } catch (\Throwable $exception) {
+
+            return \response()->json([
+                'status' => 'error',
+                'error' => $exception->getMessage()
+            ]);
+
+        }
+    }
+
+    public function emailCheck(Request $request) {
+
+        try {
+
+            $user = auth()->user();
+            $code = $request->get('code');
+
+            if (Cache::get("email_verify_$user->id") === $code) {
+
+                $user->email_verified_at = now();
+                $user->save();
+
+                $is_verified = true;
+
+                Cache::pull("email_verify_$user->id");
+            } else {
+                $is_verified = false;
+            }
+
+            return \response()->json([
+                'status' => 'success',
+                'is_verified' => $is_verified
+            ]);
+
+        } catch (\Throwable $exception) {
+
+            return \response()->json([
+                'status' => 'error',
+                'error' => $exception->getMessage()
+            ]);
+
+        }
+
     }
 }
