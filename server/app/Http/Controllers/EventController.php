@@ -114,7 +114,7 @@ class EventController extends Controller
 
         $event = Event::find($id);
         $event['host'] = $event->host()->select('id', 'photo', 'first_name', 'last_name')->first();
-        $event['members_photo'] = $event->users()->take(3)->pluck('photo');
+        $event['members_photos'] = $event->users()->take(3)->pluck('photo');
         $event['is_member'] = $event->users()->whereId($user->id)->exists();
         return \response()->json($event);
     }
