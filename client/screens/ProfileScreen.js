@@ -33,7 +33,7 @@ export const ProfileScreen = ({ navigation, route }) => {
   };
 
   const showFriendsHandler = () => {
-    navigation.push('UserListScreen', { userId: user.id, title: 'Друзья' });
+    navigation.push('FriendListScreen', { userId: user.id, title: 'Друзья' });
   };
 
   const showAllEvents = () => {
@@ -48,25 +48,13 @@ export const ProfileScreen = ({ navigation, route }) => {
 
   const toggleFriend = () => {
     setIsUserLoading(true);
-    if (isFriend) {
-      userApi
-        .deleteFromFriends(user.id)
-        .then(response => {
-          setIsFriend(false);
-          setFriendsCount(friendsCount - 1);
-          setIsUserLoading(false);
-        })
-        .catch(error => console.log(error));
-    } else {
-      userApi
-        .addToFriends(user.id)
-        .then(response => {
-          setIsFriend(true);
-          setFriendsCount(friendsCount + 1);
-          setIsUserLoading(false);
-        })
-        .catch(error => console.log(error.response));
-    }
+    userApi[isFriend ? 'deleteFromFriends' : 'addToFriends'](user.id)
+      .then(response => {
+        setIsFriend(!isFriend);
+        setFriendsCount(isFriend ? friendsCount - 1 : friendsCount + 1);
+        setIsUserLoading(false);
+      })
+      .catch(error => console.error(error));
   };
 
   useEffect(() => {
@@ -77,12 +65,12 @@ export const ProfileScreen = ({ navigation, route }) => {
         setUser(camelizeKeys(response.data.user));
         setIsUserLoading(false);
       })
-      .catch(error => console.log(error.response));
+      .catch(error => console.error(error.response));
   }, [userId]);
 
   useEffect(() => {
-    setIsEventLoading(true);
     if (!user.id) return;
+    setIsEventLoading(true);
     setIsFriend(user.isFriend);
     setFriendsCount(+user.friends);
     userApi
@@ -92,7 +80,8 @@ export const ProfileScreen = ({ navigation, route }) => {
         setIsEventLoading(false);
       })
       .catch(error => {
-        setIsEventLoading(false);
+        console.error(error);
+        setIsEventLoading(true);
       });
   }, [user.id]);
 
@@ -153,8 +142,7 @@ export const ProfileScreen = ({ navigation, route }) => {
             <Row style={styles.buttonsRow}>
               <Text>{`Событий: ${user.events}`}</Text>
               <Button
-                backgroundColor={'transparent'}
-                fontColor={THEME.BUTTON_COLOR}
+                type={'link'}
                 onPress={showFriendsHandler}
               >{`Друзей: ${friendsCount}`}</Button>
             </Row>

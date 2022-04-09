@@ -3,7 +3,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { UserContext } from '../context/UserContext';
 import { ProfileScreen } from '../../screens/ProfileScreen';
 import { ProfileEditScreen } from '../../screens/ProfileEditScreen';
-import { UserListScreen } from '../../screens/UserListScreen';
+import { FriendListScreen } from '../../screens/FriendListScreen';
+import { MemberListScreen } from '../../screens/MemberListScreen';
 import { EventScreen } from '../../screens/EventScreen';
 import { THEME } from '../../components/theme';
 
@@ -32,7 +33,8 @@ export const ProfileScreenNavigation = () => {
         }}
         options={{ title: '' }}
       />
-      <ProfileStack.Screen name='UserListScreen' component={UserListScreen} />
+      <ProfileStack.Screen name='FriendListScreen' component={FriendListScreen} />
+      <ProfileStack.Screen name='MemberListScreen' component={MemberListScreen} />
       <ProfileStack.Screen name='ProfileEditScreen' component={ProfileEditScreen} />
       <ProfileStack.Screen name='EventDetails' component={EventScreen} options={{ title: '' }} />
     </ProfileStack.Navigator>

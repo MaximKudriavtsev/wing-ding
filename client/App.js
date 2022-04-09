@@ -57,7 +57,7 @@ export default function App() {
         .getAuthorizedUser()
         .then(response => setAuthorizedUser(camelizeKeys(response.data.user)))
         .catch(error => {
-          console.log(error.response);
+          console.error(error.response);
         });
     }
   }, [userToken]);
@@ -66,7 +66,7 @@ export default function App() {
     return (
       <AppLoading
         startAsync={LoadFonts}
-        onError={err => console.log(err)}
+        onError={err => console.error(err)}
         onFinish={() => setIsReady(true)}
       />
     );

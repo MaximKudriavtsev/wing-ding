@@ -44,13 +44,10 @@ export const SetPasswordScreen = ({ navigation }) => {
           setConfirmingValidations(validate(confirming, { isFilled: true, isSame: password }));
         }}
       />
-      <Button style={{ marginVertical: 25 }} fontColor={THEME.BACKGROUND_COLOR} onPress={onSet}>
+      <Button style={{ marginVertical: 25 }} onPress={onSet}>
         Установить
       </Button>
-      <Button
-        backgroundColor={'transparent'}
-        onPress={() => navigation.navigate('RestoringPassword')}
-      >
+      <Button type='link' onPress={() => navigation.navigate('RestoringPassword')}>
         Я не получил сообщение
       </Button>
     </View>

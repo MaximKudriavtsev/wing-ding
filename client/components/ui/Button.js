@@ -1,16 +1,28 @@
 import React from 'react';
+import { render } from 'react-dom';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { THEME } from '../theme';
 import { Text } from './Text';
 
-export const Button = ({
-  children,
-  onPress,
-  style,
-  backgroundColor = THEME.BUTTON_COLOR,
-  fontColor = THEME.FONT_COLOR,
-  fontSize = 14,
-}) => {
+export const Button = ({ children, onPress, style, type = 'primary', fontSize = 14 }) => {
+  let backgroundColor;
+  let fontColor;
+
+  switch (type) {
+    case 'primary':
+      backgroundColor = THEME.BUTTON_COLOR;
+      fontColor = THEME.BACKGROUND_COLOR;
+      break;
+    case 'secondary':
+      backgroundColor = THEME.BACKGROUND_COLOR;
+      fontColor = THEME.BUTTON_COLOR;
+      break;
+    case 'link':
+      backgroundColor = 'transparent';
+      fontColor = THEME.BUTTON_COLOR;
+      break;
+  }
+
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={THEME.ACTIVE_OPACITY}>
       <View style={{ ...styles.button, backgroundColor, ...style }}>

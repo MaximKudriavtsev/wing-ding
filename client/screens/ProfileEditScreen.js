@@ -42,7 +42,7 @@ export const ProfileEditScreen = ({ navigation }) => {
         <Column style={{ alignItems: 'center', padding: 15 }}>
           <UserIcon userPhoto={authorizedUser.photo} iconSize={105} />
           <Button
-            backgroundColor={'transparent'}
+            type={'link'}
             onPress={() => {
               console.log('Load photo');
             }}
@@ -57,11 +57,7 @@ export const ProfileEditScreen = ({ navigation }) => {
           <TextInput>{date.format('DD.MM.YYYY')}</TextInput>
           <Text style={styles.label}>О себе</Text>
           <TextInput>{authorizedUser.description}</TextInput>
-          <Button
-            backgroundColor='transparent'
-            fontColor={THEME.DANGER_COLOR}
-            onPress={() => setAuthorizedUser(null)}
-          >
+          <Button type={'link'} onPress={() => setAuthorizedUser(null)}>
             Выйти из аккаунта
           </Button>
         </Column>

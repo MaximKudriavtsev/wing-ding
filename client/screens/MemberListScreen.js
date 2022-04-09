@@ -6,10 +6,10 @@ import { List } from '../components/List';
 import { UserTab } from '../components/UserTab';
 import { Loader } from '../components/ui/Loader';
 import { camelizeKeys } from '../src/utils';
-import { THEME } from './../components/theme';
+import { THEME } from '../components/theme';
 
-export const UserListScreen = ({ route, navigation }) => {
-  const { eventId, userId, title } = route.params;
+export const MemberListScreen = ({ route, navigation }) => {
+  const { eventId, title } = route.params;
 
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
@@ -33,22 +33,9 @@ export const UserListScreen = ({ route, navigation }) => {
           setUsers(response.data.members.map(item => camelizeKeys(item)));
           setIsLoading(false);
         })
-        .catch(error => console.log(error.data));
+        .catch(error => console.error(error.data));
     }
   }, [eventId]);
-
-  useEffect(() => {
-    setIsLoading(true);
-    if (userId) {
-      userApi
-        .getFriendsList(userId)
-        .then(response => {
-          setUsers(response.data.friends.map(item => camelizeKeys(item)));
-          setIsLoading(false);
-        })
-        .catch(error => console.log(error.data));
-    }
-  }, [userId]);
 
   return (
     <View

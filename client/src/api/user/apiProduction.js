@@ -27,7 +27,7 @@ export const userApi = {
     return api.post(`${USER_BASE_URL}/get/${id}/events`);
   },
 
-  getFriendsList: id => {
+  getFriendList: id => {
     return api.post(`${USER_BASE_URL}/get/${id}/friends`);
   },
 

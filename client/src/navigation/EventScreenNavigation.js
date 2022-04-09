@@ -2,7 +2,8 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { EventListScreen } from '../../screens/EventListScreen';
 import { EventScreen } from '../../screens/EventScreen';
-import { UserListScreen } from '../../screens/UserListScreen';
+import { FriendListScreen } from '../../screens/FriendListScreen';
+import { MemberListScreen } from '../../screens/MemberListScreen';
 import { ProfileScreen } from '../../screens/ProfileScreen';
 import { THEME } from '../../components/theme';
 
@@ -23,7 +24,8 @@ export const EventScreenNavigation = () => {
     >
       <EventStack.Screen name='EventList' component={EventListScreen} />
       <EventStack.Screen name='EventDetails' component={EventScreen} options={{ title: '' }} />
-      <EventStack.Screen name='UserListScreen' component={UserListScreen} />
+      <EventStack.Screen name='FriendListScreen' component={FriendListScreen} />
+      <EventStack.Screen name='MemberListScreen' component={MemberListScreen} />
       <EventStack.Screen name='ProfileScreen' component={ProfileScreen} options={{ title: '' }} />
     </EventStack.Navigator>
   );

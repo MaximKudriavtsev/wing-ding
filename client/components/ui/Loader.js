@@ -1,13 +1,11 @@
 import React from 'react';
 import { View, ImageBackground, StyleSheet } from 'react-native';
 
-export const Loader = () => {
-  return (
-    <View style={styles.wrapper}>
-      <ImageBackground style={styles.spinner} source={require('../../assets/loader.gif')} />
-    </View>
-  );
-};
+export const Loader = () => (
+  <View style={styles.wrapper}>
+    <ImageBackground style={styles.spinner} source={require('../../assets/loader.gif')} />
+  </View>
+);
 
 const styles = StyleSheet.create({
   wrapper: {

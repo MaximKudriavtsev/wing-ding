@@ -24,7 +24,7 @@ export const EventTab = ({ item, onOpen, onShowMembers }) => {
         <Row style={styles.membersWrapper}>
           <MemberTab
             reverse={true}
-            membersPhoto={item.membersPhoto}
+            membersPhotos={item.membersPhotos}
             membersCount={item.membersCount}
             onOpen={onShowMembers}
           />

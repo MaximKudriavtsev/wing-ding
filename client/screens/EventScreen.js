@@ -19,7 +19,7 @@ export const EventScreen = ({ navigation, route }) => {
   const [amIMember, setMeMember] = useState(false);
 
   const showMembersHandler = () => {
-    navigation.push('UserListScreen', {
+    navigation.push('MemberListScreen', {
       eventId,
       title: 'Участники',
     });
@@ -27,39 +27,20 @@ export const EventScreen = ({ navigation, route }) => {
 
   const toggleMember = () => {
     setIsLoading(true);
-    if (amIMember) {
-      eventApi
-        .leaveEvent(eventId)
-        .then(response => {
-          eventApi //Until I use useQuery
-            .getEvent(eventId)
-            .then(response => {
-              setEvent(camelizeKeys(response.data));
-              setIsLoading(false);
-            })
-            .catch(error => {
-              console.log(error.response.data);
-              setIsLoading(true);
-            });
-        })
-        .catch(error => console.log(error));
-    } else {
-      eventApi
-        .joinEvent(eventId)
-        .then(response => {
-          eventApi //Until I use useQuery
-            .getEvent(eventId)
-            .then(response => {
-              setEvent(camelizeKeys(response.data));
-              setIsLoading(false);
-            })
-            .catch(error => {
-              console.log(error.response.data);
-              setIsLoading(true);
-            });
-        })
-        .catch(error => console.log(error.response));
-    }
+    eventApi[event.isMember ? 'leaveEvent' : 'joinEvent'](eventId)
+      .then(response => {
+        eventApi //Until I use useQuery
+          .getEvent(eventId)
+          .then(response => {
+            setEvent(camelizeKeys(response.data));
+            setIsLoading(false);
+          })
+          .catch(error => {
+            console.error(error.response.data);
+            setIsLoading(true);
+          });
+      })
+      .catch(error => console.error(error));
   };
 
   useEffect(() => {
@@ -68,25 +49,16 @@ export const EventScreen = ({ navigation, route }) => {
       .getEvent(eventId)
       .then(response => {
         setEvent(camelizeKeys(response.data));
+        navigation.setOptions({
+          title: camelizeKeys(response.data).title,
+        });
         setIsLoading(false);
       })
       .catch(error => {
-        console.log(error.response.data);
+        console.error(error.response.data);
         setIsLoading(true);
       });
   }, [eventId]);
-
-  useEffect(() => {
-    if (event) {
-      navigation.setOptions({
-        title: event.title,
-      });
-      let date = null;
-      date = dateRu(event.date);
-      setDateString(date.format('DD.MM') + ' начало в ' + date.format('HH:MM'));
-      setMeMember(event.isMember);
-    }
-  }, [event]);
 
   return (
     <View style={styles.wrapper}>
@@ -102,20 +74,21 @@ export const EventScreen = ({ navigation, route }) => {
           </Row>
           <ImageBackground style={styles.image} source={{ uri: event.img }} />
           <MemberTab
-            membersPhoto={event.membersPhoto}
+            membersPhotos={event.membersPhotos}
             membersCount={event.membersCount}
             onOpen={showMembersHandler}
           />
           <Text style={styles.place}>{event.place}</Text>
-          <Text style={styles.date}>{dateString}</Text>
+          <Text style={styles.date}>
+            {`${dateRu(event.date).format('DDMM')} начало в ${dateRu(event.date).format('HH:mm')}`}
+          </Text>
           <Text style={styles.text}>{event.text}</Text>
           <Button
-            fontColor={amIMember ? THEME.BUTTON_COLOR : THEME.BACKGROUND_COLOR}
-            backgroundColor={amIMember ? THEME.BACKGROUND_COLOR : THEME.BUTTON_COLOR}
+            type={amIMember ? 'secondary' : 'primary'}
             style={styles.button}
-            onPress={() => toggleMember()}
+            onPress={toggleMember}
           >
-            {amIMember ? 'Отказаться от участия' : 'Принять участие'}
+            {event.isMember ? 'Отказаться от участия' : 'Принять участие'}
           </Button>
         </ScrollView>
       )}

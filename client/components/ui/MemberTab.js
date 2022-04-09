@@ -3,13 +3,13 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { UserIcon } from './UserIcon';
 import { Text } from './Text';
 
-export const MemberTab = ({ membersPhoto, membersCount, reverse, onOpen }) => {
-  const membersIcons = membersPhoto
+export const MemberTab = ({ membersPhotos, membersCount, reverse, onOpen }) => {
+  const membersIcons = membersPhotos
     .slice(0, 3)
-    .map(member => (
+    .map(memberPhoto => (
       <UserIcon
-        key={member}
-        userPhoto={member}
+        key={memberPhoto}
+        userPhoto={memberPhoto}
         style={reverse ? { marginLeft: -10 } : { marginRight: -10 }}
       />
     ));

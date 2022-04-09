@@ -3,6 +3,8 @@ import { View, FlatList } from 'react-native';
 import { Text } from './ui/Text';
 import { SCREEN_STYLE } from './theme';
 
+const idToString = id => id.toString();
+
 export const List = ({ data, Component, onOpen, onShowMembers }) => {
   if (!data.length) {
     return (
@@ -16,7 +18,7 @@ export const List = ({ data, Component, onOpen, onShowMembers }) => {
       <FlatList
         style={{ flex: 1, paddingHorizontal: 15 }}
         data={data}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => idToString(item.id)}
         renderItem={({ item }) => (
           <Component item={item} onOpen={onOpen} onShowMembers={onShowMembers} />
         )}
