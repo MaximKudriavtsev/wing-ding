@@ -3,24 +3,24 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { UserIcon } from './UserIcon';
 import { Text } from './Text';
 
-export const MemberTab = ({ members, reverse, onOpen }) => {
-  const membersIcons = members
+export const MemberTab = ({ membersPhotos, membersCount, reverse, onOpen }) => {
+  const membersIcons = membersPhotos
     .slice(0, 3)
-    .map(member => (
+    .map(memberPhoto => (
       <UserIcon
-        key={member}
-        userId={member}
+        key={memberPhoto}
+        userPhoto={memberPhoto}
         style={reverse ? { marginLeft: -10 } : { marginRight: -10 }}
       />
     ));
 
   return (
-    <TouchableOpacity activeOpacity={0.7} onPress={() => onOpen(members)}>
+    <TouchableOpacity activeOpacity={0.7} onPress={onOpen}>
       <View style={reverse ? styles.reversedWrapper : styles.wrapper}>
         <View style={styles.icons}>{membersIcons}</View>
         <View style={styles.text} key={'members_count'}>
           <Text bold={true} style={styles.counter}>
-            <Text>{members.length}</Text> участника(ов)
+            <Text>{membersCount}</Text> участника(ов)
           </Text>
         </View>
       </View>

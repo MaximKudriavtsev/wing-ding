@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { UserContext } from '../context/UserContext';
 import { ProfileScreen } from '../../screens/ProfileScreen';
 import { ProfileEditScreen } from '../../screens/ProfileEditScreen';
-import { UserListScreen } from '../../screens/UserListScreen';
+import { FriendListScreen } from '../../screens/FriendListScreen';
+import { MemberListScreen } from '../../screens/MemberListScreen';
 import { EventScreen } from '../../screens/EventScreen';
 import { THEME } from '../../components/theme';
-import { ME } from '../../components/data';
 
 const ProfileStack = createNativeStackNavigator();
 
 export const ProfileScreenNavigation = () => {
+  const { authorizedUser } = useContext(UserContext);
+
   return (
     <ProfileStack.Navigator
       screenOptions={() => ({
@@ -26,12 +29,14 @@ export const ProfileScreenNavigation = () => {
         name='ProfileScreen'
         component={ProfileScreen}
         initialParams={{
-          user: ME,
+          userId: authorizedUser.id,
         }}
+        options={{ title: '' }}
       />
-      <ProfileStack.Screen name='UserListScreen' component={UserListScreen} />
+      <ProfileStack.Screen name='FriendListScreen' component={FriendListScreen} />
+      <ProfileStack.Screen name='MemberListScreen' component={MemberListScreen} />
       <ProfileStack.Screen name='ProfileEditScreen' component={ProfileEditScreen} />
-      <ProfileStack.Screen name='EventDetails' component={EventScreen} />
+      <ProfileStack.Screen name='EventDetails' component={EventScreen} options={{ title: '' }} />
     </ProfileStack.Navigator>
   );
 };

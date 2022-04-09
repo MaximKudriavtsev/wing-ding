@@ -89,10 +89,10 @@ export const RegistrationScreen = ({ navigation }) => {
           setLastNameValidations(validate(lastName, { isFilled: true, isName: true }));
         }}
       />
-      <Button style={{ marginVertical: 25 }} fontColor={THEME.BACKGROUND_COLOR} onPress={onSignUp}>
+      <Button style={{ marginVertical: 25 }} onPress={onSignUp}>
         Зарегистрироваться
       </Button>
-      <Button backgroundColor={'transparent'} onPress={() => navigation.navigate('Authentication')}>
+      <Button type={'link'} onPress={() => navigation.navigate('Authentication')}>
         Уже есть аккаунт? Войти
       </Button>
     </View>

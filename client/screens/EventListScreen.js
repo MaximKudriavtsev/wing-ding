@@ -26,7 +26,7 @@ export const EventListScreen = ({ navigation }) => {
 
   const showMembersHandler = membersId => {
     const members = membersId.map(findUserById);
-    navigation.navigate('UserListScreen', { users: members, title: 'Участники' });
+    navigation.navigate('MembersListScreen', { users: members, title: 'Участники' });
   };
 
   const showAllEvents = () => {

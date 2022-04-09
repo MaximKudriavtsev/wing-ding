@@ -30,13 +30,13 @@ export const ResetPasswordScreen = ({ navigation }) => {
           setEmailValidations(validate(email, { isEmail: true, minLength: 5 }));
         }}
       />
-      <Button style={{ marginVertical: 25 }} fontColor={THEME.BACKGROUND_COLOR} onPress={onReset}>
+      <Button style={{ marginVertical: 25 }} onPress={onReset}>
         Восстановить
       </Button>
-      <Button backgroundColor={'transparent'} onPress={() => navigation.navigate('Authentication')}>
+      <Button type={'link'} onPress={() => navigation.navigate('Authentication')}>
         Я помню свой пароль
       </Button>
-      <Button backgroundColor={'transparent'} onPress={() => navigation.navigate('Registration')}>
+      <Button type={'link'} transparent={true} onPress={() => navigation.navigate('Registration')}>
         Создать новый аккаунт
       </Button>
     </View>

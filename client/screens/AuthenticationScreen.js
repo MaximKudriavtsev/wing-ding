@@ -32,7 +32,7 @@ export const AuthenticationScreen = ({ navigation }) => {
         })
         .catch(error => {
           const errorMessage = decodeError(error.response.data.error);
-          console.log(error.response);
+          console.error(error.response);
           showAlertMessage(errorMessage, 'ERROR');
         });
     }
@@ -60,16 +60,13 @@ export const AuthenticationScreen = ({ navigation }) => {
           setPasswordValidations(validate(password, { isFilled: true }));
         }}
       />
-      <Button style={{ marginVertical: 25 }} fontColor={THEME.BACKGROUND_COLOR} onPress={onSignIn}>
+      <Button style={{ marginVertical: 25 }} onPress={onSignIn}>
         Войти
       </Button>
-      <Button
-        backgroundColor={'transparent'}
-        onPress={() => navigation.navigate('RestoringPassword')}
-      >
+      <Button type={'link'} onPress={() => navigation.navigate('RestoringPassword')}>
         Я не помню пароль
       </Button>
-      <Button backgroundColor={'transparent'} onPress={() => navigation.navigate('Registration')}>
+      <Button type={'link'} transparent={true} onPress={() => navigation.navigate('Registration')}>
         Еще не с нами? Зарегистрируйтесь!
       </Button>
     </View>

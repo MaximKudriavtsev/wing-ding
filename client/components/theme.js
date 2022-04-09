@@ -51,6 +51,5 @@ export const SCREEN_STYLE = StyleSheet.create({
     flex: 1,
     alignContent: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 15,
   },
 });

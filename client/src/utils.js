@@ -17,6 +17,13 @@ api.interceptors.response.use(response => {
   return response;
 });
 
+export const setAuthorizationInterceptor = token => {
+  api.interceptors.request.use(config => {
+    config.headers.Authorization = token;
+    return config;
+  });
+};
+
 dayjs.locale('ru');
 
 export const dateRu = dayjs;
@@ -78,5 +85,23 @@ export const decodeError = error => {
   return message;
 };
 
-export const findUserById = id => USERS.find(user => user.id == id);
+export const camelizeString = s => {
+  return s.replace(/([-_][a-z])/gi, $1 => {
+    return $1.toUpperCase().replace('-', '').replace('_', '');
+  });
+};
+export const camelizeKeys = object => {
+  if (Array.isArray(object) || typeof object != 'object' || object === null) {
+    return object;
+  }
 
+  const camelObject = {};
+
+  Object.keys(object).forEach(key => {
+    camelObject[camelizeString(key)] = camelizeKeys(object[key]);
+  });
+
+  return camelObject;
+};
+
+export const findUserById = id => USERS.find(user => user.id == id);

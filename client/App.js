@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import AppLoading from 'expo-app-loading';
 import useFont from './components/hooks/useFont';
@@ -6,14 +6,18 @@ import useFont from './components/hooks/useFont';
 import { AppNavigation } from './src/navigation/AppNavigation';
 import { LoginNavigation } from './src/navigation/LoginNavigation';
 import { TopAlert } from './components/ui/TopAlert';
+import { setAuthorizationInterceptor, camelizeKeys } from './src/utils';
+import { userApi } from './src/api/user/apiProduction';
 import { THEME } from './components/theme';
 
 import { AlertProvider } from './src/context/AlertContext';
 import { TokenProvider } from './src/context/TokenContext';
+import { UserProvider } from './src/context/UserContext';
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);
   const [userToken, setUserToken] = useState('');
+  const [authorizedUser, setAuthorizedUser] = useState(null);
 
   const [isAlertVisible, setAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
@@ -44,17 +48,31 @@ export default function App() {
     await useFont();
   };
 
+  useEffect(() => {
+    if (!userToken) {
+      setAuthorizedUser(null);
+    } else {
+      setAuthorizationInterceptor(userToken);
+      userApi
+        .getAuthorizedUser()
+        .then(response => setAuthorizedUser(camelizeKeys(response.data.user)))
+        .catch(error => {
+          console.error(error.response);
+        });
+    }
+  }, [userToken]);
+
   if (!isReady) {
     return (
       <AppLoading
         startAsync={LoadFonts}
-        onError={err => console.log(err)}
+        onError={err => console.error(err)}
         onFinish={() => setIsReady(true)}
       />
     );
   }
 
-  if (!userToken) {
+  if (!authorizedUser) {
     return (
       <TokenProvider value={{ userToken, setUserToken }}>
         <AlertProvider value={{ showAlertMessage }}>
@@ -64,12 +82,13 @@ export default function App() {
       </TokenProvider>
     );
   }
+
   return (
-    <TokenProvider value={{ userToken, setUserToken }}>
+    <UserProvider value={{ authorizedUser, setAuthorizedUser }}>
       <AlertProvider value={{ showAlertMessage }}>
         <TopAlert message={alertMessage} iconName={alertIcon} isVisible={isAlertVisible} />
         <AppNavigation />
       </AlertProvider>
-    </TokenProvider>
+    </UserProvider>
   );
 }
