@@ -4,9 +4,15 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { THEME } from '../theme';
 import { Text } from './Text';
 
-export const Button = ({ children, onPress, style, type = 'primary', fontSize = 14 }) => {
+export const Button = ({
+  children,
+  onPress,
+  style,
+  type = 'primary',
+  fontColor = THEME.BUTTON_COLOR,
+  fontSize = 14,
+}) => {
   let backgroundColor;
-  let fontColor;
 
   switch (type) {
     case 'primary':
@@ -19,7 +25,7 @@ export const Button = ({ children, onPress, style, type = 'primary', fontSize = 
       break;
     case 'link':
       backgroundColor = 'transparent';
-      fontColor = THEME.BUTTON_COLOR;
+      fontColor;
       break;
   }
 
