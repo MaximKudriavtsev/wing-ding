@@ -30,6 +30,10 @@ export const THEME = {
   ICON_CHECK: 'check',
   ICON_CROSS: 'remove',
   ICON_WARNING: 'warning',
+  ICON_LOCATION: 'map-marker',
+  ICON_CALENDAR: 'calendar',
+  ICON_CLOCK: 'clock-o',
+  ICON_PENCIL: 'pencil',
 };
 
 export const SCREEN_STYLE = StyleSheet.create({

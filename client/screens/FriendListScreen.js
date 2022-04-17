@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { userApi } from '../src/api/user/apiProduction';
-import { eventApi } from '../src/api/event/apiProduction';
 import { View } from 'react-native';
 import { List } from '../components/List';
 import { UserTab } from '../components/UserTab';
