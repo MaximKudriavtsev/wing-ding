@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { View, StyleSheet, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
+import { eventApi } from '../src/api/event/apiProduction';
 import { AlertContext } from '../src/context/AlertContext';
 import { Column } from '../components/Column';
 import { Row } from '../components/Row';
@@ -10,9 +11,10 @@ import { Loader } from '../components/ui/Loader';
 import { dateRu, validate } from '../src/utils';
 import { SCREEN_STYLE, THEME } from '../components/theme.js';
 
-export const CreateEventScreen = () => {
+export const CreateEventScreen = ({ navigation }) => {
   const { showAlertMessage } = useContext(AlertContext);
   const [isLoading, setIsLoading] = useState(false);
+  const [photo, setPhoto] = useState('https://vibirai.ru/image/1245358.w640.jpg');
   const [title, setTitle] = useState('');
   const [timeString, setTimeString] = useState('');
   const [dateString, setDateString] = useState('');
@@ -52,6 +54,27 @@ export const CreateEventScreen = () => {
 
   const onCreateEvent = () => {
     if (!validateForms()) return;
+    const date = dateRu(`${dateString} ${timeString}`, 'DD.MM.YYYY HH:mm');
+    if (dateRu(date).isBefore(dateRu())) {
+      showAlertMessage('Время события уже прошло', 'ERROR');
+      return;
+    }
+    setIsLoading(true);
+    console.log('ok');
+    eventApi
+      .createEvent({ title, date, place, description, photo })
+      .then(({ data, status }) => {
+        if (status === 200) {
+          showAlertMessage('Событие создано', 'INFO');
+          navigation.navigate('ProfileScreen');
+          return;
+        }
+        setIsLoading(false);
+      })
+      .catch(error => {
+        console.error(error);
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -78,7 +101,7 @@ export const CreateEventScreen = () => {
                 <ImageBackground
                   style={styles.image}
                   imageStyle={{ borderRadius: 10 }}
-                  source={{ uri: 'https://vibirai.ru/image/1245358.w640.jpg' }}
+                  source={{ uri: photo }}
                 />
               </View>
             </TouchableOpacity>
