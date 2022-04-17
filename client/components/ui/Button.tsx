@@ -1,29 +1,43 @@
 import React from 'react';
-import { render } from 'react-dom';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { THEME } from '../theme';
 import { Text } from './Text';
 
-export const Button = ({
+enum ButtonType {
+  Primary = 'PRIMARY',
+  Secondary = 'SECONDARY',
+  Link = 'LINK',
+};
+
+type Props = {
+  children: string;
+  onPress: () => void;
+  style: any,
+  type: ButtonType,
+  fontColor: string,
+  fontSize: number,
+};
+
+export const Button: React.FC<Props> = ({
   children,
   onPress,
   style,
-  type = 'primary',
-  fontColor = THEME.FONT_COLOR,
-  fontSize = 14,
+  type,
+  fontColor,
+  fontSize,
 }) => {
   let backgroundColor;
 
   switch (type) {
-    case 'primary':
+    case ButtonType.Primary:
       backgroundColor = THEME.BUTTON_COLOR;
       fontColor = THEME.BACKGROUND_COLOR;
       break;
-    case 'secondary':
+    case ButtonType.Secondary:
       backgroundColor = THEME.BACKGROUND_COLOR;
       fontColor = THEME.BUTTON_COLOR;
       break;
-    case 'link':
+    case ButtonType.Link:
       backgroundColor = 'transparent';
       fontColor;
       break;
@@ -38,6 +52,12 @@ export const Button = ({
       </View>
     </TouchableOpacity>
   );
+};
+
+Button.defaultProps = {
+  type: ButtonType.Primary,
+  fontColor: THEME.FONT_COLOR,
+  fontSize: 14,
 };
 
 const styles = StyleSheet.create({
