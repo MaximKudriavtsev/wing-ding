@@ -1,10 +1,9 @@
 import { USERS } from '../components/data';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import axios from 'axios';
 import { BASE_URL } from './config';
-
-const customParseFormat = require('dayjs/plugin/customParseFormat');
 
 export const api = axios.create({
   baseURL: `${BASE_URL}/api`,

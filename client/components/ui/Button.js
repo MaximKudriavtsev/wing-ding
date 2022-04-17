@@ -9,7 +9,7 @@ export const Button = ({
   onPress,
   style,
   type = 'primary',
-  fontColor = THEME.BUTTON_COLOR,
+  fontColor = THEME.FONT_COLOR,
   fontSize = 14,
 }) => {
   let backgroundColor;

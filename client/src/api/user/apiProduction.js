@@ -42,7 +42,7 @@ export const userApi = {
   changeProfile: ({ firstName, lastName, birthDate, description, photo }) => {
     return api.post(`${USER_BASE_URL}/profile/change`, {
       first_name: firstName,
-      second__name: lastName,
+      last_name: lastName,
       birth_date: birthDate,
       description,
       photo,

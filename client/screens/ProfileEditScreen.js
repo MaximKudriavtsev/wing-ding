@@ -33,7 +33,7 @@ export const ProfileEditScreen = ({ navigation }) => {
       return;
     }
     if (!birthDateValidations.isValid) {
-      showAlertMessage('Дата должна быть в формате DD.MM.YYY', 'ERROR');
+      showAlertMessage('Дата должна быть в формате DD.MM.YYYY', 'ERROR');
       return;
     }
     setIsLoading(true);
@@ -123,12 +123,7 @@ export const ProfileEditScreen = ({ navigation }) => {
               {birthDateString}
             </TextInput>
             <Text style={styles.label}>О себе</Text>
-            <TextInput
-              maxLength={250}
-              onChangeText={description => {
-                setDescription(description);
-              }}
-            >
+            <TextInput maxLength={250} onChangeText={setDescription}>
               {description}
             </TextInput>
             <Button

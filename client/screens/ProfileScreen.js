@@ -143,6 +143,7 @@ export const ProfileScreen = ({ navigation, route }) => {
               <Text>{`Событий: ${user.events}`}</Text>
               <Button
                 type={'link'}
+                fontColor={THEME.BUTTON_COLOR}
                 onPress={showFriendsHandler}
               >{`Друзей: ${friendsCount}`}</Button>
             </Row>
