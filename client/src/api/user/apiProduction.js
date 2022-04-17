@@ -38,4 +38,14 @@ export const userApi = {
   deleteFromFriends: id => {
     return api.post(`${USER_BASE_URL}/friends/delete/${id}`);
   },
+
+  changeProfile: ({ firstName, lastName, birthDate, description, photo }) => {
+    return api.post(`${USER_BASE_URL}/profile/change`, {
+      first_name: firstName,
+      last_name: lastName,
+      birth_date: birthDate,
+      description,
+      photo,
+    });
+  },
 };
