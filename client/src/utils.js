@@ -39,6 +39,7 @@ export const validate = (value, validations) => {
   let isValid = true;
   let isName = true;
   let isDateString = true;
+  let isTimeString = true;
 
   for (const validation in validations) {
     switch (validation) {
@@ -72,6 +73,11 @@ export const validate = (value, validations) => {
         )
           ? (isDateString = true)
           : ((isDateString = false), (isValid = false));
+        break;
+      case 'isTimeString':
+        /^(((0|1)?[0-9])|(2[0-3])):[0-5][0-9]$/.test(value)
+          ? (isTimeString = true)
+          : ((isTimeString = false), (isValid = false));
         break;
     }
   }
