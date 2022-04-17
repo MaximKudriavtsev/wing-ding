@@ -131,7 +131,6 @@ export const CreateEventScreen = ({ navigation }) => {
           </Row>
           <Text style={styles.label}>Место</Text>
           <TextInput
-            style={styles.smallInput}
             iconName={THEME.ICON_LOCATION}
             placeholder={'Место'}
             onChangeText={place => {
