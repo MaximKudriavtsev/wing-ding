@@ -95,6 +95,7 @@ export const ProfileEditScreen = ({ navigation }) => {
             </Button>
             <Text style={styles.label}>Имя</Text>
             <TextInput
+              iconName={THEME.ICON_USER}
               autoCapitalize={'words'}
               onChangeText={firstName => {
                 setFirstName(firstName);
@@ -105,6 +106,7 @@ export const ProfileEditScreen = ({ navigation }) => {
             </TextInput>
             <Text style={styles.label}>Фамилия</Text>
             <TextInput
+              iconName={THEME.ICON_USER}
               autoCapitalize={'words'}
               onChangeText={lastName => {
                 setLastName(lastName);
@@ -115,6 +117,7 @@ export const ProfileEditScreen = ({ navigation }) => {
             </TextInput>
             <Text style={styles.label}>День рождения</Text>
             <TextInput
+              iconName={THEME.ICON_CAKE}
               onChangeText={birthDateString => {
                 setBirthDateString(birthDateString);
                 setBirthDateValidations(validate(birthDateString, { isDateString: true }));
@@ -123,7 +126,7 @@ export const ProfileEditScreen = ({ navigation }) => {
               {birthDateString}
             </TextInput>
             <Text style={styles.label}>О себе</Text>
-            <TextInput maxLength={250} onChangeText={setDescription}>
+            <TextInput maxLength={250} onChangeText={setDescription} iconName={THEME.ICON_PENCIL}>
               {description}
             </TextInput>
             <Button

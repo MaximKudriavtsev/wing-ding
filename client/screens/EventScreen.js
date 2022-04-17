@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { FontAwesome } from '@expo/vector-icons';
 import { eventApi } from '../src/api/event/apiProduction';
 import { dateRu, camelizeKeys } from '../src/utils';
 import { ScrollView, ImageBackground, StyleSheet, View } from 'react-native';
@@ -78,9 +79,16 @@ export const EventScreen = ({ navigation, route }) => {
             membersCount={event.membersCount}
             onOpen={showMembersHandler}
           />
-          <Text style={styles.place}>{event.place}</Text>
+          <Text style={styles.place}>
+            <FontAwesome name={THEME.ICON_LOCATION} size={18} />
+            {`  ${event.place}`}
+          </Text>
+
           <Text style={styles.date}>
-            {`${dateRu(event.date).format('DDMM')} начало в ${dateRu(event.date).format('HH:mm')}`}
+            <FontAwesome name={THEME.ICON_CLOCK} size={16} />
+            {`  ${dateRu(event.date).format('DD.MM')} начало в ${dateRu(event.date).format(
+              'HH:mm',
+            )}`}
           </Text>
           <Text style={styles.text}>{event.text}</Text>
           <Button

@@ -34,6 +34,7 @@ export const THEME = {
   ICON_CALENDAR: 'calendar',
   ICON_CLOCK: 'clock-o',
   ICON_PENCIL: 'pencil',
+  ICON_CAKE: 'birthday-cake',
 };
 
 export const SCREEN_STYLE = StyleSheet.create({
