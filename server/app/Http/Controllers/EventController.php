@@ -23,8 +23,8 @@ class EventController extends Controller
             $event->host_id = $user->id;
             $event->date = $req['date'];
 
-            if (isset($req['photo'])) {
-                $event->photo = $req['photo'];
+            if (isset($req['img'])) {
+                $event->photo = $req['img'];
             }
 
             if (isset($req['text'])) {
