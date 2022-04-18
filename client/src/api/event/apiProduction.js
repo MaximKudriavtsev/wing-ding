@@ -2,13 +2,13 @@ import { api } from './../../utils';
 const EVENT_BASE_URL = '/event';
 
 export const eventApi = {
-  createEvent: ({ title, date, place, description, photo }) => {
+  createEvent: ({ title, date, place, description, img }) => {
     return api.post(`${EVENT_BASE_URL}/create`, {
       title,
       date,
       place,
       text: description,
-      photo,
+      img,
     });
   },
 

@@ -7,7 +7,7 @@ export const UserIcon = ({ userPhoto, style, iconSize = 34 }) => {
     <ImageBackground
       style={{ ...styles.icon, height: iconSize, width: iconSize, ...style }}
       imageStyle={styles.iconImage}
-      source={{ uri: userPhoto }}
+      source={userPhoto != null ? { uri: userPhoto } : THEME.USER_PHOTO}
     />
   );
 };

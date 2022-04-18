@@ -42,7 +42,7 @@ export const ProfileEditScreen = ({ navigation }) => {
       .changeProfile({
         firstName,
         lastName,
-        birthDate,
+        birthDate: birthDate.toJSON(),
         description,
         photo: authorizedUser.photo,
       })

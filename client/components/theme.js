@@ -18,6 +18,9 @@ export const THEME = {
   ACTIVE_OPACITY: 0.7,
   //Input
   PLACEHOLDER_COLOR: '#666',
+  //Default pictures
+  USER_PHOTO: require('../assets/user.jpg'),
+  EVENT_IMAGE: require('../assets/event.jpg'),
   //Icons
   ICON_USER: 'user-o',
   ICON_ENVELOPE: 'envelope-o',

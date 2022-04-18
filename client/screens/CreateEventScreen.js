@@ -14,7 +14,7 @@ import { SCREEN_STYLE, THEME } from '../components/theme.js';
 export const CreateEventScreen = ({ navigation }) => {
   const { showAlertMessage } = useContext(AlertContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [photo, setPhoto] = useState('https://vibirai.ru/image/1245358.w640.jpg');
+  const [img, setImg] = useState(null);
   const [title, setTitle] = useState('');
   const [timeString, setTimeString] = useState('');
   const [dateString, setDateString] = useState('');
@@ -60,9 +60,8 @@ export const CreateEventScreen = ({ navigation }) => {
       return;
     }
     setIsLoading(true);
-    console.log('ok');
     eventApi
-      .createEvent({ title, date, place, description, photo })
+      .createEvent({ title, date: date.toJSON(), place, description, img })
       .then(({ data, status }) => {
         if (status === 200) {
           showAlertMessage('Событие создано', 'INFO');
@@ -101,7 +100,7 @@ export const CreateEventScreen = ({ navigation }) => {
                 <ImageBackground
                   style={styles.image}
                   imageStyle={{ borderRadius: 10 }}
-                  source={{ uri: photo }}
+                  source={{ uri: img }}
                 />
               </View>
             </TouchableOpacity>

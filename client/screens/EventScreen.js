@@ -16,8 +16,6 @@ export const EventScreen = ({ navigation, route }) => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [event, setEvent] = useState(null);
-  const [dateString, setDateString] = useState('');
-  const [amIMember, setMeMember] = useState(false);
 
   const showMembersHandler = () => {
     navigation.push('MemberListScreen', {
@@ -73,7 +71,10 @@ export const EventScreen = ({ navigation, route }) => {
               {`${event.host.firstName} ${event.host.lastName}`}
             </Text>
           </Row>
-          <ImageBackground style={styles.image} source={{ uri: event.img }} />
+          <ImageBackground
+            style={styles.image}
+            source={event.img != null ? { uri: event.img } : THEME.EVENT_IMAGE}
+          />
           <MemberTab
             membersPhotos={event.membersPhotos}
             membersCount={event.membersCount}
@@ -92,7 +93,7 @@ export const EventScreen = ({ navigation, route }) => {
           </Text>
           <Text style={styles.text}>{event.text}</Text>
           <Button
-            type={amIMember ? 'secondary' : 'primary'}
+            type={event.isMember ? 'secondary' : 'primary'}
             style={styles.button}
             onPress={toggleMember}
           >

@@ -20,7 +20,10 @@ export const EventTab = ({ item, onOpen, onShowMembers }) => {
             <Text style={styles.place}>{item.place}</Text>
           </Column>
         </Row>
-        <ImageBackground style={styles.image} source={{ uri: item.img }} />
+        <ImageBackground
+          style={styles.image}
+          source={item.img != null ? { uri: item.img } : THEME.EVENT_IMAGE}
+        />
         <Row style={styles.membersWrapper}>
           <MemberTab
             reverse={true}
