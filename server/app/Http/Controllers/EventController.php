@@ -22,6 +22,15 @@ class EventController extends Controller
             $event->place = $req['place'];
             $event->host_id = $user->id;
             $event->date = $req['date'];
+
+            if (isset($req['photo'])) {
+                $event->photo = $req['photo'];
+            }
+
+            if (isset($req['text'])) {
+                $event->text = $req['text'];
+            }
+
             $event->save();
 
             $event->joinUser($user->id);
