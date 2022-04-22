@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import { eventApi } from '../src/api/event/apiProduction';
 import { dateRu, camelizeKeys } from '../src/utils';
-import { ScrollView, ImageBackground, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { Image } from '../components/ui/Image';
 import { Loader } from '../components/ui/Loader';
 import { UserIcon } from '../components/ui/UserIcon';
 import { MemberTab } from '../components/ui/MemberTab';
@@ -71,10 +72,7 @@ export const EventScreen = ({ navigation, route }) => {
               {`${event.host.firstName} ${event.host.lastName}`}
             </Text>
           </Row>
-          <ImageBackground
-            style={styles.image}
-            source={event.img != null ? { uri: event.img } : THEME.EVENT_IMAGE}
-          />
+          <Image style={styles.image} source={event.img} defaultImage={THEME.EVENT_IMAGE} />
           <MemberTab
             membersPhotos={event.membersPhotos}
             membersCount={event.membersCount}

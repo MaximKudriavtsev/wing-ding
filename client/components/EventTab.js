@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image } from './ui/Image';
 import { Row } from './Row';
 import { Column } from './Column';
 import { DateTab } from './ui/DateTab';
@@ -20,10 +21,7 @@ export const EventTab = ({ item, onOpen, onShowMembers }) => {
             <Text style={styles.place}>{item.place}</Text>
           </Column>
         </Row>
-        <ImageBackground
-          style={styles.image}
-          source={item.img != null ? { uri: item.img } : THEME.EVENT_IMAGE}
-        />
+        <Image style={styles.image} source={item.img} defaultImage={THEME.EVENT_IMAGE} />
         <Row style={styles.membersWrapper}>
           <MemberTab
             reverse={true}

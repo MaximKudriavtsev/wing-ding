@@ -1,5 +1,5 @@
-import React, { useEffect, useContext, useState } from 'react';
-import { View, StyleSheet, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { eventApi } from '../src/api/event/apiProduction';
 import { AlertContext } from '../src/context/AlertContext';
 import { Column } from '../components/Column';
@@ -8,6 +8,7 @@ import { Button } from '../components/ui/Button';
 import { Text } from '../components/ui/Text';
 import { TextInput } from '../components/ui/TextInput';
 import { Loader } from '../components/ui/Loader';
+import { Image } from '../components/ui/Image';
 import { dateRu, validate } from '../src/utils';
 import { SCREEN_STYLE, THEME } from '../components/theme.js';
 
@@ -27,6 +28,7 @@ export const CreateEventScreen = ({ navigation }) => {
   const [descriptionValidations, setDescriptionValidations] = useState({
     isValid: false,
   });
+  let date;
 
   const validateForms = () => {
     if (!titleValidations.isValid) {
@@ -49,16 +51,16 @@ export const CreateEventScreen = ({ navigation }) => {
       showAlertMessage('Добавьте описание события', 'ERROR');
       return false;
     }
+    date = dateRu(`${dateString} ${timeString}`, 'DD.MM.YYYY HH:mm');
+    if (dateRu(date).isBefore(dateRu())) {
+      showAlertMessage('Время события уже прошло', 'ERROR');
+      return false;
+    }
     return true;
   };
 
   const onCreateEvent = () => {
     if (!validateForms()) return;
-    const date = dateRu(`${dateString} ${timeString}`, 'DD.MM.YYYY HH:mm');
-    if (dateRu(date).isBefore(dateRu())) {
-      showAlertMessage('Время события уже прошло', 'ERROR');
-      return;
-    }
     setIsLoading(true);
     eventApi
       .createEvent({ title, date: date.toJSON(), place, description, img })
@@ -92,23 +94,23 @@ export const CreateEventScreen = ({ navigation }) => {
           />
           <Row style={styles.row}>
             <TouchableOpacity
-              style={styles.coverWrapper}
+              style={styles.buttonWrapper}
               activeOpacity={0.7}
               onPress={() => console.log('Load photo')}
             >
               <View style={styles.coverWrapper}>
-                <ImageBackground
+                <Image
                   style={styles.image}
                   imageStyle={{ borderRadius: 10 }}
-                  source={{ uri: img }}
+                  source={img}
+                  defaultImage={THEME.EVENT_IMAGE}
                 />
               </View>
             </TouchableOpacity>
 
-            <Column>
+            <Column style={{ width: '50%' }}>
               <Text style={styles.label}>Дата</Text>
               <TextInput
-                style={styles.smallInput}
                 iconName={THEME.ICON_CALENDAR}
                 placeholder={'Дата'}
                 onChangeText={dateString => {
@@ -118,7 +120,6 @@ export const CreateEventScreen = ({ navigation }) => {
               />
               <Text style={styles.label}>Время:</Text>
               <TextInput
-                style={styles.smallInput}
                 iconName={THEME.ICON_CLOCK}
                 placeholder={'Время'}
                 onChangeText={timeString => {
@@ -160,14 +161,23 @@ export const CreateEventScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   row: {
-    width: '50%',
+    width: '100%',
     height: 170,
     marginBottom: 10,
   },
 
+  buttonWrapper: {
+    display: 'flex',
+    width: '50%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingRight: 10,
+  },
+
   coverWrapper: {
     display: 'flex',
-    width: '110%',
+    width: '100%',
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
@@ -178,10 +188,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 170,
     borderRadius: 30,
-  },
-
-  smallInput: {
-    width: '90%',
   },
 
   label: {
