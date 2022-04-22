@@ -4,17 +4,20 @@ import { FontAwesome } from '@expo/vector-icons';
 import { THEME } from '../theme';
 
 export const TextInput = ({
+  style,
   iconName,
   iconColor = THEME.PLACEHOLDER_COLOR,
   iconSize = 20,
   placeholder,
   onChangeText,
   autoCapitalize = 'none',
+  numberOfLines = 1,
   secureTextEntry = false,
+  multiline = false,
   children,
 }) => {
   return (
-    <View style={styles.inputSection}>
+    <View style={{ ...styles.inputSection, ...style }}>
       <FontAwesome style={styles.inputIcon} name={iconName} size={iconSize} color={iconColor} />
       <DefaultTextInput
         style={styles.input}
@@ -24,6 +27,8 @@ export const TextInput = ({
         autoCapitalize={autoCapitalize}
         secureTextEntry={secureTextEntry}
         onChangeText={onChangeText}
+        multiline={multiline}
+        numberOfLines={numberOfLines}
       />
     </View>
   );

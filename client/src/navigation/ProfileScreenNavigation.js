@@ -5,6 +5,7 @@ import { ProfileScreen } from '../../screens/ProfileScreen';
 import { ProfileEditScreen } from '../../screens/ProfileEditScreen';
 import { FriendListScreen } from '../../screens/FriendListScreen';
 import { MemberListScreen } from '../../screens/MemberListScreen';
+import { CreateEventScreen } from '../../screens/CreateEventScreen';
 import { EventScreen } from '../../screens/EventScreen';
 import { THEME } from '../../components/theme';
 
@@ -37,6 +38,11 @@ export const ProfileScreenNavigation = () => {
       <ProfileStack.Screen name='MemberListScreen' component={MemberListScreen} />
       <ProfileStack.Screen name='ProfileEditScreen' component={ProfileEditScreen} />
       <ProfileStack.Screen name='EventDetails' component={EventScreen} options={{ title: '' }} />
+      <ProfileStack.Screen
+        name='CreateEventScreen'
+        component={CreateEventScreen}
+        options={{ title: 'Создать событие' }}
+      />
     </ProfileStack.Navigator>
   );
 };

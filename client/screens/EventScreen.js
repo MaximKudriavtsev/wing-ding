@@ -1,7 +1,9 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
+import { FontAwesome } from '@expo/vector-icons';
 import { eventApi } from '../src/api/event/apiProduction';
 import { dateRu, camelizeKeys } from '../src/utils';
-import { ScrollView, ImageBackground, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { Image } from '../components/ui/Image';
 import { Loader } from '../components/ui/Loader';
 import { UserIcon } from '../components/ui/UserIcon';
 import { MemberTab } from '../components/ui/MemberTab';
@@ -15,8 +17,6 @@ export const EventScreen = ({ navigation, route }) => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [event, setEvent] = useState(null);
-  const [dateString, setDateString] = useState('');
-  const [amIMember, setMeMember] = useState(false);
 
   const showMembersHandler = () => {
     navigation.push('MemberListScreen', {
@@ -72,19 +72,26 @@ export const EventScreen = ({ navigation, route }) => {
               {`${event.host.firstName} ${event.host.lastName}`}
             </Text>
           </Row>
-          <ImageBackground style={styles.image} source={{ uri: event.img }} />
+          <Image style={styles.image} source={event.img} defaultImage={THEME.EVENT_IMAGE} />
           <MemberTab
             membersPhotos={event.membersPhotos}
             membersCount={event.membersCount}
             onOpen={showMembersHandler}
           />
-          <Text style={styles.place}>{event.place}</Text>
+          <Text style={styles.place}>
+            <FontAwesome name={THEME.ICON_LOCATION} size={18} />
+            {`  ${event.place}`}
+          </Text>
+
           <Text style={styles.date}>
-            {`${dateRu(event.date).format('DDMM')} начало в ${dateRu(event.date).format('HH:mm')}`}
+            <FontAwesome name={THEME.ICON_CLOCK} size={16} />
+            {`  ${dateRu(event.date).format('DD.MM')} начало в ${dateRu(event.date).format(
+              'HH:mm',
+            )}`}
           </Text>
           <Text style={styles.text}>{event.text}</Text>
           <Button
-            type={amIMember ? 'secondary' : 'primary'}
+            type={event.isMember ? 'secondary' : 'primary'}
             style={styles.button}
             onPress={toggleMember}
           >

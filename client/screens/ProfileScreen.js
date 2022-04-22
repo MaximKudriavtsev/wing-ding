@@ -99,7 +99,7 @@ export const ProfileScreen = ({ navigation, route }) => {
           <Item
             title='Create Event'
             iconName={THEME.ICON_APPEND}
-            onPress={() => console.log('Create Event')}
+            onPress={() => navigation.navigate('CreateEventScreen')}
           />
         </HeaderButtons>
       );

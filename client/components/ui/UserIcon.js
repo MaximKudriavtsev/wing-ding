@@ -1,13 +1,15 @@
 import React from 'react';
-import { StyleSheet, ImageBackground } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Image } from './Image';
 import { THEME } from '../theme';
 
 export const UserIcon = ({ userPhoto, style, iconSize = 34 }) => {
   return (
-    <ImageBackground
+    <Image
       style={{ ...styles.icon, height: iconSize, width: iconSize, ...style }}
       imageStyle={styles.iconImage}
-      source={{ uri: userPhoto }}
+      source={userPhoto}
+      defaultImage={THEME.USER_PHOTO}
     />
   );
 };
