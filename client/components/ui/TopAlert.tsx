@@ -4,12 +4,36 @@ import { THEME } from '../theme';
 import { Text } from './Text';
 import { FontAwesome } from '@expo/vector-icons';
 
-export const TopAlert = ({ iconName, message, isVisible }) => {
+export enum AlertType {
+  Error = 'ERROR',
+  Warning = 'WARNING',
+  Info = 'INFO',
+};
+
+type Props = {
+  type: AlertType,
+  message: string;
+  isVisible: boolean;
+};
+
+export const TopAlert: React.FC<Props> = ({ type, message, isVisible }) => {
+  let icon = '';
+    switch (type) {
+      case AlertType.Error:
+        icon = THEME.ICON_CROSS;
+        break;
+      case AlertType.Warning:
+        icon = THEME.ICON_WARNING;
+        break;
+      default:
+        icon = THEME.ICON_CHECK;
+  }
+
   return (
     <View style={styles.wrapper}>
       <Modal animationType='fade' transparent={true} visible={isVisible}>
         <View style={styles.modal}>
-          <FontAwesome name={iconName} color={'#fff'} size={24} style={{ width: '15%' }} />
+          <FontAwesome name={icon} color={'#fff'} size={24} style={{ width: '15%' }} />
           <Text style={{ width: '85%', textAlign: 'left' }}>{message}</Text>
         </View>
       </Modal>

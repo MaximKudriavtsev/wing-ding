@@ -2,7 +2,14 @@ import React from 'react';
 import { Text as DefaultText, StyleSheet } from 'react-native';
 import { THEME } from '../theme';
 
-export const Text = ({ children, style, bold = false, numberOfLines }) => {
+type Props = {
+  children: string;
+  style: object;
+  bold?: boolean;
+  numberOfLines?: number;
+};
+
+export const Text: React.FC<Props> = ({ children, style, bold, numberOfLines }) => {
   const fontWeight = bold ? styles.bold : styles.regular;
   return (
     <DefaultText
@@ -13,6 +20,11 @@ export const Text = ({ children, style, bold = false, numberOfLines }) => {
     </DefaultText>
   );
 };
+
+Text.defaultProps = {
+  bold: false,
+  numberOfLines: 1,
+}
 
 const styles = StyleSheet.create({
   default: {
