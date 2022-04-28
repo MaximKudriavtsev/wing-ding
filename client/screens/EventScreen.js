@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import { eventApi } from '../src/api/event/apiProduction';
-import { dateRu, camelizeKeys } from '../src/utils';
+import { dateRu } from '../src/utils';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Image } from '../components/ui/Image';
 import { Loader } from '../components/ui/Loader';
@@ -32,7 +32,7 @@ export const EventScreen = ({ navigation, route }) => {
         eventApi //Until I use useQuery
           .getEvent(eventId)
           .then(response => {
-            setEvent(camelizeKeys(response.data));
+            setEvent(response.data);
             setIsLoading(false);
           })
           .catch(error => {
@@ -48,9 +48,9 @@ export const EventScreen = ({ navigation, route }) => {
     eventApi
       .getEvent(eventId)
       .then(response => {
-        setEvent(camelizeKeys(response.data));
+        setEvent(response.data);
         navigation.setOptions({
-          title: camelizeKeys(response.data).title,
+          title: response.data.title,
         });
         setIsLoading(false);
       })

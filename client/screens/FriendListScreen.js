@@ -4,7 +4,6 @@ import { View } from 'react-native';
 import { List } from '../components/List';
 import { UserTab } from '../components/UserTab';
 import { Loader } from '../components/ui/Loader';
-import { camelizeKeys } from '../src/utils';
 import { THEME } from '../components/theme';
 
 export const FriendListScreen = ({ route, navigation }) => {
@@ -29,7 +28,7 @@ export const FriendListScreen = ({ route, navigation }) => {
     userApi
       .getFriendList(userId)
       .then(response => {
-        setUsers(response.data.friends.map(item => camelizeKeys(item)));
+        setUsers(response.data.friends);
         setIsLoading(false);
       })
       .catch(error => console.error(error.data));

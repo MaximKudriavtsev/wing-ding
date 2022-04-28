@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { userApi } from '../src/api/user/apiProduction';
 import { UserContext } from '../src/context/UserContext';
-import { dateRu, camelizeKeys } from '../src/utils';
+import { dateRu } from '../src/utils';
 import { View, StyleSheet } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { Row } from '../components/Row';
@@ -62,7 +62,7 @@ export const ProfileScreen = ({ navigation, route }) => {
     userApi
       .getUser(userId)
       .then(response => {
-        setUser(camelizeKeys(response.data.user));
+        setUser(response.data.user);
         setIsUserLoading(false);
       })
       .catch(error => console.error(error.response));
@@ -76,7 +76,7 @@ export const ProfileScreen = ({ navigation, route }) => {
     userApi
       .getUserEvents(userId)
       .then(response => {
-        setEvents(response.data.events.map(camelizeKeys));
+        setEvents(response.data.events);
         setIsEventLoading(false);
       })
       .catch(error => {

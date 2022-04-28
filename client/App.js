@@ -6,7 +6,7 @@ import useFont from './components/hooks/useFont';
 import { AppNavigation } from './src/navigation/AppNavigation';
 import { LoginNavigation } from './src/navigation/LoginNavigation';
 import { TopAlert } from './components/ui/TopAlert';
-import { setAuthorizationInterceptor, camelizeKeys } from './src/utils';
+import { setAuthorizationInterceptor } from './src/utils';
 import { userApi } from './src/api/user/apiProduction';
 import { THEME } from './components/theme';
 
@@ -55,7 +55,7 @@ export default function App() {
       setAuthorizationInterceptor(userToken);
       userApi
         .getAuthorizedUser()
-        .then(response => setAuthorizedUser(camelizeKeys(response.data.user)))
+        .then(response => setAuthorizedUser(response.data.user))
         .catch(error => {
           console.error(error.response);
         });
