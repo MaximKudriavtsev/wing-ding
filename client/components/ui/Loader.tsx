@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, ImageBackground, StyleSheet } from 'react-native';
 
-export const Loader = () => (
+export const Loader: React.FC = () => (
   <View style={styles.wrapper}>
     <ImageBackground style={styles.spinner} source={require('../../assets/loader.gif')} />
   </View>

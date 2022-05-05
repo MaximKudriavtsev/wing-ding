@@ -4,13 +4,17 @@ import { View, StyleSheet } from 'react-native';
 import { Text } from './Text';
 import { THEME } from '../theme';
 
-export const DateTab = ({ date }) => {
+type Props = {
+  date: string;
+};
+
+export const DateTab: React.FC<Props> = ({ date }) => {
   const shortMonth = dateRu(date).format('MMM').slice(0, -1).toUpperCase();
 
   return (
     <View style={styles.wrapper}>
       <Text bold={true} style={styles.day}>
-        {dateRu(date).date()}
+        {dateRu(date).date().toString()}
       </Text>
       <Text bold={true} style={styles.month}>
         {shortMonth}

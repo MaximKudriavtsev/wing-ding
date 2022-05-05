@@ -1,14 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import AppLoading from 'expo-app-loading';
 import useFont from './components/hooks/useFont';
 
 import { AppNavigation } from './src/navigation/AppNavigation';
 import { LoginNavigation } from './src/navigation/LoginNavigation';
-import { TopAlert } from './components/ui/TopAlert';
+import { TopAlert, AlertType } from './components/ui/TopAlert';
 import { setAuthorizationInterceptor } from './src/utils';
 import { userApi } from './src/api/user/apiProduction';
-import { THEME } from './components/theme';
 
 import { AlertProvider } from './src/context/AlertContext';
 import { TokenProvider } from './src/context/TokenContext';
@@ -21,23 +20,11 @@ export default function App() {
 
   const [isAlertVisible, setAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
-  const [alertIcon, setAlertIcon] = useState('');
+  const [alertType, setAlertType] = useState<AlertType>(AlertType.Info);
 
-  const showAlertMessage = (text, type) => {
-    let icon = '';
-    switch (type) {
-      case 'ERROR':
-        icon = THEME.ICON_CROSS;
-        break;
-      case 'WARNING':
-        icon = THEME.ICON_WARNING;
-        break;
-      case 'INFO':
-        icon = THEME.ICON_CHECK;
-        break;
-    }
+  const showAlertMessage = (text: string, type: AlertType) => {
     setAlertMessage(text);
-    setAlertIcon(icon);
+    setAlertType(type);
     setAlertVisible(true);
     setTimeout(() => {
       setAlertVisible(false);
@@ -76,7 +63,7 @@ export default function App() {
     return (
       <TokenProvider value={{ userToken, setUserToken }}>
         <AlertProvider value={{ showAlertMessage }}>
-          <TopAlert message={alertMessage} iconName={alertIcon} isVisible={isAlertVisible} />
+          <TopAlert message={alertMessage} type={alertType} isVisible={isAlertVisible} />
           <LoginNavigation />
         </AlertProvider>
       </TokenProvider>
@@ -86,7 +73,7 @@ export default function App() {
   return (
     <UserProvider value={{ authorizedUser, setAuthorizedUser }}>
       <AlertProvider value={{ showAlertMessage }}>
-        <TopAlert message={alertMessage} iconName={alertIcon} isVisible={isAlertVisible} />
+        <TopAlert message={alertMessage} type={alertType} isVisible={isAlertVisible} />
         <AppNavigation />
       </AlertProvider>
     </UserProvider>
