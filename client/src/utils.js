@@ -5,6 +5,30 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import axios from 'axios';
 import { BASE_URL } from './config';
 
+const camelizeString = s => {
+  return s.replace(/([-_][a-z])/gi, $1 => {
+    return $1.toUpperCase().replace('-', '').replace('_', '');
+  });
+};
+
+const camelizeKeys = object => {
+  if (typeof object === 'object' && !Array.isArray(object) && object != null) {
+    const camelObject = {};
+
+    Object.keys(object).forEach(key => {
+      camelObject[camelizeString(key)] = camelizeKeys(object[key]);
+    });
+
+    return camelObject;
+  }
+
+  if (Array.isArray(object)) {
+    return object.map(i => camelizeKeys(i));
+  }
+
+  return object;
+};
+
 export const api = axios.create({
   baseURL: `${BASE_URL}/api`,
 });
@@ -15,7 +39,8 @@ api.interceptors.response.use(response => {
     error.response = response;
     throw error;
   }
-  return response;
+
+  return camelizeKeys(response);
 });
 
 export const setAuthorizationInterceptor = token => {
@@ -91,6 +116,7 @@ export const validate = (value, validations) => {
     isName,
     isValid,
     isDateString,
+    isTimeString,
   };
 };
 
@@ -109,25 +135,6 @@ export const decodeError = error => {
   }
 
   return message;
-};
-
-export const camelizeString = s => {
-  return s.replace(/([-_][a-z])/gi, $1 => {
-    return $1.toUpperCase().replace('-', '').replace('_', '');
-  });
-};
-export const camelizeKeys = object => {
-  if (Array.isArray(object) || typeof object != 'object' || object === null) {
-    return object;
-  }
-
-  const camelObject = {};
-
-  Object.keys(object).forEach(key => {
-    camelObject[camelizeString(key)] = camelizeKeys(object[key]);
-  });
-
-  return camelObject;
 };
 
 export const findUserById = id => USERS.find(user => user.id == id);
