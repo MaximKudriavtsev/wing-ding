@@ -5,11 +5,11 @@ import useFont from './components/hooks/useFont';
 
 import { AppNavigation } from './src/navigation/AppNavigation';
 import { LoginNavigation } from './src/navigation/LoginNavigation';
-import { TopAlert, AlertType } from './components/ui/TopAlert';
+import { TopAlert } from './components/ui/TopAlert';
 import { setAuthorizationInterceptor } from './src/utils';
 import { userApi } from './src/api/user/apiProduction';
 
-import { AlertProvider } from './src/context/AlertContext';
+import { AlertProvider, AlertType, ShowAlertMessage } from './src/context/AlertContext';
 import { TokenProvider } from './src/context/TokenContext';
 import { UserProvider } from './src/context/UserContext';
 
@@ -22,7 +22,7 @@ export default function App() {
   const [alertMessage, setAlertMessage] = useState('');
   const [alertType, setAlertType] = useState<AlertType>(AlertType.Info);
 
-  const showAlertMessage = (text: string, type: AlertType) => {
+  const showAlertMessage: ShowAlertMessage = (text, type) => {
     setAlertMessage(text);
     setAlertType(type);
     setAlertVisible(true);
