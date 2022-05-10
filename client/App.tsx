@@ -6,7 +6,7 @@ import useFont from './components/hooks/useFont';
 import { AppNavigation } from './src/navigation/AppNavigation';
 import { LoginNavigation } from './src/navigation/LoginNavigation';
 import { TopAlert, AlertType } from './components/ui/TopAlert';
-import { setAuthorizationInterceptor } from './src/utils';
+import { createAuthorizationInterceptor, ejectInterceptor } from './src/utils';
 import { userApi } from './src/api/user/apiProduction';
 
 import { AlertProvider } from './src/context/AlertContext';
@@ -17,6 +17,7 @@ export default function App() {
   const [isReady, setIsReady] = useState(false);
   const [userToken, setUserToken] = useState('');
   const [authorizedUser, setAuthorizedUser] = useState(null);
+  const [authorizationInterceptor, setAuthorizationInterceptor] = useState(0);
 
   const [isAlertVisible, setAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
@@ -37,9 +38,9 @@ export default function App() {
 
   useEffect(() => {
     if (!userToken) {
-      setAuthorizedUser(null);
+      ejectInterceptor(authorizationInterceptor);
     } else {
-      setAuthorizationInterceptor(userToken);
+      setAuthorizationInterceptor(createAuthorizationInterceptor(userToken));
       userApi
         .getAuthorizedUser()
         .then(response => setAuthorizedUser(response.data.user))
@@ -48,6 +49,11 @@ export default function App() {
         });
     }
   }, [userToken]);
+
+  useEffect(() => {
+    if (authorizedUser) return;
+    setUserToken('');
+  }, [authorizedUser]);
 
   if (!isReady) {
     return (

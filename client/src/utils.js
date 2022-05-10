@@ -43,11 +43,16 @@ api.interceptors.response.use(response => {
   return camelizeKeys(response);
 });
 
-export const setAuthorizationInterceptor = token => {
-  api.interceptors.request.use(config => {
+export const createAuthorizationInterceptor = token => {
+  //returns interceptors id
+  return api.interceptors.request.use(config => {
     config.headers.Authorization = token;
     return config;
   });
+};
+
+export const ejectInterceptor = id => {
+  api.interceptors.request.eject(id);
 };
 
 dayjs.locale('ru');
