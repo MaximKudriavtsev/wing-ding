@@ -1,14 +1,9 @@
 import React from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+import { AlertType } from '../../src/context/AlertContext';
 import { THEME } from '../theme';
 import { Text } from './Text';
-import { FontAwesome } from '@expo/vector-icons';
-
-export enum AlertType {
-  Error = 'ERROR',
-  Warning = 'WARNING',
-  Info = 'INFO',
-};
 
 type Props = {
   type: AlertType,
