@@ -5,15 +5,12 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import axios from 'axios';
 import { BASE_URL } from './config';
 
-const camelizeString = s => {
-  return s.replace(/([-_][a-z])/gi, $1 => {
-    return $1.toUpperCase().replace('-', '').replace('_', '');
-  });
-};
+const camelizeString = (s: string) =>
+  s.replace(/([-_][a-z])/gi, $1 => $1.toUpperCase().replace('-', '').replace('_', ''));
 
-const camelizeKeys = object => {
+const camelizeKeys = (object: any): any => {
   if (typeof object === 'object' && !Array.isArray(object) && object != null) {
-    const camelObject = {};
+    const camelObject: any = {};
 
     Object.keys(object).forEach(key => {
       camelObject[camelizeString(key)] = camelizeKeys(object[key]);
@@ -35,18 +32,19 @@ export const api = axios.create({
 
 api.interceptors.response.use(response => {
   if (response.data.status === 'error') {
-    const error = Error(response.data.error);
-    error.response = response;
+    const error = Error(`ERROR: ${response.data.error}\nResponse: ${response}`);
     throw error;
   }
 
   return camelizeKeys(response);
 });
 
-export const createAuthorizationInterceptor = token => {
+export const createAuthorizationInterceptor = (token: string) => {
   //returns interceptors id
   return api.interceptors.request.use(config => {
-    config.headers.Authorization = token;
+    if (config && config.headers) {
+      config.headers.Authorization = token;
+    }
     return config;
   });
 };
@@ -60,7 +58,7 @@ dayjs.extend(customParseFormat);
 
 export const dateRu = dayjs;
 
-export const validate = (value, validations) => {
+export const validate = (value: string, validations: any) => {
   let isLengthy = true;
   let isShorty = true;
   let isFilled = true;
@@ -125,7 +123,7 @@ export const validate = (value, validations) => {
   };
 };
 
-export const decodeError = error => {
+export const decodeError = (error: string) => {
   let message = 'Неизвестная ошибка. Попробуйте позже';
   switch (error) {
     case 'Unauthorized':
@@ -142,4 +140,4 @@ export const decodeError = error => {
   return message;
 };
 
-export const findUserById = id => USERS.find(user => user.id == id);
+export const findUserById = (id: string) => USERS.find(user => user.id == id);
