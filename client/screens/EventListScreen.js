@@ -1,87 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { HeaderIcon } from '../components/HeaderIcon';
+import { View } from 'react-native';
+import { THEME, SCREEN_STYLE } from '../components/theme';
 import { List } from '../components/List';
 import { EventTab } from '../components/EventTab';
-import { ToggleButton } from '../components/ui/ToggleButton';
-import { DATA, ME } from './../components/data';
-import { THEME } from './../components/theme';
-import { Row } from '../components/Row';
-import { findUserById } from '../src/utils';
 
 export const EventListScreen = ({ navigation }) => {
-  const [events, setEvents] = useState(DATA);
-  const [filter, setFilter] = useState('all');
-
-  const areFriendsThere = event => {
-    for (let i = 0; i < event.membersIds.length; i++) {
-      if (ME.friendsId.includes(event.membersIds[i])) {
-        return event;
-      }
-    }
-  };
-
   const openEventHandler = event => {
-    navigation.navigate('EventDetails', { eventId: event.id });
-  };
-
-  const showMembersHandler = membersId => {
-    const members = membersId.map(findUserById);
-    navigation.navigate('MembersListScreen', { users: members, title: 'Участники' });
-  };
-
-  const showAllEvents = () => {
-    setEvents(DATA);
-    setFilter('all');
-  };
-
-  const showFriendsEvents = () => {
-    setEvents(DATA.filter(areFriendsThere));
-    setFilter('friends');
+    navigation.push('EventDetails', { eventId: event.id });
   };
 
   useEffect(() => {
     navigation.setOptions({
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderIcon}>
+          <Item title='Filter' iconName={THEME.ICON_FILTER} onPress={() => console.log('filter')} />
+        </HeaderButtons>
+      ),
       title: 'Wing-Ding',
     });
   }, [navigation]);
-
   return (
-    <View style={{ backgroundColor: THEME.BACKGROUND_COLOR, flex: 1 }}>
-      <Row style={styles.filterRow}>
-        <ToggleButton
-          isActive={filter === 'all'}
-          style={styles.filterButton}
-          onPress={showAllEvents}
-        >
-          Все события
-        </ToggleButton>
-        <ToggleButton
-          isActive={filter === 'friends'}
-          style={styles.filterButton}
-          onPress={showFriendsEvents}
-        >
-          События друзей
-        </ToggleButton>
-      </Row>
-      <List
-        data={events}
-        Component={EventTab}
-        onOpen={openEventHandler}
-        onShowMembers={showMembersHandler}
-      />
+    <View style={SCREEN_STYLE.wrapper}>
+      <List data={[]} Component={EventTab} onOpen={openEventHandler} />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  filterRow: {
-    justifyContent: 'center',
-    width: '100%',
-    height: 50,
-    backgroundColor: 'black',
-  },
-  filterButton: {
-    width: '50%',
-    height: '100%',
-  },
-});

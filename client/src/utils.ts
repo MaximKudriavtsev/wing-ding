@@ -5,7 +5,8 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import axios from 'axios';
 import { BASE_URL } from './config';
 
-const camelizeString = (s: string) => s.replace(/([-_][a-z])/gi, $1 => $1.toUpperCase().replace('-', '').replace('_', ''));
+const camelizeString = (s: string) =>
+  s.replace(/([-_][a-z])/gi, $1 => $1.toUpperCase().replace('-', '').replace('_', ''));
 
 const camelizeKeys = (object: any): any => {
   if (typeof object === 'object' && !Array.isArray(object) && object != null) {
@@ -38,13 +39,18 @@ api.interceptors.response.use(response => {
   return camelizeKeys(response);
 });
 
-export const setAuthorizationInterceptor = (token: string) => {
-  api.interceptors.request.use(config => {
+export const createAuthorizationInterceptor = (token: string) => {
+  //returns interceptors id
+  return api.interceptors.request.use(config => {
     if (config && config.headers) {
       config.headers.Authorization = token;
     }
     return config;
   });
+};
+
+export const ejectInterceptor = id => {
+  api.interceptors.request.eject(id);
 };
 
 dayjs.locale('ru');

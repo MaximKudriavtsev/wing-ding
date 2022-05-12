@@ -11,6 +11,7 @@ const BottomTab = createBottomTabNavigator();
 export const BottomNavigation = () => {
   return (
     <BottomTab.Navigator
+      initialRouteName='Events'
       screenOptions={() => ({
         headerShown: false,
         tabBarStyle: {
