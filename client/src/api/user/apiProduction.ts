@@ -1,7 +1,9 @@
-import { api } from './../../utils';
+import { api } from '../../utils';
+import { UserApi } from './types';
+
 const USER_BASE_URL = '/user';
 
-export const userApi = {
+export const userApi: UserApi = {
   auth: ({ email, password }) => {
     return api.post(`${USER_BASE_URL}/auth`, { email, password });
   },

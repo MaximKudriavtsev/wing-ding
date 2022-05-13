@@ -1,39 +1,25 @@
 import { delay } from '../mockUtils';
-import { EventApi, Event, Member } from './types';
+import { EventApi, Event } from './types';
+import { member } from '../user/apiMock';
 
-const member: Member = {
-  id: '1',
-  firstName: "admin",
-  lastName: "admin",
-  email: "admin@wing-ding.com",
-  emailVerifiedAt: null,
-  description: "",
-  birthDate: null,
-  photo: 'https://img-fotki.yandex.ru/get/6436/244675082.51/0_10eb49_679c31ac_L.jpg',
-  createdAt: "2022-03-09T18:51:20.000000Z",
-  updatedAt: "2022-03-09T19:03:31.000000Z",
-  friends: 0,
-  events: 2
-};
-
-const event: Event = {
+export const event: Event = {
   id: 'event_id',
   title: 'Вечериночка у Ашота',
   img: 'https://artpostergallery.ru/userdata/image/thumbs/72/04/720434017f2b46c344c89a309e0468ac_2.jpg',
   place: 'г. Тула, ул. Ленина, дом 21',
   text: 'Как обычно, встречаемся чтобы побухать и тусануть. Посмотрим ютюбчик и немного выжрем.',
   host: {
-    id: member.id,
-    photo: member.photo,
-    firstName: member.firstName,
-    lastName: member.lastName,
+    id: '1',
+    photo: 'https://www.gannett-cdn.com/presto/2020/01/03/PCIN/ad5fc4b3-b5a4-4a3c-b6c3-cadb19e44810-Screen_Shot_2020-01-03_at_9.21.19_AM.jpg?crop=509,678,x16,y0&quality=50&width=640',
+    firstName: 'Альберт',
+    lastName: 'Попов',
   },
   date: "2022-02-20T00:00:00.000000Z",
   createdAt: "2022-03-09T19:03:25.000000Z",
   updatedAt: "2022-03-09T19:03:25.000000Z",
   membersCount: 1,
   membersPhoto: [
-    member.photo,
+    'https://www.gannett-cdn.com/presto/2020/01/03/PCIN/ad5fc4b3-b5a4-4a3c-b6c3-cadb19e44810-Screen_Shot_2020-01-03_at_9.21.19_AM.jpg?crop=509,678,x16,y0&quality=50&width=640',
   ],
 }
 

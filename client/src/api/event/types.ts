@@ -1,4 +1,4 @@
-
+import { User } from '../user/types';
 
 type CreateEventArgs = {
   title: string;
@@ -10,21 +10,6 @@ type CreateEventArgs = {
 type CreateEventResponse = { status: string, id: string };
 type CreateEvent = (obj: CreateEventArgs) => Promise<CreateEventResponse>;
 
-export type Member = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  emailVerifiedAt: string | null;
-  description: string;
-  birthDate: string | null;
-  photo: string | null;
-  createdAt: string;
-  updatedAt: string;
-  friends: number;
-  events: number;
-};
-
 export type Event = {
   id: string;
   img: string;
@@ -32,20 +17,20 @@ export type Event = {
   place: string;
   text: string;
   host: {
-    id: Member['id'];
-    photo: Member['photo'];
-    firstName: Member['firstName'];
-    lastName: Member['lastName'];
+    id: User['id'];
+    photo: User['photo'];
+    firstName: User['firstName'];
+    lastName: User['lastName'];
   };
   date: string;
   createdAt: string;
   updatedAt: string;
   membersCount: number;
-  membersPhoto: Member['photo'][];
+  membersPhoto: User['photo'][];
 };
 
 export type GetEventResponse = { data: Event };
-export type GetMembersResponse = { status: string; members: Member[] };
+export type GetMembersResponse = { status: string; members: User[] };
 export type StatusResponse = { status: string };
 
 export type EventApi = {

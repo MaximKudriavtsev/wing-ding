@@ -49,7 +49,7 @@ export const createAuthorizationInterceptor = (token: string) => {
   });
 };
 
-export const ejectInterceptor = id => {
+export const ejectInterceptor = (id: number) => {
   api.interceptors.request.eject(id);
 };
 
