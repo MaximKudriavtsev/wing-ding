@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { userApi } from '../src/api/user/apiProduction';
+import { PhotoPicker } from '../components/ui/PhotoPicker';
 import { AlertContext } from '../src/context/AlertContext';
 import { UserContext } from '../src/context/UserContext';
 import { View, StyleSheet, ScrollView } from 'react-native';
@@ -84,15 +85,11 @@ export const ProfileEditScreen = ({ navigation }) => {
       ) : (
         <ScrollView>
           <Column style={{ alignItems: 'center', padding: 15 }}>
-            <UserIcon userPhoto={authorizedUser.photo} iconSize={105} />
-            <Button
-              type={'link'}
-              onPress={() => {
-                console.log('Load photo');
-              }}
-            >
-              Изменить фото профиля
-            </Button>
+            <PhotoPicker
+              style={styles.photoPicker}
+              photoDiameter={110}
+              source={authorizedUser.photo}
+            />
             <Text style={styles.label}>Имя</Text>
             <TextInput
               iconName={THEME.ICON_USER}
@@ -148,5 +145,13 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 10,
     marginBottom: 10,
+  },
+
+  photoPicker: {
+    display: 'flex',
+    width: '50%',
+    height: 150,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

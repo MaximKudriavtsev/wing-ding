@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import { PhotoPicker } from '../components/ui/PhotoPicker';
 import { eventApi } from '../src/api/event/apiProduction';
 import { AlertContext } from '../src/context/AlertContext';
 import { Column } from '../components/Column';
@@ -8,14 +9,13 @@ import { Button } from '../components/ui/Button';
 import { Text } from '../components/ui/Text';
 import { TextInput } from '../components/ui/TextInput';
 import { Loader } from '../components/ui/Loader';
-import { Image } from '../components/ui/Image';
 import { dateRu, validate } from '../src/utils';
 import { SCREEN_STYLE, THEME } from '../components/theme.js';
 
 export const CreateEventScreen = ({ navigation }) => {
   const { showAlertMessage } = useContext(AlertContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [img, setImg] = useState(null);
+  const [img, setImg] = useState('');
   const [title, setTitle] = useState('');
   const [timeString, setTimeString] = useState('');
   const [dateString, setDateString] = useState('');
@@ -93,21 +93,7 @@ export const CreateEventScreen = ({ navigation }) => {
             }}
           />
           <Row style={styles.row}>
-            <TouchableOpacity
-              style={styles.buttonWrapper}
-              activeOpacity={0.7}
-              onPress={() => console.log('Load photo')}
-            >
-              <View style={styles.coverWrapper}>
-                <Image
-                  style={styles.image}
-                  imageStyle={{ borderRadius: 10 }}
-                  source={img}
-                  defaultImage={THEME.EVENT_IMAGE}
-                />
-              </View>
-            </TouchableOpacity>
-
+            <PhotoPicker style={styles.photoPicker} source={img} photoDiameter={130} />
             <Column style={{ width: '50%' }}>
               <Text style={styles.label}>Дата</Text>
               <TextInput
@@ -150,9 +136,7 @@ export const CreateEventScreen = ({ navigation }) => {
               setDescriptionValidations(validate(description, { isFilled: true }));
             }}
           />
-          <Button type={'primary'} onPress={onCreateEvent}>
-            Создать событие
-          </Button>
+          <Button onPress={onCreateEvent}>Создать событие</Button>
         </ScrollView>
       )}
     </View>
@@ -166,7 +150,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
-  buttonWrapper: {
+  photoPicker: {
     display: 'flex',
     width: '50%',
     height: '100%',
