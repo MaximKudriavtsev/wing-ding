@@ -5,7 +5,7 @@ export const Image = ({ style, source, defaultImage, imageStyle }) => {
   return (
     <ImageBackground
       style={style}
-      source={source != null ? { uri: source } : defaultImage}
+      source={source ? { uri: source } : defaultImage}
       imageStyle={imageStyle}
     />
   );
