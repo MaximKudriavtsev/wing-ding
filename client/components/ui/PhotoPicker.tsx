@@ -14,7 +14,7 @@ type Props = {
 
 export const PhotoPicker: React.FC<Props> = ({ style, source, photoDiameter = 150 }) => {
   const { showAlertMessage } = useContext(AlertContext);
-  const [photoUrl, setPhotoUrl] = useState(source);
+  const [photoUri, setPhotoUri] = useState(source);
 
   const openImagePicker = async () => {
     const permission = await ImagePicker.requestCameraPermissionsAsync();
@@ -30,18 +30,18 @@ export const PhotoPicker: React.FC<Props> = ({ style, source, photoDiameter = 15
 
     if (result.cancelled) return;
 
-    setPhotoUrl(result.uri);
+    setPhotoUri(result.uri);
   };
 
   return (
     <TouchableOpacity style={style} activeOpacity={0.7} onPress={openImagePicker}>
       <Image
-        source={photoUrl}
+        source={photoUri}
         style={styles.imageWrapper}
         imageStyle={{ ...styles.image, width: photoDiameter, height: photoDiameter }}
         defaultImage={THEME.USER_PHOTO}
       />
-      <Text style={styles.text}>{photoUrl ? 'Изменить фото' : 'Загрузить фото'}</Text>
+      <Text style={styles.text}>{photoUri ? 'Изменить фото' : 'Загрузить фото'}</Text>
     </TouchableOpacity>
   );
 };
