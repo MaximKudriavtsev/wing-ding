@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { userApi } from '../src/api/user/apiProduction';
+import { api } from '../src/config';
 import { PhotoPicker } from '../components/ui/PhotoPicker';
 import { AlertContext } from '../src/context/AlertContext';
 import { UserContext } from '../src/context/UserContext';
@@ -7,7 +7,6 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { HeaderIcon } from '../components/HeaderIcon';
 import { Column } from '../components/Column';
-import { UserIcon } from '../components/ui/UserIcon';
 import { Button } from '../components/ui/Button';
 import { Text } from '../components/ui/Text';
 import { TextInput } from '../components/ui/TextInput';
@@ -39,7 +38,7 @@ export const ProfileEditScreen = ({ navigation }) => {
     }
     setIsLoading(true);
     const birthDate = dateRu(birthDateString, 'DD.MM.YYYY');
-    userApi
+    api.user
       .changeProfile({
         firstName,
         lastName,

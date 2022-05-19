@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { userApi } from '../src/api/user/apiProduction';
+import { api } from '../src/config';
 import { UserContext } from '../src/context/UserContext';
 import { dateRu } from '../src/utils';
 import { View, StyleSheet } from 'react-native';
@@ -48,7 +48,7 @@ export const ProfileScreen = ({ navigation, route }) => {
 
   const toggleFriend = () => {
     setIsUserLoading(true);
-    userApi[isFriend ? 'deleteFromFriends' : 'addToFriends'](user.id)
+    api.user[isFriend ? 'deleteFromFriends' : 'addToFriends'](user.id)
       .then(response => {
         setIsFriend(!isFriend);
         setFriendsCount(isFriend ? friendsCount - 1 : friendsCount + 1);
@@ -59,7 +59,7 @@ export const ProfileScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     setIsUserLoading(true);
-    userApi
+    api.user
       .getUser(userId)
       .then(response => {
         setUser(response.data.user);
@@ -73,7 +73,7 @@ export const ProfileScreen = ({ navigation, route }) => {
     setIsEventLoading(true);
     setIsFriend(user.isFriend);
     setFriendsCount(+user.friends);
-    userApi
+    api.user
       .getUserEvents(userId)
       .then(response => {
         setEvents(response.data.events);

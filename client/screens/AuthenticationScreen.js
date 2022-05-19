@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { AlertContext } from '../src/context/AlertContext';
 import { TokenContext } from '../src/context/TokenContext';
 import { validate, decodeError } from '../src/utils';
-import { userApi } from '../src/api/user/apiProduction';
+import { api } from '../src/config';
 import { View } from 'react-native';
 import { Title } from '../components/ui/Title';
 import { Button } from '../components/ui/Button';
@@ -22,7 +22,7 @@ export const AuthenticationScreen = ({ navigation }) => {
   const onSignIn = () => {
     if (!emailValidations || !passwordValidations) return;
     if (emailValidations.isValid && passwordValidations.isValid) {
-      userApi
+      api.user
         .auth({ email, password })
         .then(response => {
           const { data, status } = response;

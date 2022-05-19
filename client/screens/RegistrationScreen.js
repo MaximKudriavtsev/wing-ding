@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { AlertContext } from '../src/context/AlertContext';
 import { TokenContext } from '../src/context/TokenContext';
-import { userApi } from '../src/api/user/apiProduction';
+import { api } from '../src/config';
 import { validate, decodeError } from '../src/utils';
 import { View } from 'react-native';
 import { Title } from '../components/ui/Title';
@@ -32,7 +32,7 @@ export const RegistrationScreen = ({ navigation }) => {
       firstNameValidations.isValid &&
       lastNameValidations.isValid
     ) {
-      userApi
+      api.user
         .registration({ email, password, firstName, lastName })
         .then(response => {
           const { data, status } = response;

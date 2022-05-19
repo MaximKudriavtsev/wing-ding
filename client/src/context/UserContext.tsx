@@ -1,6 +1,7 @@
 import React, { createContext } from 'react';
+import { User } from '../api/user/types';
 
-type UserContextType = { authorizedUser: string | null, setAuthorizedUser: (str: string) => void };
+type UserContextType = { authorizedUser: User | null, setAuthorizedUser: (str: User) => void };
 
 export const UserContext = createContext<UserContextType>({ authorizedUser: null, setAuthorizedUser: () => null });
 

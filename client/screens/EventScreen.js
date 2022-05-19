@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
-import { eventApi } from '../src/api/event/apiProduction';
+import { api } from '../src/config';
 import { dateRu } from '../src/utils';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Image } from '../components/ui/Image';
@@ -27,9 +27,9 @@ export const EventScreen = ({ navigation, route }) => {
 
   const toggleMember = () => {
     setIsLoading(true);
-    eventApi[event.isMember ? 'leaveEvent' : 'joinEvent'](eventId)
+    api.event[event.isMember ? 'leaveEvent' : 'joinEvent'](eventId)
       .then(response => {
-        eventApi //Until I use useQuery
+        api.event //Until I use useQuery
           .getEvent(eventId)
           .then(response => {
             setEvent(response.data);
@@ -45,7 +45,7 @@ export const EventScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     setIsLoading(true);
-    eventApi
+    api.event
       .getEvent(eventId)
       .then(response => {
         setEvent(response.data);

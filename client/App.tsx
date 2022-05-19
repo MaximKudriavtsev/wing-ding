@@ -7,17 +7,22 @@ import { AppNavigation } from './src/navigation/AppNavigation';
 import { LoginNavigation } from './src/navigation/LoginNavigation';
 import { TopAlert } from './components/ui/TopAlert';
 import { createAuthorizationInterceptor, ejectInterceptor } from './src/utils';
-import { userApi } from './src/api/user/apiProduction';
+import { api } from './src/config';
 
 import { AlertProvider, AlertType, ShowAlertMessage } from './src/context/AlertContext';
 import { TokenProvider } from './src/context/TokenContext';
 import { UserProvider } from './src/context/UserContext';
+import { User } from './src/api/user/types';
+
+const LoadFonts = async () => {
+  await useFont();
+};
+let authorizationInterceptor = 0;
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);
   const [userToken, setUserToken] = useState('');
-  const [authorizedUser, setAuthorizedUser] = useState(null);
-  const [authorizationInterceptor, setAuthorizationInterceptor] = useState(0);
+  const [authorizedUser, setAuthorizedUser] = useState<User | null>(null);
 
   const [isAlertVisible, setAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
@@ -32,18 +37,16 @@ export default function App() {
     }, 2500);
   };
 
-  const LoadFonts = async () => {
-    await useFont();
-  };
-
   useEffect(() => {
     if (!userToken) {
       ejectInterceptor(authorizationInterceptor);
     } else {
-      setAuthorizationInterceptor(createAuthorizationInterceptor(userToken));
-      userApi
+      authorizationInterceptor = createAuthorizationInterceptor(userToken);
+      api.user
         .getAuthorizedUser()
-        .then(response => setAuthorizedUser(response.data.user))
+        .then(response => {
+          setAuthorizedUser(response.data.user);
+        })
         .catch(error => {
           console.error(error.response);
         });
@@ -65,23 +68,18 @@ export default function App() {
     );
   }
 
-  if (!authorizedUser) {
-    return (
-      <TokenProvider value={{ userToken, setUserToken }}>
+  return (
+    <TokenProvider value={{ userToken, setUserToken }}>
+      <UserProvider value={{ authorizedUser, setAuthorizedUser }}>
         <AlertProvider value={{ showAlertMessage }}>
           <TopAlert message={alertMessage} type={alertType} isVisible={isAlertVisible} />
-          <LoginNavigation />
+          {!!authorizedUser ? (
+            <AppNavigation />
+          ) : (
+            <LoginNavigation />
+          )}
         </AlertProvider>
-      </TokenProvider>
-    );
-  }
-
-  return (
-    <UserProvider value={{ authorizedUser, setAuthorizedUser }}>
-      <AlertProvider value={{ showAlertMessage }}>
-        <TopAlert message={alertMessage} type={alertType} isVisible={isAlertVisible} />
-        <AppNavigation />
-      </AlertProvider>
-    </UserProvider>
+      </UserProvider>
+    </TokenProvider>
   );
 }
