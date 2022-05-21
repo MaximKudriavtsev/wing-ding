@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { userApi } from '../src/api/user/apiProduction';
+import { api } from '../src/config';
 import { View } from 'react-native';
 import { List } from '../components/List';
 import { UserTab } from '../components/UserTab';
@@ -25,7 +25,7 @@ export const FriendListScreen = ({ route, navigation }) => {
   useEffect(() => {
     if (!userId) return;
     setIsLoading(true);
-    userApi
+    api.user
       .getFriendList(userId)
       .then(response => {
         setUsers(response.data.friends);

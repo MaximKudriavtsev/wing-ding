@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { eventApi } from '../src/api/event/apiProduction';
+import { api } from '../src/config';
 import { View } from 'react-native';
 import { List } from '../components/List';
 import { UserTab } from '../components/UserTab';
@@ -25,7 +25,7 @@ export const MemberListScreen = ({ route, navigation }) => {
   useEffect(() => {
     if (eventId) {
       setIsLoading(true);
-      eventApi
+      api.event
         .getMembers(eventId)
         .then(response => {
           setUsers(response.data.members);

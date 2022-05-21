@@ -3,7 +3,7 @@ import { EventApi } from './types';
 
 const EVENT_BASE_URL = '/event';
 
-export const eventApi: EventApi = {
+const eventApi: EventApi = {
   createEvent: ({ title, date, place, description, img }) => {
     return api.post(`${EVENT_BASE_URL}/create`, {
       title,
@@ -30,3 +30,5 @@ export const eventApi: EventApi = {
     return api.post(`${EVENT_BASE_URL}/leave/${id}`);
   },
 };
+
+export default eventApi;

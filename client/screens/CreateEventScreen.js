@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { PhotoPicker } from '../components/ui/PhotoPicker';
-import { eventApi } from '../src/api/event/apiProduction';
+import { api } from '../src/config';
 import { AlertContext } from '../src/context/AlertContext';
 import { Column } from '../components/Column';
 import { Row } from '../components/Row';
@@ -62,7 +62,7 @@ export const CreateEventScreen = ({ navigation }) => {
   const onCreateEvent = () => {
     if (!validateForms()) return;
     setIsLoading(true);
-    eventApi
+    api.event
       .createEvent({ title, date: date.toJSON(), place, description, img })
       .then(({ data, status }) => {
         if (status === 200) {

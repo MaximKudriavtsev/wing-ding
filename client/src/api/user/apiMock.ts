@@ -37,47 +37,47 @@ export const member2: User = {
 const userMockApi: UserApi = {
   auth: (request) => {
     console.log('POST /api/auth', request);
-    return delay({ status: 'success', token: '123456789' });
+    return delay({ status: 200, data: { accessToken: '123456789' } });
   },
 
   registration: (request) => {
     console.log('POST /api/registration', request);
-    return delay({ status: 'success', token: '123456789' });
+    return delay({ status: 200, data: { accessToken: '123456789' } });
   },
 
   getAuthorizedUser: () => {
     console.log('POST /api/user/profile/get');
-    return delay({ status: 'success', data: { user: member } });
+    return delay({ status: 200, data: { user: member } });
   },
 
   getUser: id => {
     console.log(`POST /api/user/get/${id}`);
-    return delay({ status: 'success', data: { user: member2 } });
+    return delay({ status: 200, data: { user: member2 } });
   },
 
   getUserEvents: id => {
     console.log(`POST /api/user/get/${id}/events`);
-    return delay({ status: 'success', data: [event] });
+    return delay({ status: 200, data: [event] });
   },
 
   getFriendList: id => {
     console.log(`POST /api/user/get/${id}/friends`);
-    return delay({ status: 'success', friends: [member, member2] });
+    return delay({ status: 200, friends: [member, member2] });
   },
 
   addToFriends: id => {
     console.log(`POST /api/user/friends/add/${id}`);
-    return delay({ status: 'success' });
+    return delay({ status: 200 });
   },
 
   deleteFromFriends: id => {
     console.log(`POST /api/user/friends/delete/${id}`);
-    return delay({ status: 'success' });
+    return delay({ status: 200 });
   },
 
   changeProfile: (request) => {
     console.log('POST /api/user/profile/change', request);
-    return delay({ status: 'success' });
+    return delay({ status: 200 });
   },
 };
 

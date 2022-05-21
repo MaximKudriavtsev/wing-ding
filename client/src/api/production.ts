@@ -1,4 +1,9 @@
-import MockApi from "./mock";
+import userApi from './user/apiProduction';
+import eventApi from './event/apiProduction';
 
-// Temporary because we don't have clear production API
-export default MockApi;
+const api = {
+  user: userApi,
+  event: eventApi,
+};
+
+export default api;

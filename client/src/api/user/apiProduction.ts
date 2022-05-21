@@ -3,7 +3,7 @@ import { UserApi } from './types';
 
 const USER_BASE_URL = '/user';
 
-export const userApi: UserApi = {
+const userApi: UserApi = {
   auth: ({ email, password }) => {
     return api.post(`${USER_BASE_URL}/auth`, { email, password });
   },
@@ -51,3 +51,5 @@ export const userApi: UserApi = {
     });
   },
 };
+
+export default userApi;

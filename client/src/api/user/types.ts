@@ -15,15 +15,15 @@ export type User = {
   events: number;
 };
 
-export type AuthResponse = { status: string; token?: string; error?: string };
+export type AuthResponse = { status: 200; data: { accessToken?: string; error?: string } };
 
-export type GetUserResponse = { status: string; data: { user: User } };
+export type GetUserResponse = { status: 200; data: { user: User } };
 
-export type GetUserEvents = { status: string; data: Event[] };
+export type GetUserEvents = { status: 200; data: Event[] };
 
-export type GetUserFriends = { status: string; friends: User[] };
+export type GetUserFriends = { status: 200; friends: User[] };
 
-export type Status = { status: string; error?: string };
+export type Status = { status: 200; error?: string };
 
 export type UserApi = {
   auth: ({ email, password }: { email: string, password: string }) => Promise<AuthResponse>;
