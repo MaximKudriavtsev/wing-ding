@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { api } from '../src/config';
 import { PhotoPicker } from '../components/ui/PhotoPicker';
+import { PhotoPickerSheet } from '../components/ui/PhotoPickerSheet';
 import { AlertContext } from '../src/context/AlertContext';
 import { UserContext } from '../src/context/UserContext';
 import { View, StyleSheet, ScrollView } from 'react-native';
@@ -19,6 +20,8 @@ export const ProfileEditScreen = ({ navigation }) => {
   const { authorizedUser, setAuthorizedUser } = useContext(UserContext);
   const date = dateRu(authorizedUser.birthDate);
   const [isLoading, setIsLoading] = useState(false);
+  const [isPickerSheetVisible, setPickerSheetVisible] = useState(false);
+  const [userPhoto, setUserPhoto] = useState(authorizedUser.photo);
   const [firstName, setFirstName] = useState(authorizedUser.firstName);
   const [lastName, setLastName] = useState(authorizedUser.lastName);
   const [birthDateString, setBirthDateString] = useState(date.format('DD.MM.YYYY'));
@@ -26,6 +29,14 @@ export const ProfileEditScreen = ({ navigation }) => {
   const [firstNameValidations, setFirstNameValidations] = useState({ isValid: true });
   const [lastNameValidations, setLastNameValidations] = useState({ isValid: true });
   const [birthDateValidations, setBirthDateValidations] = useState({ isValid: true });
+
+  const openPickerSheet = () => {
+    setPickerSheetVisible(true);
+  };
+
+  const closePickerSheet = () => {
+    setPickerSheetVisible(false);
+  };
 
   const onApplyChanges = () => {
     if (!firstNameValidations.isValid || !lastNameValidations.isValid) {
@@ -82,58 +93,66 @@ export const ProfileEditScreen = ({ navigation }) => {
       {isLoading ? (
         <Loader />
       ) : (
-        <ScrollView>
-          <Column style={{ alignItems: 'center', padding: 15 }}>
-            <PhotoPicker
-              style={styles.photoPicker}
-              photoDiameter={110}
-              source={authorizedUser.photo}
-            />
-            <Text style={styles.label}>Имя</Text>
-            <TextInput
-              iconName={THEME.ICON_USER}
-              autoCapitalize={'words'}
-              onChangeText={firstName => {
-                setFirstName(firstName);
-                setFirstNameValidations(validate(firstName, { isFilled: true, isName: true }));
-              }}
-            >
-              {firstName}
-            </TextInput>
-            <Text style={styles.label}>Фамилия</Text>
-            <TextInput
-              iconName={THEME.ICON_USER}
-              autoCapitalize={'words'}
-              onChangeText={lastName => {
-                setLastName(lastName);
-                setLastNameValidations(validate(lastName, { isFilled: true, isName: true }));
-              }}
-            >
-              {lastName}
-            </TextInput>
-            <Text style={styles.label}>День рождения</Text>
-            <TextInput
-              iconName={THEME.ICON_CAKE}
-              onChangeText={birthDateString => {
-                setBirthDateString(birthDateString);
-                setBirthDateValidations(validate(birthDateString, { isDateString: true }));
-              }}
-            >
-              {birthDateString}
-            </TextInput>
-            <Text style={styles.label}>О себе</Text>
-            <TextInput maxLength={250} onChangeText={setDescription} iconName={THEME.ICON_PENCIL}>
-              {description}
-            </TextInput>
-            <Button
-              type={'link'}
-              fontColor={THEME.DANGER_COLOR}
-              onPress={() => setAuthorizedUser(null)}
-            >
-              Выйти из аккаунта
-            </Button>
-          </Column>
-        </ScrollView>
+        <>
+          <ScrollView>
+            <Column style={{ alignItems: 'center', padding: 15 }}>
+              <PhotoPicker
+                style={styles.photoPicker}
+                onPress={openPickerSheet}
+                photoDiameter={110}
+                source={userPhoto}
+              />
+              <Text style={styles.label}>Имя</Text>
+              <TextInput
+                iconName={THEME.ICON_USER}
+                autoCapitalize={'words'}
+                onChangeText={firstName => {
+                  setFirstName(firstName);
+                  setFirstNameValidations(validate(firstName, { isFilled: true, isName: true }));
+                }}
+              >
+                {firstName}
+              </TextInput>
+              <Text style={styles.label}>Фамилия</Text>
+              <TextInput
+                iconName={THEME.ICON_USER}
+                autoCapitalize={'words'}
+                onChangeText={lastName => {
+                  setLastName(lastName);
+                  setLastNameValidations(validate(lastName, { isFilled: true, isName: true }));
+                }}
+              >
+                {lastName}
+              </TextInput>
+              <Text style={styles.label}>День рождения</Text>
+              <TextInput
+                iconName={THEME.ICON_CAKE}
+                onChangeText={birthDateString => {
+                  setBirthDateString(birthDateString);
+                  setBirthDateValidations(validate(birthDateString, { isDateString: true }));
+                }}
+              >
+                {birthDateString}
+              </TextInput>
+              <Text style={styles.label}>О себе</Text>
+              <TextInput maxLength={250} onChangeText={setDescription} iconName={THEME.ICON_PENCIL}>
+                {description}
+              </TextInput>
+              <Button
+                type={'link'}
+                fontColor={THEME.DANGER_COLOR}
+                onPress={() => setAuthorizedUser(null)}
+              >
+                Выйти из аккаунта
+              </Button>
+            </Column>
+          </ScrollView>
+          <PhotoPickerSheet
+            isVisible={isPickerSheetVisible}
+            onClose={closePickerSheet}
+            onSetPhoto={setUserPhoto}
+          />
+        </>
       )}
     </View>
   );

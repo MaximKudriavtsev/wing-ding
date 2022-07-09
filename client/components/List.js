@@ -6,7 +6,7 @@ import { SCREEN_STYLE } from './theme';
 const idToString = id => id.toString();
 
 export const List = ({ data, Component, onOpen, onShowMembers }) => {
-  if (!data.length) {
+  if (!data || data.length == 0) {
     return (
       <View style={SCREEN_STYLE.listWrapper}>
         <Text style={{ textAlign: 'center' }}>Здесь пока пусто...</Text>

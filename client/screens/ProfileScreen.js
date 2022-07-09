@@ -37,13 +37,17 @@ export const ProfileScreen = ({ navigation, route }) => {
   };
 
   const showAllEvents = () => {
-    setEvents(events);
-    setFilter('all');
+    if (!!events) {
+      setEvents(events);
+      setFilter('all');
+    }
   };
 
   const showUpcomingEvents = () => {
-    setEvents(events.filter(event => dateRu(event.date).isAfter(dateRu())));
-    setFilter('upcoming');
+    if (!!events) {
+      setEvents(events.filter(event => dateRu(event.date).isAfter(dateRu())));
+      setFilter('upcoming');
+    }
   };
 
   const toggleFriend = () => {
