@@ -153,21 +153,28 @@ class UserController extends Controller
             }
 
             $user = auth()->user();
+            $is_changed = false;
+
+            Log::debug(json_encode($request->all()));
 
             if ($request->input('first_name')) {
                 $user->first_name = $request->input('first_name');
+                $is_changed = true;
             }
 
             if ($request->input('last_name')) {
                 $user->last_name = $request->input('last_name');
+                $is_changed = true;
             }
 
             if ($request->input('description')) {
                 $user->description = $request->input('description');
+                $is_changed = true;
             }
 
             if ($request->input('birth_date')) {
                 $user->birth_date = $request->input('birth_date');
+                $is_changed = true;
             }
 
             if ($request->file('photo')) {
@@ -179,6 +186,14 @@ class UserController extends Controller
                 $request->file('photo')->storeAs('public/avatar', $new_filename);
 
                 $user->photo = 'avatar/' . $new_filename;
+                $is_changed = true;
+            }
+
+            if (!$is_changed) {
+                return \response()->json([
+                   'status' => 'error',
+                   'error' => 'no changes'
+                ]);
             }
 
             $user->save();
