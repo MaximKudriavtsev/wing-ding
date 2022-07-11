@@ -189,12 +189,12 @@ class UserController extends Controller
                 $is_changed = true;
             }
 
-            if (!$is_changed) {
-                return \response()->json([
-                   'status' => 'error',
-                   'error' => 'no changes'
-                ]);
-            }
+//            if (!$is_changed) {
+//                return \response()->json([
+//                   'status' => 'error',
+//                   'error' => 'no changes'
+//                ]);
+//            }
 
             $user->save();
 
