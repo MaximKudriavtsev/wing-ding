@@ -181,20 +181,25 @@ class UserController extends Controller
                 $filename = $request->file('photo')->getClientOriginalName();
                 $filename_without_extension = pathinfo($filename, PATHINFO_FILENAME);
                 $extension = $request->file('photo')->getClientOriginalExtension();
+
+                if (!$extension || $extension == '') {
+                    $extension = 'jpg';
+                }
+
                 $new_filename = sha1($filename_without_extension . time()) . '.' . $extension;
 
                 $request->file('photo')->storeAs('public/avatar', $new_filename);
 
-                $user->photo = 'avatar/' . $new_filename;
+                $user->photo = config('app.url') . 'storage/avatar/' . $new_filename;
                 $is_changed = true;
             }
 
-//            if (!$is_changed) {
-//                return \response()->json([
-//                   'status' => 'error',
-//                   'error' => 'no changes'
-//                ]);
-//            }
+            if (!$is_changed) {
+                return \response()->json([
+                   'status' => 'error',
+                   'error' => 'no changes'
+                ]);
+            }
 
             $user->save();
 
