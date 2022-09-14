@@ -12,7 +12,7 @@ import { Button } from '../components/ui/Button';
 import { Text } from '../components/ui/Text';
 import { TextInput } from '../components/ui/TextInput';
 import { Loader } from '../components/ui/Loader';
-import { dateRu, validate } from '../src/utils';
+import { dateRu, validate, decodeError } from '../src/utils';
 import { SCREEN_STYLE, THEME } from '../components/theme.js';
 
 export const ProfileEditScreen = ({ navigation }) => {
@@ -38,6 +38,20 @@ export const ProfileEditScreen = ({ navigation }) => {
     setPickerSheetVisible(false);
   };
 
+  const getChanges = () => {
+    const changes = {};
+    const birthDate = dateRu(authorizedUser.birthDate).format('DD.MM.YYYY'); // Set old date to string
+
+    if (firstName != authorizedUser.firstName) changes.firstName = firstName;
+    if (lastName != authorizedUser.lastName) changes.lastName = lastName;
+    if (birthDateString != birthDate)
+      changes.birthDate = dateRu(birthDateString, 'DD.MM.YYYY').toJSON();
+    if (description != authorizedUser.description) changes.description = description;
+    if (userPhoto != authorizedUser.photo) changes.photo = userPhoto;
+
+    return changes;
+  };
+
   const onApplyChanges = () => {
     if (!firstNameValidations.isValid || !lastNameValidations.isValid) {
       showAlertMessage('Введите настоящие имя и фамилию', 'ERROR');
@@ -47,21 +61,25 @@ export const ProfileEditScreen = ({ navigation }) => {
       showAlertMessage('Дата должна быть в формате DD.MM.YYYY', 'ERROR');
       return;
     }
+
+    const changes = getChanges();
+
     setIsLoading(true);
     const birthDate = dateRu(birthDateString, 'DD.MM.YYYY');
     api.user
-      .changeProfile({
-        firstName,
-        lastName,
-        birthDate: birthDate.toJSON(),
-        description,
-        photo: authorizedUser.photo,
-      })
+      .changeProfile(changes)
       .then(response => {
         const { data, status } = response;
         if (status === 200) {
           showAlertMessage('Данные успешно обновлены', 'INFO');
-          setAuthorizedUser({ ...authorizedUser, birthDate, description, firstName, lastName });
+          setAuthorizedUser({
+            ...authorizedUser,
+            birthDate,
+            description,
+            firstName,
+            lastName,
+            userPhoto,
+          });
         } else {
           showAlertMessage('Что-то пошло не так..', 'ERROR');
         }
@@ -86,7 +104,7 @@ export const ProfileEditScreen = ({ navigation }) => {
       },
       title: 'Редактировать профиль',
     });
-  }, [navigation, firstName, lastName, birthDateString, description]);
+  }, [navigation, firstName, lastName, birthDateString, description, userPhoto]);
 
   return (
     <View style={SCREEN_STYLE.listWrapper}>
