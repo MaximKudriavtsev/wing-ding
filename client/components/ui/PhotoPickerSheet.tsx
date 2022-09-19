@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { cutPhoto } from '../../src/utils';
 import { View, StyleSheet } from 'react-native';
 import { BottomSheet } from '../BottomSheet';
 import { BottomSheetOption } from './BottomSheetOption';
@@ -13,23 +14,8 @@ type Props = {
   onClose: () => void;
 };
 
-type Size = {
-  h: number;
-  w: number;
-};
-
 export const PhotoPickerSheet: React.FC<Props> = ({ isVisible, onSetPhoto, onClose }) => {
   const { showAlertMessage } = useContext(AlertContext);
-
-  const cutPhoto = (size: Size): Size => {
-    let resized = { h: size.h, w: size.w };
-
-    if (resized.h > 1280 || resized.w > 1280) {
-      resized = { h: size.h / 1.3, w: size.w / 1.3 };
-      return cutPhoto(resized);
-    }
-    return resized;
-  };
 
   const compressPhoto = async (uri: string, height: number, width: number) => {
     const compressedSize = cutPhoto({ h: height, w: width });

@@ -5,6 +5,21 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import axios from 'axios';
 import { BASE_URL } from './config';
 
+type Size = {
+  h: number;
+  w: number;
+};
+
+export const cutPhoto = (size: Size): Size => {
+  let resized = { ...size };
+
+  if (resized.h > 1280 || resized.w > 1280) {
+    resized = { h: size.h / 1.3, w: size.w / 1.3 };
+    return cutPhoto(resized);
+  }
+  return resized;
+};
+
 const camelizeString = (s: string) =>
   s.replace(/([-_][a-z])/gi, $1 => $1.toUpperCase().replace('-', '').replace('_', ''));
 
