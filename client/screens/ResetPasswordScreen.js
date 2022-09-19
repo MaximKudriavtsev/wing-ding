@@ -33,10 +33,10 @@ export const ResetPasswordScreen = ({ navigation }) => {
       <Button style={{ marginVertical: 25 }} onPress={onReset}>
         Восстановить
       </Button>
-      <Button type={'link'} onPress={() => navigation.navigate('Authentication')}>
+      <Button type={'LINK'} onPress={() => navigation.navigate('Authentication')}>
         Я помню свой пароль
       </Button>
-      <Button type={'link'} transparent={true} onPress={() => navigation.navigate('Registration')}>
+      <Button type={'LINK'} transparent={true} onPress={() => navigation.navigate('Registration')}>
         Создать новый аккаунт
       </Button>
     </View>

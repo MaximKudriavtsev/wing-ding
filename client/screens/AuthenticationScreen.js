@@ -63,10 +63,10 @@ export const AuthenticationScreen = ({ navigation }) => {
       <Button style={{ marginVertical: 25 }} onPress={onSignIn}>
         Войти
       </Button>
-      <Button type={'link'} onPress={() => navigation.navigate('RestoringPassword')}>
+      <Button type={'LINK'} onPress={() => navigation.navigate('RestoringPassword')}>
         Я не помню пароль
       </Button>
-      <Button type={'link'} transparent={true} onPress={() => navigation.navigate('Registration')}>
+      <Button type={'LINK'} transparent={true} onPress={() => navigation.navigate('Registration')}>
         Еще не с нами? Зарегистрируйтесь!
       </Button>
     </View>

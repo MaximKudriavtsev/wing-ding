@@ -47,7 +47,7 @@ export const SetPasswordScreen = ({ navigation }) => {
       <Button style={{ marginVertical: 25 }} onPress={onSet}>
         Установить
       </Button>
-      <Button type='link' onPress={() => navigation.navigate('RestoringPassword')}>
+      <Button type='LINK' onPress={() => navigation.navigate('RestoringPassword')}>
         Я не получил сообщение
       </Button>
     </View>

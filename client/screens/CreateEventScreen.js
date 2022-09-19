@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { PhotoPicker } from '../components/ui/PhotoPicker';
+import { PhotoPickerSheet } from '../components/ui/PhotoPickerSheet';
 import { api } from '../src/config';
 import { AlertContext } from '../src/context/AlertContext';
 import { Column } from '../components/Column';
@@ -15,7 +16,8 @@ import { SCREEN_STYLE, THEME } from '../components/theme.js';
 export const CreateEventScreen = ({ navigation }) => {
   const { showAlertMessage } = useContext(AlertContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [img, setImg] = useState('');
+  const [isPickerSheetVisible, setPickerSheetVisible] = useState(false);
+  const [eventPhotoUri, setEventPhotoUri] = useState('');
   const [title, setTitle] = useState('');
   const [timeString, setTimeString] = useState('');
   const [dateString, setDateString] = useState('');
@@ -59,11 +61,19 @@ export const CreateEventScreen = ({ navigation }) => {
     return true;
   };
 
+  const openPickerSheet = () => {
+    setPickerSheetVisible(true);
+  };
+
+  const closePickerSheet = () => {
+    setPickerSheetVisible(false);
+  };
+
   const onCreateEvent = () => {
     if (!validateForms()) return;
     setIsLoading(true);
     api.event
-      .createEvent({ title, date: date.toJSON(), place, description, img })
+      .createEvent({ title, date: date.toJSON(), place, description, eventPhotoUri })
       .then(({ data, status }) => {
         if (status === 200) {
           showAlertMessage('Событие создано', 'INFO');
@@ -83,61 +93,73 @@ export const CreateEventScreen = ({ navigation }) => {
       {isLoading ? (
         <Loader />
       ) : (
-        <ScrollView>
-          <Text style={styles.label}>Название</Text>
-          <TextInput
-            placeholder={'Введите название'}
-            onChangeText={title => {
-              setTitle(title);
-              setTitleValidations(validate(title, { isFilled: true }));
-            }}
-          />
-          <Row style={styles.row}>
-            <PhotoPicker style={styles.photoPicker} source={img} photoDiameter={130} />
-            <Column style={{ width: '50%' }}>
-              <Text style={styles.label}>Дата</Text>
-              <TextInput
-                iconName={THEME.ICON_CALENDAR}
-                placeholder={'Дата'}
-                onChangeText={dateString => {
-                  setDateString(dateString);
-                  setDateValidations(validate(dateString, { isDateString: true }));
-                }}
+        <>
+          <ScrollView>
+            <Text style={styles.label}>Название</Text>
+            <TextInput
+              placeholder={'Введите название'}
+              onChangeText={title => {
+                setTitle(title);
+                setTitleValidations(validate(title, { isFilled: true }));
+              }}
+            />
+            <Row style={styles.row}>
+              <PhotoPicker
+                style={styles.photoPicker}
+                source={eventPhotoUri}
+                onPress={openPickerSheet}
+                photoDiameter={130}
               />
-              <Text style={styles.label}>Время:</Text>
-              <TextInput
-                iconName={THEME.ICON_CLOCK}
-                placeholder={'Время'}
-                onChangeText={timeString => {
-                  setTimeString(timeString);
-                  setTimeValidations(validate(timeString, { isTimeString: true }));
-                }}
-              />
-            </Column>
-          </Row>
-          <Text style={styles.label}>Место</Text>
-          <TextInput
-            iconName={THEME.ICON_LOCATION}
-            placeholder={'Место'}
-            onChangeText={place => {
-              setPlace(place);
-              setPlaceValidations(validate(place, { isFilled: true }));
-            }}
+              <Column style={{ width: '50%' }}>
+                <Text style={styles.label}>Дата</Text>
+                <TextInput
+                  iconName={THEME.ICON_CALENDAR}
+                  placeholder={'Дата'}
+                  onChangeText={dateString => {
+                    setDateString(dateString);
+                    setDateValidations(validate(dateString, { isDateString: true }));
+                  }}
+                />
+                <Text style={styles.label}>Время:</Text>
+                <TextInput
+                  iconName={THEME.ICON_CLOCK}
+                  placeholder={'Время'}
+                  onChangeText={timeString => {
+                    setTimeString(timeString);
+                    setTimeValidations(validate(timeString, { isTimeString: true }));
+                  }}
+                />
+              </Column>
+            </Row>
+            <Text style={styles.label}>Место</Text>
+            <TextInput
+              iconName={THEME.ICON_LOCATION}
+              placeholder={'Место'}
+              onChangeText={place => {
+                setPlace(place);
+                setPlaceValidations(validate(place, { isFilled: true }));
+              }}
+            />
+            <Text style={styles.label}>Описание</Text>
+            <TextInput
+              style={{ height: 100, marginBottom: 30 }}
+              iconName={THEME.ICON_PENCIL}
+              multiline={true}
+              numberOfLines={4}
+              placeholder={'Добавьте описание'}
+              onChangeText={description => {
+                setDescription(description);
+                setDescriptionValidations(validate(description, { isFilled: true }));
+              }}
+            />
+            <Button onPress={onCreateEvent}>Создать событие</Button>
+          </ScrollView>
+          <PhotoPickerSheet
+            isVisible={isPickerSheetVisible}
+            onClose={closePickerSheet}
+            onSetPhoto={setEventPhotoUri}
           />
-          <Text style={styles.label}>Описание</Text>
-          <TextInput
-            style={{ height: 100, marginBottom: 30 }}
-            iconName={THEME.ICON_PENCIL}
-            multiline={true}
-            numberOfLines={4}
-            placeholder={'Добавьте описание'}
-            onChangeText={description => {
-              setDescription(description);
-              setDescriptionValidations(validate(description, { isFilled: true }));
-            }}
-          />
-          <Button onPress={onCreateEvent}>Создать событие</Button>
-        </ScrollView>
+        </>
       )}
     </View>
   );

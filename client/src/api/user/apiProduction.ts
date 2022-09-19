@@ -41,13 +41,28 @@ const userApi: UserApi = {
     return api.post(`${USER_BASE_URL}/friends/delete/${id}`);
   },
 
-  changeProfile: ({ firstName, lastName, birthDate, description, photo }) => {
-    return api.post(`${USER_BASE_URL}/profile/change`, {
-      first_name: firstName,
-      last_name: lastName,
-      birth_date: birthDate,
-      description,
-      photo,
+  changeProfile: changes => {
+    const { firstName, lastName, birthDate, description, photo } = changes;
+    const formData = new FormData();
+
+    if (firstName) formData.append('first_name', firstName);
+    if (lastName) formData.append('last_name', lastName);
+    if (birthDate) formData.append('birth_date', birthDate);
+    if (description) formData.append('description', description);
+    if (photo)
+      formData.append('photo', {
+        uri: photo,
+        type: 'image/jpeg',
+        name: 'profile-photo',
+      });
+
+    return api.post(`${USER_BASE_URL}/profile/change`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      transformRequest: (data, headers) => {
+        return formData;
+      },
     });
   },
 };

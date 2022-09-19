@@ -1,47 +1,26 @@
-import React, { useState, useContext } from 'react';
-import * as ImagePicker from 'expo-image-picker';
+import React from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
-import { AlertContext, AlertType } from '../../src/context/AlertContext';
 import { Text } from './Text';
 import { Image } from './Image';
 import { THEME } from '../theme';
 
 type Props = {
-  style: object;
+  style?: object;
   source: string;
   photoDiameter: number;
+  onPress: () => void;
 };
 
-export const PhotoPicker: React.FC<Props> = ({ style, source, photoDiameter = 150 }) => {
-  const { showAlertMessage } = useContext(AlertContext);
-  const [photoUri, setPhotoUri] = useState(source);
-
-  const openImagePicker = async () => {
-    const permission = await ImagePicker.requestCameraPermissionsAsync();
-
-    if (!permission.granted) {
-      showAlertMessage('Необходимо разрешение для загрузки фото', AlertType.Error);
-      return;
-    }
-
-    const result = await ImagePicker.launchCameraAsync({
-      allowsEditing: false,
-    });
-
-    if (result.cancelled) return;
-
-    setPhotoUri(result.uri);
-  };
-
+export const PhotoPicker: React.FC<Props> = ({ style, source, onPress, photoDiameter = 150 }) => {
   return (
-    <TouchableOpacity style={style} activeOpacity={0.7} onPress={openImagePicker}>
+    <TouchableOpacity style={style} activeOpacity={0.7} onPress={onPress}>
       <Image
-        source={photoUri}
+        source={source}
         style={styles.imageWrapper}
         imageStyle={{ ...styles.image, width: photoDiameter, height: photoDiameter }}
         defaultImage={THEME.USER_PHOTO}
       />
-      <Text style={styles.text}>{photoUri ? 'Изменить фото' : 'Загрузить фото'}</Text>
+      <Text style={styles.text}>{source ? 'Изменить фото' : 'Загрузить фото'}</Text>
     </TouchableOpacity>
   );
 };

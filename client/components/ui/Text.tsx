@@ -4,7 +4,7 @@ import { THEME } from '../theme';
 
 type Props = {
   children: string;
-  style: object;
+  style?: object;
   bold?: boolean;
   numberOfLines?: number;
 };
@@ -24,7 +24,7 @@ export const Text: React.FC<Props> = ({ children, style, bold, numberOfLines }) 
 Text.defaultProps = {
   bold: false,
   numberOfLines: 1,
-}
+};
 
 const styles = StyleSheet.create({
   default: {

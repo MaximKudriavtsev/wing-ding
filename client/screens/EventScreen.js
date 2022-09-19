@@ -91,7 +91,7 @@ export const EventScreen = ({ navigation, route }) => {
           </Text>
           <Text style={styles.text}>{event.text}</Text>
           <Button
-            type={event.isMember ? 'secondary' : 'primary'}
+            type={event.isMember ? 'SECONDARY' : 'PRIMARY'}
             style={styles.button}
             onPress={toggleMember}
           >

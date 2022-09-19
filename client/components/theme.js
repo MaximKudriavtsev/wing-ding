@@ -1,7 +1,9 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
 export const THEME = {
   //General
+  SCREEN_WIDTH: Dimensions.get('screen').width,
+  SCREEN_HEIGHT: Dimensions.get('screen').height,
   REGULAR_FONT: 'comfortaa-regular',
   BOLD_FONT: 'comfortaa-bold',
   FONT_COLOR: '#ddd',
@@ -39,6 +41,8 @@ export const THEME = {
   ICON_PENCIL: 'pencil',
   ICON_CAKE: 'birthday-cake',
   ICON_FILTER: 'filter',
+  ICON_IMAGE: 'image',
+  ICON_CAMERA: 'camera',
 };
 
 export const SCREEN_STYLE = StyleSheet.create({

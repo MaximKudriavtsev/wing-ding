@@ -26,10 +26,19 @@ export type GetUserFriends = { status: 200; friends: User[] };
 export type Status = { status: 200; error?: string };
 
 export type UserApi = {
-  auth: ({ email, password }: { email: string, password: string }) => Promise<AuthResponse>;
+  auth: ({ email, password }: { email: string; password: string }) => Promise<AuthResponse>;
 
-  registration: ({ email, password, firstName, lastName }:
-    { email: string, password: string, firstName: string, lastName: string }) => Promise<AuthResponse>;
+  registration: ({
+    email,
+    password,
+    firstName,
+    lastName,
+  }: {
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+  }) => Promise<AuthResponse>;
 
   getAuthorizedUser: () => Promise<GetUserResponse>;
 
@@ -43,6 +52,17 @@ export type UserApi = {
 
   deleteFromFriends: (id: string) => Promise<Status>;
 
-  changeProfile: ({ firstName, lastName, birthDate, description, photo }:
-    { firstName: string, lastName: string, birthDate: string, description: string, photo: string }) => Promise<any>;
+  changeProfile: ({
+    firstName,
+    lastName,
+    birthDate,
+    description,
+    photo,
+  }: {
+    firstName?: string;
+    lastName?: string;
+    birthDate?: string;
+    description?: string;
+    photo?: string;
+  }) => Promise<any>;
 };

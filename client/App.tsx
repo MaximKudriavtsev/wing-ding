@@ -73,11 +73,7 @@ export default function App() {
       <UserProvider value={{ authorizedUser, setAuthorizedUser }}>
         <AlertProvider value={{ showAlertMessage }}>
           <TopAlert message={alertMessage} type={alertType} isVisible={isAlertVisible} />
-          {!!authorizedUser ? (
-            <AppNavigation />
-          ) : (
-            <LoginNavigation />
-          )}
+          {!!authorizedUser ? <AppNavigation /> : <LoginNavigation />}
         </AlertProvider>
       </UserProvider>
     </TokenProvider>

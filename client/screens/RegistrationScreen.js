@@ -92,7 +92,7 @@ export const RegistrationScreen = ({ navigation }) => {
       <Button style={{ marginVertical: 25 }} onPress={onSignUp}>
         Зарегистрироваться
       </Button>
-      <Button type={'link'} onPress={() => navigation.navigate('Authentication')}>
+      <Button type={'LINK'} onPress={() => navigation.navigate('Authentication')}>
         Уже есть аккаунт? Войти
       </Button>
     </View>
