@@ -19,7 +19,7 @@ export type AuthResponse = { status: 200; data: { accessToken?: string; error?: 
 
 export type GetUserResponse = { status: 200; data: { user: User } };
 
-export type GetUserEvents = { status: 200; data: Event[] };
+export type GetUserEvents = { status: 200; data: { events: Event[] } };
 
 export type GetUserFriends = { status: 200; friends: User[] };
 

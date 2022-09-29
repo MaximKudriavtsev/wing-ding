@@ -7,7 +7,7 @@ type CreateEventArgs = {
   description: string;
   img: string;
 };
-type CreateEventResponse = { status: string, id: string };
+type CreateEventResponse = { status: string; id: string };
 type CreateEvent = (obj: CreateEventArgs) => Promise<CreateEventResponse>;
 
 export type Event = {
@@ -26,7 +26,8 @@ export type Event = {
   createdAt: string;
   updatedAt: string;
   membersCount: number;
-  membersPhoto: User['photo'][];
+  membersPhotos: User['photo'][];
+  isMember: boolean;
 };
 
 export type GetEventResponse = { data: Event };
