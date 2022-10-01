@@ -150,6 +150,29 @@ class EventController extends Controller
         return \response()->json($event);
     }
 
+    public function getIsHost($id) {
+        $user_id = auth()->id();
+        $event = Event::find($id);
+
+        if (!$event) {
+            return \response()->json([
+               'status' => 'error',
+               'error' => 'event not found'
+            ]);
+        }
+
+        if ($event->host_id === $user_id) {
+            $is_host = true;
+        } else {
+            $is_host = false;
+        }
+
+        return \response()->json([
+            'status' => 'success',
+            'is_host' => $is_host
+        ]);
+    }
+
 //    public function uploadImg(Request $request) {
 //
 //        $request->validate([
