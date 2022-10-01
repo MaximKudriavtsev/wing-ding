@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -139,28 +140,65 @@ class UserController extends Controller
     public function changeProfile(Request $request) {
 
         try {
+
+            $validator = Validator::make($request->all(), [
+                'photo' => 'image'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'error',
+                    'error' => 'photo file is not an image'
+                ]);
+            }
+
             $user = auth()->user();
+            $is_changed = false;
 
-            $req_data = $request->toArray();
+            Log::debug(json_encode($request->all()));
 
-            if (isset($req_data['first_name'])) {
-                $user->first_name = $request->get('first_name');
+            if ($request->input('first_name')) {
+                $user->first_name = $request->input('first_name');
+                $is_changed = true;
             }
 
-            if (isset($req_data['last_name'])) {
-                $user->last_name = $request->get('last_name');
+            if ($request->input('last_name')) {
+                $user->last_name = $request->input('last_name');
+                $is_changed = true;
             }
 
-            if (isset($req_data['description'])) {
-                $user->description = $request->get('description');
+            if ($request->input('description')) {
+                $user->description = $request->input('description');
+                $is_changed = true;
             }
 
-            if (isset($req_data['photo'])) {
-                $user->photo = $request->get('photo');
+            if ($request->input('birth_date')) {
+                $user->birth_date = $request->input('birth_date');
+                $is_changed = true;
             }
 
-            if (isset($req_data['birth_date'])) {
-                $user->birth_date = $request->get('birth_date');
+            if ($request->file('photo')) {
+                $filename = $request->file('photo')->getClientOriginalName();
+                $filename_without_extension = pathinfo($filename, PATHINFO_FILENAME);
+                $extension = $request->file('photo')->getClientOriginalExtension();
+
+                if (!$extension || $extension == '') {
+                    $extension = 'jpg';
+                }
+
+                $new_filename = sha1($filename_without_extension . time()) . '.' . $extension;
+
+                $request->file('photo')->storeAs('public/avatar', $new_filename);
+
+                $user->photo = config('app.url') . 'storage/avatar/' . $new_filename;
+                $is_changed = true;
+            }
+
+            if (!$is_changed) {
+                return \response()->json([
+                   'status' => 'error',
+                   'error' => 'no changes'
+                ]);
             }
 
             $user->save();
@@ -320,6 +358,28 @@ class UserController extends Controller
             ]);
 
         }
+    }
 
+    public function uploadPhoto(Request $request) {
+        $request->validate([
+            'photo' => 'required|image'
+        ]);
+
+        $user = auth()->user();
+
+        $filename = $request->file('photo')->getClientOriginalName();
+        $filename_without_extension = pathinfo($filename, PATHINFO_FILENAME);
+        $extension = $request->file('photo')->getClientOriginalExtension();
+        $new_filename = sha1($filename_without_extension . time()) . '.' . $extension;
+
+        $request->file('photo')->storeAs('public/avatar', $new_filename);
+
+        $user->photo = 'avatar/' . $new_filename;
+        $user->save();
+
+        return [
+            'status' => 'success',
+            'photo' => $user->photo
+        ];
     }
 }
