@@ -115,7 +115,7 @@ class UserController extends Controller
                 ]);
             }
 
-            $events = $user->events()->get();
+            $events = $user->events()->isNotDeleted()->get();
             $data = [];
 
             foreach ($events as $key => $event) {
@@ -219,7 +219,7 @@ class UserController extends Controller
         try {
             $user = auth()->user();
 
-            $events = $user->events()->get();
+            $events = $user->events()->isNotDeleted()->get();
 
             $data = [];
 

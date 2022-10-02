@@ -35,4 +35,8 @@ class Event extends Model
         User::whereId($id)->decrement('events');
         $this->decrement('members_count');
     }
+
+    public function scopeIsNotDeleted($query) {
+        return $query->where('is_deleted', false);
+    }
 }

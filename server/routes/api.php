@@ -41,4 +41,5 @@ Route::prefix('/event')->group(function () {
     Route::post('/list/get')->middleware('auth');
     Route::post('/get/{id}/users', [EventController::class, 'getUsers'])->middleware('auth');
     Route::get('/host/verify/{id}', [EventController::class, 'getIsHost'])->middleware('auth');
+    Route::delete('/{id}', [EventController::class, 'deleteEvent'])->middleware('auth');
 });

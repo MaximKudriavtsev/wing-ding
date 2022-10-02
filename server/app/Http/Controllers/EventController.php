@@ -82,7 +82,15 @@ class EventController extends Controller
                 ]);
             }
 
-            $event = Event::find($id);
+            $event = Event::isNotDeleted()->find($id);
+
+            if (!$event) {
+                return \response()->json([
+                    'status' => 'error',
+                    'error' => 'event not found'
+                ]);
+            }
+
             $event->joinUser($user->id);
             $event->increment('members_count');
             User::whereId($user->id)->increment('events');
@@ -100,7 +108,7 @@ class EventController extends Controller
     public function leave($id) {
         try {
             $user = auth()->user();
-            $event = Event::find($id);
+            $event = Event::isNotDeleted()->find($id);
 
             if ($event) {
                 $event->leaveUser($user->id);
@@ -126,6 +134,14 @@ class EventController extends Controller
 
     public function getUsers($id) {
         try {
+
+            if (Event::whereId($id)->isNotDeleted()->doesntExist()) {
+                return \response()->json([
+                    'status' => 'error',
+                    'error' => 'event not found'
+                ]);
+            }
+
             $ids = Participation::whereEventId($id)->pluck('user_id');
             return \response([
                 'status' => 'success',
@@ -143,7 +159,15 @@ class EventController extends Controller
 
         $user = auth()->user();
 
-        $event = Event::find($id);
+        $event = Event::isNotDeleted()->find($id);
+
+        if (!$event) {
+            return \response()->json([
+                'status' => 'error',
+                'error' => 'event not found'
+            ]);
+        }
+
         $event['host'] = $event->host()->select('id', 'photo', 'first_name', 'last_name')->first();
         $event['members_photos'] = $event->users()->take(3)->pluck('photo');
         $event['is_member'] = $event->users()->whereId($user->id)->exists();
@@ -152,7 +176,7 @@ class EventController extends Controller
 
     public function getIsHost($id) {
         $user_id = auth()->id();
-        $event = Event::find($id);
+        $event = Event::isNotDeleted()->find($id);
 
         if (!$event) {
             return \response()->json([
@@ -170,6 +194,34 @@ class EventController extends Controller
         return \response()->json([
             'status' => 'success',
             'is_host' => $is_host
+        ]);
+    }
+
+    public function deleteEvent($id) {
+
+        $user_id = auth()->id();
+        $event = Event::isNotDeleted()->find($id);
+
+        if (!$event) {
+            return \response()->json([
+                'status' => 'error',
+                'error' => 'event not found'
+            ]);
+        }
+
+        if ($event->host_id !== $user_id) {
+            return \response()->json([
+                'status' => 'error',
+                'error' => 'user isn`t the host of this event'
+            ]);
+        }
+
+        $event->users()->decrement('events');
+        $event->is_deleted = true;
+        $event->save();
+
+        return \response()->json([
+            'status' => 'success'
         ]);
     }
 
