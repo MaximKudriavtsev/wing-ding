@@ -16,13 +16,13 @@ class EventController extends Controller
         try {
 
             $validator = Validator::make($request->all(), [
-                'photo' => 'image'
+                'img' => 'image'
             ]);
 
             if ($validator->fails()) {
                 return response()->json([
                     'status' => 'error',
-                    'error' => 'photo file is not an image'
+                    'error' => 'img file is not an image'
                 ]);
             }
 
