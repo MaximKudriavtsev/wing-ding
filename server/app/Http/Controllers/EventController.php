@@ -168,6 +168,12 @@ class EventController extends Controller
             ]);
         }
 
+        if ($event->host_id === $user->id) {
+            $event['is_host'] = true;
+        } else {
+            $event['is_host'] = false;
+        }
+
         $event['host'] = $event->host()->select('id', 'photo', 'first_name', 'last_name')->first();
         $event['members_photos'] = $event->users()->take(3)->pluck('photo');
         $event['is_member'] = $event->users()->whereId($user->id)->exists();
