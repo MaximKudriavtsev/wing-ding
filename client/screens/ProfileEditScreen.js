@@ -12,7 +12,7 @@ import { Button } from '../components/ui/Button';
 import { Text } from '../components/ui/Text';
 import { TextInput } from '../components/ui/TextInput';
 import { Loader } from '../components/ui/Loader';
-import { dateRu, validate, decodeError } from '../src/utils';
+import { dateRu, validate, getObjectChanges } from '../src/utils';
 import { SCREEN_STYLE, THEME } from '../components/theme.js';
 
 export const ProfileEditScreen = ({ navigation }) => {
@@ -38,20 +38,6 @@ export const ProfileEditScreen = ({ navigation }) => {
     setPickerSheetVisible(false);
   };
 
-  const getChanges = () => {
-    const changes = {};
-    const birthDate = dateRu(authorizedUser.birthDate).format('DD.MM.YYYY'); // Set old date to string
-
-    if (firstName != authorizedUser.firstName) changes.firstName = firstName;
-    if (lastName != authorizedUser.lastName) changes.lastName = lastName;
-    if (birthDateString != birthDate)
-      changes.birthDate = dateRu(birthDateString, 'DD.MM.YYYY').toJSON();
-    if (description != authorizedUser.description) changes.description = description;
-    if (userPhoto != authorizedUser.photo) changes.photo = userPhoto;
-
-    return changes;
-  };
-
   const onApplyChanges = () => {
     if (!firstNameValidations.isValid || !lastNameValidations.isValid) {
       showAlertMessage('Введите настоящие имя и фамилию', 'ERROR');
@@ -62,7 +48,15 @@ export const ProfileEditScreen = ({ navigation }) => {
       return;
     }
 
-    const changes = getChanges();
+    const newData = {
+      firstName,
+      lastName,
+      birthDate: dateRu(birthDateString, 'DD.MM.YYYY').toJSON(),
+      description,
+      photo: userPhoto,
+    };
+
+    const changes = getObjectChanges(newData, authorizedUser);
 
     setIsLoading(true);
     const birthDate = dateRu(birthDateString, 'DD.MM.YYYY');
