@@ -28,6 +28,7 @@ export type Event = {
   membersCount: number;
   membersPhotos: User['photo'][];
   isMember: boolean;
+  isHost: boolean;
 };
 
 export type GetEventResponse = { data: Event };

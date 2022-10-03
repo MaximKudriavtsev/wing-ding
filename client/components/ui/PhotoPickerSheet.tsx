@@ -27,7 +27,6 @@ export const PhotoPickerSheet: React.FC<Props> = ({ isVisible, onSetPhoto, onClo
         format: SaveFormat.JPEG,
       },
     );
-    console.log('COMPRESSED PHOTO: ', compressedPhoto);
     return compressedPhoto.uri;
   };
 

@@ -19,8 +19,8 @@ type Props = {
     title: string;
     date: string;
     place: string;
-    description: string;
-    eventPhotoUri: string;
+    text: string;
+    img: string;
   }) => void;
 };
 
@@ -35,7 +35,9 @@ export const EventForm: React.FC<Props> = ({
   const [eventPhotoUri, setEventPhotoUri] = useState(event ? event.img : eventPhoto);
   const [title, setTitle] = useState(event ? event.title : ''); // Set event props if they exist
   const [timeString, setTimeString] = useState(event ? dateRu(event.date).format('HH:mm') : '');
-  const [dateString, setDateString] = useState(event ? dateRu(event.date).format('DD.MM') : '');
+  const [dateString, setDateString] = useState(
+    event ? dateRu(event.date).format('DD.MM.YYYY') : '',
+  );
   const [place, setPlace] = useState(event ? event.place : '');
   const [description, setDescription] = useState(event ? event.text : '');
   const [titleValidations, setTitleValidations] = useState({ isValid: event || false }); // If we got event - its props valid
@@ -85,7 +87,8 @@ export const EventForm: React.FC<Props> = ({
       return;
     }
     onValidate(true);
-    onSetEventObject({ title, date: date.toJSON(), place, description, eventPhotoUri });
+    console.log('DATE:', dateString);
+    onSetEventObject({ title, date: date.toJSON(), place, text: description, img: eventPhotoUri });
   }, [title, dateString, timeString, place, description, eventPhotoUri]);
 
   return (
