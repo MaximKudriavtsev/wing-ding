@@ -3,7 +3,21 @@ import { View, TextInput as DefaultTextInput, StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { THEME } from '../theme';
 
-export const TextInput = ({
+type Props = {
+  style?: object;
+  iconName?: string;
+  iconColor?: string;
+  iconSize?: number;
+  placeholder?: string;
+  onChangeText?: (text: string) => void;
+  autoCapitalize?: string;
+  numberOfLines?: number;
+  secureTextEntry?: boolean;
+  multiline?: boolean;
+  children?: string;
+};
+
+export const TextInput: React.FC<Props> = ({
   style,
   iconName,
   iconColor = THEME.PLACEHOLDER_COLOR,
@@ -54,6 +68,5 @@ const styles = StyleSheet.create({
     color: THEME.FONT_COLOR,
     fontFamily: THEME.REGULAR_FONT,
     backgroundColor: 'transparent',
-    color: THEME.FONT_COLOR,
   },
 });
