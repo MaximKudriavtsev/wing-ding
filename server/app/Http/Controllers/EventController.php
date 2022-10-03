@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\Participation;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class EventController extends Controller
@@ -231,42 +231,81 @@ class EventController extends Controller
         ]);
     }
 
-//    public function uploadImg(Request $request) {
-//
-//        $request->validate([
-//            'img' => 'required|img',
-//            'event' => 'required'
-//        ]);
-//
-//        $user = auth()->user();
-//        $event = Event::find($request->input('event'));
-//
-//        if (!$event) {
-//            return response()->json([
-//                'status' => 'error',
-//                'error' => 'no such event'
-//            ]);
-//        }
-//
-//        if ($user->id !== $event->host_id) {
-//            return response()->json([
-//                'status' => 'error',
-//                'error' => 'no such event'
-//            ]);
-//        }
-//
-//        $filename = $request->file('img')->getClientOriginalName();
-//        $filename_without_extension = pathinfo($filename, PATHINFO_FILENAME);
-//        $extension = $request->file('img')->getClientOriginalExtension();
-//        $new_filename = sha1($filename_without_extension . time()) . '.' . $extension;
-//
-//        $request->file('img')->storeAs('public/event-img', $new_filename);
-//
-//        $event->img = $new_filename;
-//
-//        return \response()->json([
-//            'status' => 'success',
-//            'img' => $new_filename
-//        ]);
-//    }
+    public function update(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'img' => 'image'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'error' => 'img file is not an image'
+            ]);
+        }
+
+        $user = auth()->user();
+        $event = Event::isNotDeleted()->find($request->input('event_id'));
+
+        if (!$event) {
+            return response()->json([
+                'status' => 'error',
+                'error' => 'event not found ' . $request->input('event_id')
+            ]);
+        }
+
+        if ($user->id !== $event->host_id) {
+            return response()->json([
+                'status' => 'error',
+                'error' => 'user isn`t the host of this event'
+            ]);
+        }
+
+        if ($request->input('title')) {
+            $event->title = $request->input('title');
+        }
+
+        if ($request->input('place')) {
+            $event->place = $request->input('place');
+        }
+
+        if ($request->input('date')) {
+            $event->date = $request->input('date');
+        }
+
+        if ($request->input('text')) {
+            $event->text = $request->input('text');
+        }
+
+        $old_file = '';
+
+        if ($request->file('img')) {
+
+            $old_file = $event->img;
+
+            $filename = $request->file('img')->getClientOriginalName();
+            $filename_without_extension = pathinfo($filename, PATHINFO_FILENAME);
+            $extension = $request->file('img')->getClientOriginalExtension();
+
+            if (!$extension || $extension == '') {
+                $extension = 'jpg';
+            }
+
+            $new_filename = sha1($filename_without_extension . time()) . '.' . $extension;
+
+            $request->file('img')->storeAs('public/event', $new_filename);
+            $event->img = config('app.url') . 'storage/event/' . $new_filename;
+        }
+
+        $event->save();
+
+        if ($old_file) {
+            $old_file = str_replace(config('app.url'), '', $old_file);
+            unlink($old_file);
+        }
+
+        return \response()->json([
+            'status' => 'success'
+        ]);
+
+    }
 }

@@ -155,8 +155,6 @@ class UserController extends Controller
             $user = auth()->user();
             $is_changed = false;
 
-            Log::debug(json_encode($request->all()));
-
             if ($request->input('first_name')) {
                 $user->first_name = $request->input('first_name');
                 $is_changed = true;
