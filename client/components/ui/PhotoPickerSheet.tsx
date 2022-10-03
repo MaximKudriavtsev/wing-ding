@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { cutPhoto } from '../../src/utils';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { BottomSheet } from '../BottomSheet';
 import { BottomSheetOption } from './BottomSheetOption';
 import * as ImagePicker from 'expo-image-picker';
 import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 import { AlertContext, AlertType } from '../../src/context/AlertContext';
-import { THEME } from './../theme';
+import { THEME, SCREEN_STYLE } from './../theme';
 
 type Props = {
   isVisible: boolean;
@@ -73,7 +73,7 @@ export const PhotoPickerSheet: React.FC<Props> = ({ isVisible, onSetPhoto, onClo
   };
 
   return (
-    <View style={styles.wrapper}>
+    <View style={SCREEN_STYLE.bottomSheetWrapper}>
       <BottomSheet isVisible={isVisible} onClose={onClose}>
         <BottomSheetOption
           icon={THEME.ICON_IMAGE}
@@ -85,13 +85,3 @@ export const PhotoPickerSheet: React.FC<Props> = ({ isVisible, onSetPhoto, onClo
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  wrapper: {
-    position: 'absolute',
-    width: THEME.SCREEN_WIDTH,
-    height: THEME.SCREEN_HEIGHT,
-    top: 0,
-    left: 0,
-  },
-});
