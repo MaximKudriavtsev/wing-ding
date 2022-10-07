@@ -1,17 +1,55 @@
 import { api } from '../../utils';
 import { EventApi } from './types';
+import { CreateEventArgs } from './types';
 
 const EVENT_BASE_URL = '/event';
 
-const eventApi: EventApi = {
-  createEvent: ({ title, date, place, description, img }) => {
-    return api.post(`${EVENT_BASE_URL}/create`, {
-      title,
-      date,
-      place,
-      text: description,
-      img,
+const createEventFormData = (object: CreateEventArgs) => {
+  const { title, date, place, text, img } = object;
+  const formData = new FormData();
+  if (title) formData.append('title', title);
+  if (date) formData.append('date', date);
+  if (place) formData.append('place', place);
+  if (text) formData.append('text', text);
+  if (img)
+    formData.append('img', {
+      uri: img,
+      type: 'image/jpeg',
+      name: 'event-img',
     });
+  return formData;
+};
+
+const eventApi: EventApi = {
+  createEvent: ({ title, date, place, text, img }) => {
+    const formData = createEventFormData({ title, date, place, text, img });
+
+    return api.post(`${EVENT_BASE_URL}/create`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      transformRequest: (data, headers) => {
+        return formData;
+      },
+    });
+  },
+
+  updateEvent: (changes, id) => {
+    const formData = createEventFormData(changes);
+    formData.append('event_id', id);
+
+    return api.post(`${EVENT_BASE_URL}/update`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      transformRequest: (data, headers) => {
+        return formData;
+      },
+    });
+  },
+
+  deleteEvent: id => {
+    return api.delete(`${EVENT_BASE_URL}/${id}`);
   },
 
   getEvent: id => {

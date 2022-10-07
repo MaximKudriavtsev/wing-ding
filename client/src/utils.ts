@@ -4,6 +4,8 @@ import 'dayjs/locale/ru';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import axios from 'axios';
 import { BASE_URL } from './config';
+import mergeWith from 'lodash/mergeWith';
+import isEqual from 'lodash/isEqual';
 
 type Size = {
   h: number;
@@ -158,18 +160,28 @@ export const decodeError = (error: string) => {
 export const findUserById = (id: string) => USERS.find(user => user.id == id);
 
 export const getObjectChanges = (n: any, t: any) => {
-  const changes = {};
-  // Checking every key of new object and compare with old one
-  Object.keys(n).forEach(key => {
-    if (typeof n[key] === 'object' && typeof t[key] === 'object' && !Array.isArray(n[key])) {
-      // If prop is object - deep compare
-      const deepChanges = getObjectChanges(t[key], n[key]);
-      // If objects have no changes - return
-      if (Object.keys(deepChanges).length === 0) return;
-      n[key] = deepChanges;
+  const changes: any = {};
+  mergeWith(t, n, function (objectValue: object, sourceValue: object, key: string) {
+    if (!isEqual(objectValue, sourceValue) && Object(objectValue) !== objectValue) {
+      changes[key] = sourceValue;
     }
-    // Primitives and arrays just replaced
-    if (n[key] != t[key]) changes[key] = n[key];
   });
   return changes;
 };
+
+// export const getObjectChanges = (n: any, t: any) => {
+//   const changes = {};
+//   // Checking every key of new object and compare with old one
+//   Object.keys(n).forEach(key => {
+//     if (typeof n[key] === 'object' && typeof t[key] === 'object' && !Array.isArray(n[key])) {
+//       // If prop is object - deep compare
+//       const deepChanges = getObjectChanges(t[key], n[key]);
+//       // If objects have no changes - return
+//       if (Object.keys(deepChanges).length === 0) return;
+//       n[key] = deepChanges;
+//     }
+//     // Primitives and arrays just replaced
+//     if (n[key] != t[key]) changes[key] = n[key];
+//   });
+//   return changes;
+// };

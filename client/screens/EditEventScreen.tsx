@@ -9,15 +9,15 @@ import { Loader } from '../components/ui/Loader';
 import { SCREEN_STYLE } from '../components/theme.js';
 import { AlertType } from '../src/context/AlertContext';
 import { getObjectChanges } from '../src/utils';
+import { Event } from '../src/api/event/types';
 
 type Props = {
-  // Does TS useful here?
   navigation: any;
   route: any;
 };
 
 export const EditEventScreen: React.FC<Props> = ({ navigation, route }) => {
-  const event = { ...route.params.event };
+  const event: Event = { ...route.params.event };
 
   const { showAlertMessage } = useContext(AlertContext);
   const [isFormValid, setFormValid] = useState(true);
@@ -42,22 +42,22 @@ export const EditEventScreen: React.FC<Props> = ({ navigation, route }) => {
       showAlertMessage(validationMessage, AlertType.Error);
       return;
     }
-    //setIsLoading(true);
-    console.log(getObjectChanges(eventObject, event));
-    // api.event
-    //   .createEvent(eventObject)
-    //   .then(({ data, status }) => {
-    //     if (status === 200) {
-    //       showAlertMessage('Событие успешно создано', AlertType.Info);
-    //       navigation.navigate('ProfileScreen');
-    //       return;
-    //     }
-    //     setIsLoading(false);
-    //   })
-    //   .catch(error => {
-    //     console.error(error);
-    //     setIsLoading(false);
-    //   });
+    setIsLoading(true);
+    const changes = getObjectChanges(eventObject, event);
+    api.event
+      .updateEvent(changes, +event.id)
+      .then(({ status }) => {
+        if (status === 200) {
+          showAlertMessage('Событие успешно обновлено', AlertType.Info);
+          navigation.navigate('EventDetails', { eventId: event.id });
+          return;
+        }
+        setIsLoading(false);
+      })
+      .catch(error => {
+        console.error(error);
+        setIsLoading(false);
+      });
   };
 
   return (

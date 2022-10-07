@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import { api } from '../src/config';
 import { dateRu } from '../src/utils';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import { AlertContext } from '../src/context/AlertContext';
+import { AlertType } from '../src/context/AlertContext';
 import { Image } from '../components/ui/Image';
 import { Loader } from '../components/ui/Loader';
 import { EventOptionsSheet } from '../components/ui/EventOptionsSheet';
@@ -17,6 +19,7 @@ import { THEME } from '../components/theme.js';
 
 export const EventScreen = ({ navigation, route }) => {
   const { eventId } = route.params;
+  const { showAlertMessage } = useContext(AlertContext);
 
   const [isLoading, setIsLoading] = useState(true);
   const [event, setEvent] = useState(null);
@@ -32,6 +35,24 @@ export const EventScreen = ({ navigation, route }) => {
 
   const editEvent = () => {
     navigation.push('EditEventScreen', { event });
+    closeOptionsSheet();
+  };
+
+  const onDeleteEvent = () => {
+    setIsLoading(true);
+    api.event
+      .deleteEvent(eventId)
+      .then(({ status }) => {
+        if (status === 200) {
+          showAlertMessage('Событие успешно удалено', AlertType.Info);
+          navigation.goBack();
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        setIsLoading(false);
+      });
+    setIsLoading(true);
   };
 
   const showMembersHandler = () => {
@@ -126,6 +147,7 @@ export const EventScreen = ({ navigation, route }) => {
           </ScrollView>
           <EventOptionsSheet
             onEditEvent={editEvent}
+            onDeleteEvent={onDeleteEvent}
             isVisible={isOptionsSheetVisible}
             onClose={closeOptionsSheet}
           />

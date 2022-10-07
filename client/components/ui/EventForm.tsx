@@ -87,7 +87,6 @@ export const EventForm: React.FC<Props> = ({
       return;
     }
     onValidate(true);
-    console.log('DATE:', dateString);
     onSetEventObject({ title, date: date.toJSON(), place, text: description, img: eventPhotoUri });
   }, [title, dateString, timeString, place, description, eventPhotoUri]);
 

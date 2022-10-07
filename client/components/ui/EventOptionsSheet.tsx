@@ -8,9 +8,15 @@ type Props = {
   isVisible: boolean;
   onClose: () => void;
   onEditEvent: () => void;
+  onDeleteEvent: () => void;
 };
 
-export const EventOptionsSheet: React.FC<Props> = ({ onEditEvent, isVisible, onClose }) => {
+export const EventOptionsSheet: React.FC<Props> = ({
+  onEditEvent,
+  onDeleteEvent,
+  isVisible,
+  onClose,
+}) => {
   return (
     <View style={SCREEN_STYLE.bottomSheetWrapper}>
       <BottomSheet isVisible={isVisible} onClose={onClose}>
@@ -18,7 +24,7 @@ export const EventOptionsSheet: React.FC<Props> = ({ onEditEvent, isVisible, onC
         <BottomSheetOption
           icon={THEME.ICON_CROSS}
           text={'Удалить событие'}
-          onPress={() => console.log('2')}
+          onPress={onDeleteEvent}
         />
       </BottomSheet>
     </View>

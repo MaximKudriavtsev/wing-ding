@@ -36,7 +36,7 @@ export const CreateEventScreen = ({ navigation }) => {
     setIsLoading(true);
     api.event
       .createEvent(eventObject)
-      .then(({ data, status }) => {
+      .then(({ status }) => {
         if (status === 200) {
           showAlertMessage('Событие успешно создано', AlertType.Info);
           navigation.navigate('ProfileScreen');
