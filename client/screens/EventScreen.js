@@ -3,8 +3,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { api } from '../src/config';
 import { dateRu } from '../src/utils';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { AlertContext } from '../src/context/AlertContext';
-import { AlertType } from '../src/context/AlertContext';
+import { AlertContext, AlertType } from '../src/context/AlertContext';
 import { Image } from '../components/ui/Image';
 import { Loader } from '../components/ui/Loader';
 import { EventOptionsSheet } from '../components/ui/EventOptionsSheet';
@@ -45,14 +44,15 @@ export const EventScreen = ({ navigation, route }) => {
       .then(({ status }) => {
         if (status === 200) {
           showAlertMessage('Событие успешно удалено', AlertType.Info);
+          setIsLoading(false);
           navigation.goBack();
         }
       })
       .catch(error => {
-        console.error(error);
+        showAlertMessage('Что-то пошло не так... Попробуйте позже', AlertType.Error);
+        console.log(error.response);
         setIsLoading(false);
       });
-    setIsLoading(true);
   };
 
   const showMembersHandler = () => {
@@ -65,44 +65,44 @@ export const EventScreen = ({ navigation, route }) => {
   const toggleMember = () => {
     setIsLoading(true);
     api.event[event.isMember ? 'leaveEvent' : 'joinEvent'](eventId)
-      .then(response => {
+      .then(() => {
         api.event //Until I use useQuery
           .getEvent(eventId)
-          .then(response => {
-            setEvent(response.data);
+          .then(({ data }) => {
+            setEvent(data);
             setIsLoading(false);
-          })
-          .catch(error => {
-            console.error(error.response.data);
-            setIsLoading(true);
           });
       })
-      .catch(error => console.error(error));
+      .catch(error => {
+        showAlertMessage('Что-то пошло не так... Попробуйте позже', AlertType.Error);
+        console.log(error.response);
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
     setIsLoading(true);
     api.event
       .getEvent(eventId)
-      .then(response => {
-        setEvent(response.data);
-        console.log(response.data);
+      .then(({ data }) => {
+        setEvent(data);
         navigation.setOptions({
           headerRight: () => {
-            if (!response.data.isHost) return;
+            if (!data.isHost) return;
             return (
               <HeaderButtons HeaderButtonComponent={HeaderIcon}>
                 <Item title='Filter' iconName={THEME.ICON_OPTION_DOTS} onPress={openOptionsSheet} />
               </HeaderButtons>
             );
           },
-          title: response.data.title,
+          title: data.title,
         });
         setIsLoading(false);
       })
       .catch(error => {
-        console.error(error.response.data);
-        setIsLoading(true);
+        showAlertMessage('Что-то пошло не так... Попробуйте позже', AlertType.Error);
+        console.log(error.response);
+        setIsLoading(false);
       });
   }, [eventId]);
 

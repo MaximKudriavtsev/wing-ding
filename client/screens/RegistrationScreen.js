@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { AlertContext } from '../src/context/AlertContext';
+import { AlertContext, AlertType } from '../src/context/AlertContext';
 import { TokenContext } from '../src/context/TokenContext';
 import { api } from '../src/config';
 import { validate, decodeError } from '../src/utils';
@@ -34,15 +34,15 @@ export const RegistrationScreen = ({ navigation }) => {
     ) {
       api.user
         .registration({ email, password, firstName, lastName })
-        .then(response => {
-          const { data, status } = response;
+        .then(({ data, status }) => {
           if (status === 200) {
             setUserToken(data[TOKEN_PROP]);
           }
         })
         .catch(error => {
           const errorMessage = decodeError(error.response.data.error);
-          showAlertMessage(errorMessage, 'ERROR');
+          showAlertMessage(errorMessage, AlertType.Error);
+          console.log(error.response);
         });
     }
   };

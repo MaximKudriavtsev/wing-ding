@@ -3,14 +3,14 @@ import { EventForm } from '../components/ui/EventForm';
 import { View, ScrollView } from 'react-native';
 import { PhotoPickerSheet } from '../components/ui/PhotoPickerSheet';
 import { api } from '../src/config';
-import { AlertContext } from '../src/context/AlertContext';
+import { AlertContext, AlertType } from '../src/context/AlertContext';
 import { Button } from '../components/ui/Button';
 import { Loader } from '../components/ui/Loader';
 import { SCREEN_STYLE } from '../components/theme.js';
-import { AlertType } from '../src/context/AlertContext';
 
 export const CreateEventScreen = ({ navigation }) => {
   const { showAlertMessage } = useContext(AlertContext);
+
   const [isFormValid, setFormValid] = useState(false);
   const [validationMessage, setValidationMessage] = useState('Заполните форму');
   const [isLoading, setIsLoading] = useState(false);
@@ -39,13 +39,13 @@ export const CreateEventScreen = ({ navigation }) => {
       .then(({ status }) => {
         if (status === 200) {
           showAlertMessage('Событие успешно создано', AlertType.Info);
+          setIsLoading(false);
           navigation.navigate('ProfileScreen');
-          return;
         }
-        setIsLoading(false);
       })
       .catch(error => {
-        console.error(error);
+        showAlertMessage('Что-то пошло не так... Попробуйте позже', AlertType.Error);
+        console.log(error.response);
         setIsLoading(false);
       });
   };

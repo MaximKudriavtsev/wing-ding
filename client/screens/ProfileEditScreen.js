@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import { api } from '../src/config';
 import { PhotoPicker } from '../components/ui/PhotoPicker';
 import { PhotoPickerSheet } from '../components/ui/PhotoPickerSheet';
-import { AlertContext } from '../src/context/AlertContext';
+import { AlertContext, AlertType } from '../src/context/AlertContext';
 import { UserContext } from '../src/context/UserContext';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -40,11 +40,11 @@ export const ProfileEditScreen = ({ navigation }) => {
 
   const onApplyChanges = () => {
     if (!firstNameValidations.isValid || !lastNameValidations.isValid) {
-      showAlertMessage('Введите настоящие имя и фамилию', 'ERROR');
+      showAlertMessage('Введите настоящие имя и фамилию', AlertType.Error);
       return;
     }
     if (!birthDateValidations.isValid) {
-      showAlertMessage('Дата должна быть в формате DD.MM.YYYY', 'ERROR');
+      showAlertMessage('Дата должна быть в формате DD.MM.YYYY', AlertType.Error);
       return;
     }
 
@@ -62,10 +62,9 @@ export const ProfileEditScreen = ({ navigation }) => {
     const birthDate = dateRu(birthDateString, 'DD.MM.YYYY');
     api.user
       .changeProfile(changes)
-      .then(response => {
-        const { data, status } = response;
+      .then(({ status }) => {
         if (status === 200) {
-          showAlertMessage('Данные успешно обновлены', 'INFO');
+          showAlertMessage('Данные успешно обновлены', AlertType.Info);
           setAuthorizedUser({
             ...authorizedUser,
             birthDate,
@@ -74,14 +73,13 @@ export const ProfileEditScreen = ({ navigation }) => {
             lastName,
             userPhoto,
           });
-        } else {
-          showAlertMessage('Что-то пошло не так..', 'ERROR');
+          setIsLoading(false);
         }
-        setIsLoading(false);
       })
       .catch(error => {
         const errorMessage = decodeError(error.response.data.error);
-        showAlertMessage(errorMessage, 'ERROR');
+        showAlertMessage(errorMessage, AlertType.Error);
+        console.log(error.response);
         setIsLoading(false);
       });
   };

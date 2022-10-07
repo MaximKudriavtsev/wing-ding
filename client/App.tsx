@@ -48,7 +48,8 @@ export default function App() {
           setAuthorizedUser(response.data.user);
         })
         .catch(error => {
-          console.error(error.response);
+          showAlertMessage('Что-то пошло не так...', AlertType.Error);
+          console.log(error.response);
         });
     }
   }, [userToken]);
