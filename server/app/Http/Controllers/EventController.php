@@ -49,8 +49,8 @@ class EventController extends Controller
                 $event->img = config('app.url') . 'storage/event/' . $new_filename;
             }
 
-            if (isset($req['text'])) {
-                $event->text = $req['text'];
+            if ($request->input('text')) {
+                $event->text = $request->input('text');
             }
 
             $event->save();
