@@ -118,7 +118,7 @@ export const ProfileEditScreen = ({ navigation }) => {
                 autoCapitalize={'words'}
                 onChangeText={firstName => {
                   setFirstName(firstName);
-                  setFirstNameValidations(validate(firstName, { isFilled: true, isName: true }));
+                  setFirstNameValidations(validate(firstName, { isRequired: true, isName: true }));
                 }}
               >
                 {firstName}
@@ -129,7 +129,7 @@ export const ProfileEditScreen = ({ navigation }) => {
                 autoCapitalize={'words'}
                 onChangeText={lastName => {
                   setLastName(lastName);
-                  setLastNameValidations(validate(lastName, { isFilled: true, isName: true }));
+                  setLastNameValidations(validate(lastName, { isRequired: true, isName: true }));
                 }}
               >
                 {lastName}

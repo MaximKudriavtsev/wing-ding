@@ -3,7 +3,7 @@ import { EventForm } from '../components/ui/EventForm';
 import { View, ScrollView } from 'react-native';
 import { PhotoPickerSheet } from '../components/ui/PhotoPickerSheet';
 import { api } from '../src/config';
-import { AlertContext, AlertType } from '../src/context/AlertContext';
+import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertContext';
 import { Button } from '../components/ui/Button';
 import { Loader } from '../components/ui/Loader';
 import { SCREEN_STYLE } from '../components/theme.js';
@@ -44,7 +44,7 @@ export const CreateEventScreen = ({ navigation }) => {
         }
       })
       .catch(error => {
-        showAlertMessage('Что-то пошло не так... Попробуйте позже', AlertType.Error);
+        showAlertMessage(AlertMessages.unknownError, AlertType.Error);
         console.log(error.response);
         setIsLoading(false);
       });

@@ -1,20 +1,13 @@
 import React from 'react';
 import { View, TextInput as DefaultTextInput, StyleSheet } from 'react-native';
+import { TextInputProps } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { THEME } from '../theme';
 
-type Props = {
-  style?: object;
+type Props = TextInputProps & {
   iconName?: string;
   iconColor?: string;
   iconSize?: number;
-  placeholder?: string;
-  onChangeText?: (text: string) => void;
-  autoCapitalize?: string;
-  numberOfLines?: number;
-  secureTextEntry?: boolean;
-  multiline?: boolean;
-  children?: string;
 };
 
 export const TextInput: React.FC<Props> = ({

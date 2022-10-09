@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { AlertContext, AlertType } from '../src/context/AlertContext';
+import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertContext';
 import { api } from '../src/config';
 import { View } from 'react-native';
 import { List } from '../components/List';
@@ -34,7 +34,7 @@ export const MemberListScreen = ({ route, navigation }) => {
           setIsLoading(false);
         })
         .catch(error => {
-          showAlertMessage('Что-то пошло не так... Попробуйте позже', AlertType.Error);
+          showAlertMessage(AlertMessages.unknownError, AlertType.Error);
           console.log(error.response);
           setIsLoading(false);
         });

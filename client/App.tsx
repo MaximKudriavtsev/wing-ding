@@ -9,7 +9,12 @@ import { TopAlert } from './components/ui/TopAlert';
 import { createAuthorizationInterceptor, ejectInterceptor } from './src/utils';
 import { api } from './src/config';
 
-import { AlertProvider, AlertType, ShowAlertMessage } from './src/context/AlertContext';
+import {
+  AlertProvider,
+  AlertType,
+  ShowAlertMessage,
+  AlertMessages,
+} from './src/context/AlertContext';
 import { TokenProvider } from './src/context/TokenContext';
 import { UserProvider } from './src/context/UserContext';
 import { User } from './src/api/user/types';
@@ -48,7 +53,7 @@ export default function App() {
           setAuthorizedUser(response.data.user);
         })
         .catch(error => {
-          showAlertMessage('Что-то пошло не так...', AlertType.Error);
+          showAlertMessage(AlertMessages.unknownError, AlertType.Error);
           console.log(error.response);
         });
     }

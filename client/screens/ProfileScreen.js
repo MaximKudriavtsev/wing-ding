@@ -61,7 +61,7 @@ export const ProfileScreen = ({ navigation, route }) => {
         setIsUserLoading(false);
       })
       .catch(error => {
-        showAlertMessage('Что-то пошло не так... Попробуйте позже', AlertType.Error);
+        showAlertMessage(AlertMessages.unknownErrorError, AlertType.Error);
         console.log(error.response);
         setIsUserLoading(false);
       });
@@ -76,7 +76,7 @@ export const ProfileScreen = ({ navigation, route }) => {
         setIsUserLoading(false);
       })
       .catch(error => {
-        showAlertMessage('Что-то пошло не так... Попробуйте позже', AlertType.Error);
+        showAlertMessage(AlertMessages.unknownErrorError, AlertType.Error);
         console.log(error.response);
         setIsUserLoading(false);
       });
@@ -94,7 +94,7 @@ export const ProfileScreen = ({ navigation, route }) => {
         setIsEventLoading(false);
       })
       .catch(error => {
-        showAlertMessage('Что-то пошло не так... Попробуйте позже', AlertType.Error);
+        showAlertMessage(AlertMessages.unknownErrorError, AlertType.Error);
         console.log(error.response);
         setIsEventLoading(false);
       });

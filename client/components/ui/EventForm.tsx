@@ -11,7 +11,11 @@ import { THEME } from '../theme.js';
 
 type Props = {
   event?: Event;
-  eventPhoto: string; // Required photo from photoPicker
+
+  /**
+   *  Required photo from photo picker
+   */
+  eventPhoto: string;
   onOpenPhotoPicker: () => void;
   onValidate: (b: boolean) => void;
   onSetValidationMessage: (s: string) => void;
@@ -97,7 +101,7 @@ export const EventForm: React.FC<Props> = ({
         placeholder={'Введите название'}
         onChangeText={title => {
           setTitle(title);
-          setTitleValidations(validate(title, { isFilled: true }));
+          setTitleValidations(validate(title, { isRequired: true }));
         }}
       >
         {title}
@@ -140,7 +144,7 @@ export const EventForm: React.FC<Props> = ({
         placeholder={'Место'}
         onChangeText={place => {
           setPlace(place);
-          setPlaceValidations(validate(place, { isFilled: true }));
+          setPlaceValidations(validate(place, { isRequired: true }));
         }}
       >
         {place}
@@ -154,7 +158,7 @@ export const EventForm: React.FC<Props> = ({
         placeholder={'Добавьте описание'}
         onChangeText={description => {
           setDescription(description);
-          setDescriptionValidations(validate(description, { isFilled: true }));
+          setDescriptionValidations(validate(description, { isRequired: true }));
         }}
       >
         {description}

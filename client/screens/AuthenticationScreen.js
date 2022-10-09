@@ -56,7 +56,7 @@ export const AuthenticationScreen = ({ navigation }) => {
         placeholder={'Пароль'}
         onChangeText={password => {
           setPassword(password);
-          setPasswordValidations(validate(password, { isFilled: true }));
+          setPasswordValidations(validate(password, { isRequired: true }));
         }}
       />
       <Button style={{ marginVertical: 25 }} onPress={onSignIn}>

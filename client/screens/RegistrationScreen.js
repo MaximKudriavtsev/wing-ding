@@ -66,7 +66,7 @@ export const RegistrationScreen = ({ navigation }) => {
         secureTextEntry={true}
         onChangeText={password => {
           setPassword(password);
-          setPasswordValidations(validate(password, { isFilled: true }));
+          setPasswordValidations(validate(password, { isRequired: true }));
         }}
       />
       <ValidationHint validations={firstNameValidations} />
@@ -76,7 +76,7 @@ export const RegistrationScreen = ({ navigation }) => {
         autoCapitalize={'words'}
         onChangeText={firstName => {
           setFirstName(firstName);
-          setFirstNameValidations(validate(firstName, { isFilled: true, isName: true }));
+          setFirstNameValidations(validate(firstName, { isRequired: true, isName: true }));
         }}
       />
       <ValidationHint validations={lastNameValidations} />
@@ -86,7 +86,7 @@ export const RegistrationScreen = ({ navigation }) => {
         autoCapitalize={'words'}
         onChangeText={lastName => {
           setLastName(lastName);
-          setLastNameValidations(validate(lastName, { isFilled: true, isName: true }));
+          setLastNameValidations(validate(lastName, { isRequired: true, isName: true }));
         }}
       />
       <Button style={{ marginVertical: 25 }} onPress={onSignUp}>

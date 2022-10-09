@@ -30,8 +30,8 @@ export const SetPasswordScreen = ({ navigation }) => {
         secureTextEntry={true}
         onChangeText={password => {
           setPassword(password);
-          setPasswordValidations(validate(password, { isFilled: true }));
-          setConfirmingValidations(validate(confirming, { isFilled: true, isSame: password }));
+          setPasswordValidations(validate(password, { isRequired: true }));
+          setConfirmingValidations(validate(confirming, { isRequired: true, isSame: password }));
         }}
       />
       <ValidationHint validations={confirmingValidations} />
@@ -41,7 +41,7 @@ export const SetPasswordScreen = ({ navigation }) => {
         secureTextEntry={true}
         onChangeText={confirming => {
           setConfirming(confirming);
-          setConfirmingValidations(validate(confirming, { isFilled: true, isSame: password }));
+          setConfirmingValidations(validate(confirming, { isRequired: true, isSame: password }));
         }}
       />
       <Button style={{ marginVertical: 25 }} onPress={onSet}>

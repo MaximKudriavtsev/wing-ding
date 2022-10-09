@@ -3,7 +3,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { api } from '../src/config';
 import { dateRu } from '../src/utils';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { AlertContext, AlertType } from '../src/context/AlertContext';
+import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertContext';
 import { Image } from '../components/ui/Image';
 import { Loader } from '../components/ui/Loader';
 import { EventOptionsSheet } from '../components/ui/EventOptionsSheet';
@@ -49,7 +49,7 @@ export const EventScreen = ({ navigation, route }) => {
         }
       })
       .catch(error => {
-        showAlertMessage('Что-то пошло не так... Попробуйте позже', AlertType.Error);
+        showAlertMessage(AlertMessages.unknownError, AlertType.Error);
         console.log(error.response);
         setIsLoading(false);
       });
@@ -74,7 +74,7 @@ export const EventScreen = ({ navigation, route }) => {
           });
       })
       .catch(error => {
-        showAlertMessage('Что-то пошло не так... Попробуйте позже', AlertType.Error);
+        showAlertMessage(AlertMessages.unknownError, AlertType.Error);
         console.log(error.response);
         setIsLoading(false);
       });
@@ -100,7 +100,7 @@ export const EventScreen = ({ navigation, route }) => {
         setIsLoading(false);
       })
       .catch(error => {
-        showAlertMessage('Что-то пошло не так... Попробуйте позже', AlertType.Error);
+        showAlertMessage(AlertMessages.unknownError, AlertType.Error);
         console.log(error.response);
         setIsLoading(false);
       });

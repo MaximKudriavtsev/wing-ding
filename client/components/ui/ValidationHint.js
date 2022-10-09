@@ -5,11 +5,11 @@ import { THEME } from '../theme';
 export const ValidationHint = ({ validations }, fontSize) => {
   let text = '';
   if (validations) {
-    const { isFilled, isLengthy, isEmail, isSame, isName } = validations;
+    const { isRequired, isLengthy, isEmail, isSame, isName } = validations;
 
     if (!isEmail) text = 'Введите действующий E-mail адрес';
     if (!isLengthy) text = 'Недостаточное количество символов';
-    if (!isFilled) text = 'Поле не может быть пустым';
+    if (!isRequired) text = 'Поле не может быть пустым';
     if (!isSame) text = 'Поле не совпадает';
     if (!isName) text = 'Введите свои настоящие данные';
   }
