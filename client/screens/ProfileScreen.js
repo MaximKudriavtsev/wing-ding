@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { api } from '../src/config';
 import { UserContext } from '../src/context/UserContext';
+import { AlertContext, AlertType } from '../src/context/AlertContext';
 import { dateRu } from '../src/utils';
 import { View, StyleSheet } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -19,6 +20,7 @@ import { SCREEN_STYLE, THEME } from '../components/theme.js';
 export const ProfileScreen = ({ navigation, route }) => {
   const { userId } = route.params;
   const { authorizedUser } = useContext(UserContext);
+  const { showAlertMessage } = useContext(AlertContext);
 
   const [user, setUser] = useState({});
   const [isFriend, setIsFriend] = useState(false);
@@ -53,23 +55,31 @@ export const ProfileScreen = ({ navigation, route }) => {
   const toggleFriend = () => {
     setIsUserLoading(true);
     api.user[isFriend ? 'deleteFromFriends' : 'addToFriends'](user.id)
-      .then(response => {
+      .then(() => {
         setIsFriend(!isFriend);
         setFriendsCount(isFriend ? friendsCount - 1 : friendsCount + 1);
         setIsUserLoading(false);
       })
-      .catch(error => console.error(error));
+      .catch(error => {
+        showAlertMessage(AlertMessages.unknownErrorError, AlertType.Error);
+        console.log(error.response);
+        setIsUserLoading(false);
+      });
   };
 
   useEffect(() => {
     setIsUserLoading(true);
     api.user
       .getUser(userId)
-      .then(response => {
-        setUser(response.data.user);
+      .then(({ data }) => {
+        setUser(data.user);
         setIsUserLoading(false);
       })
-      .catch(error => console.error(error.response));
+      .catch(error => {
+        showAlertMessage(AlertMessages.unknownErrorError, AlertType.Error);
+        console.log(error.response);
+        setIsUserLoading(false);
+      });
   }, [userId]);
 
   useEffect(() => {
@@ -79,13 +89,14 @@ export const ProfileScreen = ({ navigation, route }) => {
     setFriendsCount(+user.friends);
     api.user
       .getUserEvents(userId)
-      .then(response => {
-        setEvents(response.data.events);
+      .then(({ data }) => {
+        setEvents(data.events);
         setIsEventLoading(false);
       })
       .catch(error => {
-        console.error(error);
-        setIsEventLoading(true);
+        showAlertMessage(AlertMessages.unknownErrorError, AlertType.Error);
+        console.log(error.response);
+        setIsEventLoading(false);
       });
   }, [user.id]);
 

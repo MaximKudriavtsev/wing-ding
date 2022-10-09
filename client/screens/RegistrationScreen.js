@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { AlertContext } from '../src/context/AlertContext';
+import { AlertContext, AlertType } from '../src/context/AlertContext';
 import { TokenContext } from '../src/context/TokenContext';
 import { api } from '../src/config';
 import { validate, decodeError } from '../src/utils';
@@ -34,15 +34,15 @@ export const RegistrationScreen = ({ navigation }) => {
     ) {
       api.user
         .registration({ email, password, firstName, lastName })
-        .then(response => {
-          const { data, status } = response;
+        .then(({ data, status }) => {
           if (status === 200) {
             setUserToken(data[TOKEN_PROP]);
           }
         })
         .catch(error => {
           const errorMessage = decodeError(error.response.data.error);
-          showAlertMessage(errorMessage, 'ERROR');
+          showAlertMessage(errorMessage, AlertType.Error);
+          console.log(error.response);
         });
     }
   };
@@ -66,7 +66,7 @@ export const RegistrationScreen = ({ navigation }) => {
         secureTextEntry={true}
         onChangeText={password => {
           setPassword(password);
-          setPasswordValidations(validate(password, { isFilled: true }));
+          setPasswordValidations(validate(password, { isRequired: true }));
         }}
       />
       <ValidationHint validations={firstNameValidations} />
@@ -76,7 +76,7 @@ export const RegistrationScreen = ({ navigation }) => {
         autoCapitalize={'words'}
         onChangeText={firstName => {
           setFirstName(firstName);
-          setFirstNameValidations(validate(firstName, { isFilled: true, isName: true }));
+          setFirstNameValidations(validate(firstName, { isRequired: true, isName: true }));
         }}
       />
       <ValidationHint validations={lastNameValidations} />
@@ -86,7 +86,7 @@ export const RegistrationScreen = ({ navigation }) => {
         autoCapitalize={'words'}
         onChangeText={lastName => {
           setLastName(lastName);
-          setLastNameValidations(validate(lastName, { isFilled: true, isName: true }));
+          setLastNameValidations(validate(lastName, { isRequired: true, isName: true }));
         }}
       />
       <Button style={{ marginVertical: 25 }} onPress={onSignUp}>

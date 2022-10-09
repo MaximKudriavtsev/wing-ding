@@ -43,6 +43,7 @@ export const THEME = {
   ICON_FILTER: 'filter',
   ICON_IMAGE: 'image',
   ICON_CAMERA: 'camera',
+  ICON_OPTION_DOTS: 'ellipsis-h',
 };
 
 export const SCREEN_STYLE = StyleSheet.create({
@@ -64,5 +65,13 @@ export const SCREEN_STYLE = StyleSheet.create({
     flex: 1,
     alignContent: 'center',
     justifyContent: 'center',
+  },
+
+  bottomSheetWrapper: {
+    position: 'absolute',
+    width: THEME.SCREEN_WIDTH,
+    height: THEME.SCREEN_HEIGHT,
+    top: 0,
+    left: 0,
   },
 });

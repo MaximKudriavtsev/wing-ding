@@ -4,6 +4,10 @@ export enum AlertType {
   Error = 'ERROR',
   Warning = 'WARNING',
   Info = 'INFO',
+}
+
+export const AlertMessages = {
+  unknown: 'Что-то пошло не так... Попробуйте позже',
 };
 
 export type ShowAlertMessage = (text: string, type: AlertType) => void;
@@ -17,5 +21,6 @@ type Props = {
   value: AlertContextType;
 };
 
-export const AlertProvider: React.FC<Props> = ({ children, value }) =>
-  <AlertContext.Provider value={value}>{children}</AlertContext.Provider>;
+export const AlertProvider: React.FC<Props> = ({ children, value }) => (
+  <AlertContext.Provider value={value}>{children}</AlertContext.Provider>
+);

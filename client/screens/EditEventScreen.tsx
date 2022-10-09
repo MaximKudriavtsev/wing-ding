@@ -7,15 +7,23 @@ import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertCont
 import { Button } from '../components/ui/Button';
 import { Loader } from '../components/ui/Loader';
 import { SCREEN_STYLE } from '../components/theme.js';
+import { getObjectChanges } from '../src/utils';
+import { Event } from '../src/api/event/types';
 
-export const CreateEventScreen = ({ navigation }) => {
+type Props = {
+  navigation: any;
+  route: any;
+};
+
+export const EditEventScreen: React.FC<Props> = ({ navigation, route }) => {
+  const event: Event = { ...route.params.event };
+
   const { showAlertMessage } = useContext(AlertContext);
-
-  const [isFormValid, setFormValid] = useState(false);
-  const [validationMessage, setValidationMessage] = useState('Заполните форму');
+  const [isFormValid, setFormValid] = useState(true);
+  const [validationMessage, setValidationMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isPickerSheetVisible, setPickerSheetVisible] = useState(false);
-  const [eventPhotoUri, setEventPhotoUri] = useState('');
+  const [eventPhotoUri, setEventPhotoUri] = useState(event.img || '');
   const [eventObject, setEventObject] = useState({});
   let date;
 
@@ -27,20 +35,21 @@ export const CreateEventScreen = ({ navigation }) => {
     setPickerSheetVisible(false);
   };
 
-  // Object creates and validates with Event Form
-  const onCreateEvent = () => {
+  // Object changes and validates with Event Form
+  const onChangeEvent = () => {
     if (!isFormValid) {
       showAlertMessage(validationMessage, AlertType.Error);
       return;
     }
     setIsLoading(true);
+    const changes = getObjectChanges(eventObject, event);
     api.event
-      .createEvent(eventObject)
+      .updateEvent(changes, +event.id)
       .then(({ status }) => {
         if (status === 200) {
-          showAlertMessage('Событие успешно создано', AlertType.Info);
+          showAlertMessage('Событие успешно обновлено', AlertType.Info);
           setIsLoading(false);
-          navigation.navigate('ProfileScreen');
+          navigation.navigate('EventDetails', { eventId: event.id });
         }
       })
       .catch(error => {
@@ -58,13 +67,14 @@ export const CreateEventScreen = ({ navigation }) => {
         <>
           <ScrollView>
             <EventForm
+              event={event}
               eventPhoto={eventPhotoUri}
               onOpenPhotoPicker={openPickerSheet}
               onValidate={setFormValid}
               onSetValidationMessage={setValidationMessage}
               onSetEventObject={setEventObject}
             />
-            <Button onPress={onCreateEvent}>Создать событие</Button>
+            <Button onPress={onChangeEvent}>Изменить событие</Button>
           </ScrollView>
           <PhotoPickerSheet
             isVisible={isPickerSheetVisible}

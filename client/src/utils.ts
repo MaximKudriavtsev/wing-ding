@@ -4,6 +4,8 @@ import 'dayjs/locale/ru';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import axios from 'axios';
 import { BASE_URL } from './config';
+import mergeWith from 'lodash/mergeWith';
+import isEqual from 'lodash/isEqual';
 
 type Size = {
   h: number;
@@ -76,7 +78,7 @@ export const dateRu = dayjs;
 export const validate = (value: string, validations: any) => {
   let isLengthy = true;
   let isShorty = true;
-  let isFilled = true;
+  let isRequired = true;
   let isEmail = true;
   let isSame = true;
   let isValid = true;
@@ -86,8 +88,8 @@ export const validate = (value: string, validations: any) => {
 
   for (const validation in validations) {
     switch (validation) {
-      case 'isFilled':
-        value ? (isFilled = true) : ((isFilled = false), (isValid = false));
+      case 'isRequired':
+        value ? (isRequired = true) : ((isRequired = false), (isValid = false));
         break;
       case 'minLength':
         value.length > validations[validation]
@@ -126,7 +128,7 @@ export const validate = (value: string, validations: any) => {
   }
 
   return {
-    isFilled,
+    isRequired,
     isLengthy,
     isShorty,
     isEmail,
@@ -156,3 +158,13 @@ export const decodeError = (error: string) => {
 };
 
 export const findUserById = (id: string) => USERS.find(user => user.id == id);
+
+export const getObjectChanges = (n: any, t: any) => {
+  const changes: any = {};
+  mergeWith(t, n, function (objectValue: object, sourceValue: object, key: string) {
+    if (!isEqual(objectValue, sourceValue) && Object(objectValue) !== objectValue) {
+      changes[key] = sourceValue;
+    }
+  });
+  return changes;
+};

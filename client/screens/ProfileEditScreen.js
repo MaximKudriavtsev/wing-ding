@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import { api } from '../src/config';
 import { PhotoPicker } from '../components/ui/PhotoPicker';
 import { PhotoPickerSheet } from '../components/ui/PhotoPickerSheet';
-import { AlertContext } from '../src/context/AlertContext';
+import { AlertContext, AlertType } from '../src/context/AlertContext';
 import { UserContext } from '../src/context/UserContext';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -12,7 +12,7 @@ import { Button } from '../components/ui/Button';
 import { Text } from '../components/ui/Text';
 import { TextInput } from '../components/ui/TextInput';
 import { Loader } from '../components/ui/Loader';
-import { dateRu, validate, decodeError } from '../src/utils';
+import { dateRu, validate, getObjectChanges } from '../src/utils';
 import { SCREEN_STYLE, THEME } from '../components/theme.js';
 
 export const ProfileEditScreen = ({ navigation }) => {
@@ -38,40 +38,33 @@ export const ProfileEditScreen = ({ navigation }) => {
     setPickerSheetVisible(false);
   };
 
-  const getChanges = () => {
-    const changes = {};
-    const birthDate = dateRu(authorizedUser.birthDate).format('DD.MM.YYYY'); // Set old date to string
-
-    if (firstName != authorizedUser.firstName) changes.firstName = firstName;
-    if (lastName != authorizedUser.lastName) changes.lastName = lastName;
-    if (birthDateString != birthDate)
-      changes.birthDate = dateRu(birthDateString, 'DD.MM.YYYY').toJSON();
-    if (description != authorizedUser.description) changes.description = description;
-    if (userPhoto != authorizedUser.photo) changes.photo = userPhoto;
-
-    return changes;
-  };
-
   const onApplyChanges = () => {
     if (!firstNameValidations.isValid || !lastNameValidations.isValid) {
-      showAlertMessage('Введите настоящие имя и фамилию', 'ERROR');
+      showAlertMessage('Введите настоящие имя и фамилию', AlertType.Error);
       return;
     }
     if (!birthDateValidations.isValid) {
-      showAlertMessage('Дата должна быть в формате DD.MM.YYYY', 'ERROR');
+      showAlertMessage('Дата должна быть в формате DD.MM.YYYY', AlertType.Error);
       return;
     }
 
-    const changes = getChanges();
+    const newData = {
+      firstName,
+      lastName,
+      birthDate: dateRu(birthDateString, 'DD.MM.YYYY').toJSON(),
+      description,
+      photo: userPhoto,
+    };
+
+    const changes = getObjectChanges(newData, authorizedUser);
 
     setIsLoading(true);
     const birthDate = dateRu(birthDateString, 'DD.MM.YYYY');
     api.user
       .changeProfile(changes)
-      .then(response => {
-        const { data, status } = response;
+      .then(({ status }) => {
         if (status === 200) {
-          showAlertMessage('Данные успешно обновлены', 'INFO');
+          showAlertMessage('Данные успешно обновлены', AlertType.Info);
           setAuthorizedUser({
             ...authorizedUser,
             birthDate,
@@ -80,14 +73,13 @@ export const ProfileEditScreen = ({ navigation }) => {
             lastName,
             userPhoto,
           });
-        } else {
-          showAlertMessage('Что-то пошло не так..', 'ERROR');
+          setIsLoading(false);
         }
-        setIsLoading(false);
       })
       .catch(error => {
         const errorMessage = decodeError(error.response.data.error);
-        showAlertMessage(errorMessage, 'ERROR');
+        showAlertMessage(errorMessage, AlertType.Error);
+        console.log(error.response);
         setIsLoading(false);
       });
   };
@@ -126,7 +118,7 @@ export const ProfileEditScreen = ({ navigation }) => {
                 autoCapitalize={'words'}
                 onChangeText={firstName => {
                   setFirstName(firstName);
-                  setFirstNameValidations(validate(firstName, { isFilled: true, isName: true }));
+                  setFirstNameValidations(validate(firstName, { isRequired: true, isName: true }));
                 }}
               >
                 {firstName}
@@ -137,7 +129,7 @@ export const ProfileEditScreen = ({ navigation }) => {
                 autoCapitalize={'words'}
                 onChangeText={lastName => {
                   setLastName(lastName);
-                  setLastNameValidations(validate(lastName, { isFilled: true, isName: true }));
+                  setLastNameValidations(validate(lastName, { isRequired: true, isName: true }));
                 }}
               >
                 {lastName}

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertContext';
 import { api } from '../src/config';
 import { View } from 'react-native';
 import { List } from '../components/List';
@@ -8,6 +9,7 @@ import { THEME } from '../components/theme';
 
 export const MemberListScreen = ({ route, navigation }) => {
   const { eventId, title } = route.params;
+  const { showAlertMessage } = useContext(AlertContext);
 
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
@@ -27,11 +29,15 @@ export const MemberListScreen = ({ route, navigation }) => {
       setIsLoading(true);
       api.event
         .getMembers(eventId)
-        .then(response => {
-          setUsers(response.data.members);
+        .then(({ data }) => {
+          setUsers(data.members);
           setIsLoading(false);
         })
-        .catch(error => console.error(error.data));
+        .catch(error => {
+          showAlertMessage(AlertMessages.unknownError, AlertType.Error);
+          console.log(error.response);
+          setIsLoading(false);
+        });
     }
   }, [eventId]);
 

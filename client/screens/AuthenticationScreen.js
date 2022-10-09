@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { AlertContext } from '../src/context/AlertContext';
+import { AlertContext, AlertType } from '../src/context/AlertContext';
 import { TokenContext } from '../src/context/TokenContext';
 import { validate, decodeError } from '../src/utils';
 import { api } from '../src/config';
@@ -24,16 +24,15 @@ export const AuthenticationScreen = ({ navigation }) => {
     if (emailValidations.isValid && passwordValidations.isValid) {
       api.user
         .auth({ email, password })
-        .then(response => {
-          const { data, status } = response;
+        .then(({ data, status }) => {
           if (status === 200) {
             setUserToken(data[TOKEN_PROP]);
           }
         })
         .catch(error => {
           const errorMessage = decodeError(error.response.data.error);
-          console.error(error.response);
-          showAlertMessage(errorMessage, 'ERROR');
+          showAlertMessage(errorMessage, AlertType.Error);
+          console.log(error.response);
         });
     }
   };
@@ -57,7 +56,7 @@ export const AuthenticationScreen = ({ navigation }) => {
         placeholder={'Пароль'}
         onChangeText={password => {
           setPassword(password);
-          setPasswordValidations(validate(password, { isFilled: true }));
+          setPasswordValidations(validate(password, { isRequired: true }));
         }}
       />
       <Button style={{ marginVertical: 25 }} onPress={onSignIn}>

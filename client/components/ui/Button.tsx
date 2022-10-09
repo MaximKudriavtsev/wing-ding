@@ -7,15 +7,15 @@ enum ButtonType {
   Primary = 'PRIMARY',
   Secondary = 'SECONDARY',
   Link = 'LINK',
-};
+}
 
 type Props = {
   children: string;
   onPress: () => void;
-  style: any,
-  type: ButtonType,
-  fontColor: string,
-  fontSize: number,
+  style?: any;
+  type?: ButtonType;
+  fontColor?: string;
+  fontSize?: number;
 };
 
 export const Button: React.FC<Props> = ({

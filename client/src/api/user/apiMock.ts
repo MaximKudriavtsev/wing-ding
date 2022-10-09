@@ -59,7 +59,7 @@ const userMockApi: UserApi = {
 
   getUserEvents: id => {
     console.log(`POST /api/user/get/${id}/events`);
-    return delay({ status: 200, data: [event] });
+    return delay({ status: 200, data: { events: [event] } });
   },
 
   getFriendList: id => {
