@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { EventForm } from '../components/ui/EventForm';
 import { View, ScrollView } from 'react-native';
 import { PhotoPickerSheet } from '../components/ui/PhotoPickerSheet';
-import { api } from '../src/config';
+import { api } from '../src/api';
 import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertContext';
 import { Button } from '../components/ui/Button';
 import { Loader } from '../components/ui/Loader';

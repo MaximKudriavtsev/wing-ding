@@ -1,15 +1,15 @@
-import { api } from '../../utils';
+import { apiQuery } from '../query';
 import { UserApi } from './types';
 
 const USER_BASE_URL = '/user';
 
 const userApi: UserApi = {
   auth: ({ email, password }) => {
-    return api.post(`${USER_BASE_URL}/auth`, { email, password });
+    return apiQuery.post(`${USER_BASE_URL}/auth`, { email, password });
   },
 
   registration: ({ email, password, firstName, lastName }) => {
-    return api.post(`${USER_BASE_URL}/registration`, {
+    return apiQuery.post(`${USER_BASE_URL}/registration`, {
       email,
       password,
       first_name: firstName,
@@ -18,27 +18,27 @@ const userApi: UserApi = {
   },
 
   getAuthorizedUser: () => {
-    return api.post(`${USER_BASE_URL}/profile/get`);
+    return apiQuery.post(`${USER_BASE_URL}/profile/get`);
   },
 
   getUser: id => {
-    return api.post(`${USER_BASE_URL}/get/${id}`);
+    return apiQuery.post(`${USER_BASE_URL}/get/${id}`);
   },
 
   getUserEvents: id => {
-    return api.post(`${USER_BASE_URL}/get/${id}/events`);
+    return apiQuery.post(`${USER_BASE_URL}/get/${id}/events`);
   },
 
   getFriendList: id => {
-    return api.post(`${USER_BASE_URL}/get/${id}/friends`);
+    return apiQuery.post(`${USER_BASE_URL}/get/${id}/friends`);
   },
 
   addToFriends: id => {
-    return api.post(`${USER_BASE_URL}/friends/add/${id}`);
+    return apiQuery.post(`${USER_BASE_URL}/friends/add/${id}`);
   },
 
   deleteFromFriends: id => {
-    return api.post(`${USER_BASE_URL}/friends/delete/${id}`);
+    return apiQuery.post(`${USER_BASE_URL}/friends/delete/${id}`);
   },
 
   changeProfile: changes => {
@@ -56,7 +56,7 @@ const userApi: UserApi = {
         name: 'profile-photo',
       });
 
-    return api.post(`${USER_BASE_URL}/profile/change`, formData, {
+    return apiQuery.post(`${USER_BASE_URL}/profile/change`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

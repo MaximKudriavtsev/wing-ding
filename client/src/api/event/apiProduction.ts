@@ -1,4 +1,4 @@
-import { api } from '../../utils';
+import { apiQuery } from '../query';
 import { EventApi } from './types';
 import { CreateEventArgs } from './types';
 
@@ -24,7 +24,7 @@ const eventApi: EventApi = {
   createEvent: ({ title, date, place, text, img }) => {
     const formData = createEventFormData({ title, date, place, text, img });
 
-    return api.post(`${EVENT_BASE_URL}/create`, formData, {
+    return apiQuery.post(`${EVENT_BASE_URL}/create`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -38,7 +38,7 @@ const eventApi: EventApi = {
     const formData = createEventFormData(changes);
     formData.append('event_id', id);
 
-    return api.post(`${EVENT_BASE_URL}/update`, formData, {
+    return apiQuery.post(`${EVENT_BASE_URL}/update`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -49,23 +49,23 @@ const eventApi: EventApi = {
   },
 
   deleteEvent: id => {
-    return api.delete(`${EVENT_BASE_URL}/${id}`);
+    return apiQuery.delete(`${EVENT_BASE_URL}/${id}`);
   },
 
   getEvent: id => {
-    return api.post(`${EVENT_BASE_URL}/get/${id}`);
+    return apiQuery.post(`${EVENT_BASE_URL}/get/${id}`);
   },
 
   getMembers: id => {
-    return api.post(`${EVENT_BASE_URL}/get/${id}/users`);
+    return apiQuery.post(`${EVENT_BASE_URL}/get/${id}/users`);
   },
 
   joinEvent: id => {
-    return api.post(`${EVENT_BASE_URL}/join/${id}`);
+    return apiQuery.post(`${EVENT_BASE_URL}/join/${id}`);
   },
 
   leaveEvent: id => {
-    return api.post(`${EVENT_BASE_URL}/leave/${id}`);
+    return apiQuery.post(`${EVENT_BASE_URL}/leave/${id}`);
   },
 };
 

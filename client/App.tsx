@@ -7,7 +7,7 @@ import { AppNavigation } from './src/navigation/AppNavigation';
 import { LoginNavigation } from './src/navigation/LoginNavigation';
 import { TopAlert } from './components/ui/TopAlert';
 import { createAuthorizationInterceptor, ejectInterceptor } from './src/utils';
-import { api } from './src/config';
+import { api } from './src/api';
 
 import {
   AlertProvider,
