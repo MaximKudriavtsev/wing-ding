@@ -2,7 +2,6 @@ import { USERS } from '../components/data';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import axios from 'axios';
 import mergeWith from 'lodash/mergeWith';
 import isEqual from 'lodash/isEqual';
 
