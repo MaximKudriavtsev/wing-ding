@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
-import { api } from '../src/config';
+import { api } from '../src/api';
 import { dateRu } from '../src/utils';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertContext';

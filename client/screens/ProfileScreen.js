@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { api } from '../src/config';
+import { api } from '../src/api';
 import { UserContext } from '../src/context/UserContext';
 import { AlertContext, AlertType } from '../src/context/AlertContext';
 import { dateRu } from '../src/utils';

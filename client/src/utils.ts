@@ -2,8 +2,6 @@ import { USERS } from '../components/data';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import axios from 'axios';
-import { BASE_URL } from './config';
 import mergeWith from 'lodash/mergeWith';
 import isEqual from 'lodash/isEqual';
 
@@ -20,54 +18,6 @@ export const cutPhoto = (size: Size): Size => {
     return cutPhoto(resized);
   }
   return resized;
-};
-
-const camelizeString = (s: string) =>
-  s.replace(/([-_][a-z])/gi, $1 => $1.toUpperCase().replace('-', '').replace('_', ''));
-
-const camelizeKeys = (object: any): any => {
-  if (typeof object === 'object' && !Array.isArray(object) && object != null) {
-    const camelObject: any = {};
-
-    Object.keys(object).forEach(key => {
-      camelObject[camelizeString(key)] = camelizeKeys(object[key]);
-    });
-
-    return camelObject;
-  }
-
-  if (Array.isArray(object)) {
-    return object.map(i => camelizeKeys(i));
-  }
-
-  return object;
-};
-
-export const api = axios.create({
-  baseURL: `${BASE_URL}/api`,
-});
-
-api.interceptors.response.use(response => {
-  if (response.data.status === 'error') {
-    const error = Error(`ERROR: ${response.data.error}\nResponse: ${response}`);
-    throw error;
-  }
-
-  return camelizeKeys(response);
-});
-
-export const createAuthorizationInterceptor = (token: string) => {
-  //returns interceptors id
-  return api.interceptors.request.use(config => {
-    if (config && config.headers) {
-      config.headers.Authorization = token;
-    }
-    return config;
-  });
-};
-
-export const ejectInterceptor = (id: number) => {
-  api.interceptors.request.eject(id);
 };
 
 dayjs.locale('ru');

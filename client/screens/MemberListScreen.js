@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertContext';
-import { api } from '../src/config';
+import { api } from '../src/api';
 import { View } from 'react-native';
 import { List } from '../components/List';
 import { UserTab } from '../components/UserTab';

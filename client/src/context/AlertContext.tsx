@@ -7,7 +7,7 @@ export enum AlertType {
 }
 
 export const AlertMessages = {
-  unknown: 'Что-то пошло не так... Попробуйте позже',
+  unknownError: 'Что-то пошло не так... Попробуйте позже',
 };
 
 export type ShowAlertMessage = (text: string, type: AlertType) => void;

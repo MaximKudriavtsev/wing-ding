@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { api } from '../src/config';
+import { api } from '../src/api';
 import { PhotoPicker } from '../components/ui/PhotoPicker';
 import { PhotoPickerSheet } from '../components/ui/PhotoPickerSheet';
 import { AlertContext, AlertType } from '../src/context/AlertContext';

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { AlertContext, AlertType } from '../src/context/AlertContext';
 import { TokenContext } from '../src/context/TokenContext';
-import { api } from '../src/config';
+import { api } from '../src/api';
 import { validate, decodeError } from '../src/utils';
 import { View } from 'react-native';
 import { Title } from '../components/ui/Title';

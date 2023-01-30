@@ -6,8 +6,8 @@ import useFont from './components/hooks/useFont';
 import { AppNavigation } from './src/navigation/AppNavigation';
 import { LoginNavigation } from './src/navigation/LoginNavigation';
 import { TopAlert } from './components/ui/TopAlert';
-import { createAuthorizationInterceptor, ejectInterceptor } from './src/utils';
-import { api } from './src/config';
+import { createAuthorizationInterceptor, ejectInterceptor } from './src/api/query';
+import { api } from './src/api';
 
 import {
   AlertProvider,
