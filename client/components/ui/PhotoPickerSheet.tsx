@@ -44,9 +44,13 @@ export const PhotoPickerSheet: React.FC<Props> = ({ isVisible, onSetPhoto, onClo
 
     onClose();
 
-    if (result.cancelled) return;
+    if (result.canceled) return;
 
-    const photoUri = await compressPhoto(result.uri, result.height, result.width);
+    const photoUri = await compressPhoto(
+      result.assets[0].uri,
+      result.assets[0].height,
+      result.assets[0].width,
+    );
 
     onSetPhoto(photoUri);
   };
@@ -64,9 +68,13 @@ export const PhotoPickerSheet: React.FC<Props> = ({ isVisible, onSetPhoto, onClo
     });
 
     onClose();
-    if (result.cancelled) return;
+    if (result.canceled) return;
 
-    const photoUri = await compressPhoto(result.uri, result.height, result.width);
+    const photoUri = await compressPhoto(
+      result.assets[0].uri,
+      result.assets[0].height,
+      result.assets[0].width,
+    );
 
     onSetPhoto(photoUri);
   };
