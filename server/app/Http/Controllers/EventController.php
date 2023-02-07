@@ -49,8 +49,8 @@ class EventController extends Controller
                 $event->img = config('app.url') . 'storage/event/' . $new_filename;
             }
 
-            if ($request->input('text')) {
-                $event->text = $request->input('text');
+            if (isset($req['text'])) {
+                $event->text = $req['text'];
             }
 
             $event->save();
@@ -307,5 +307,23 @@ class EventController extends Controller
             'status' => 'success'
         ]);
 
+    }
+
+    public function search(Request $request) {
+        if (!$request->input('value')) {
+            return [
+                'status' => 'error',
+                'error' => 'no value for search'
+            ];
+        }
+
+        $value = $request->input('value');
+
+        $users = User::where('first_name', 'like', "%$value%")->orWhere('last_name', 'like', "%$value%")->take(config('common.user_search_count'))->get();
+
+        return [
+            'status' => 'success',
+            'users' => $users
+        ];
     }
 }

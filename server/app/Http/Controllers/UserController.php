@@ -380,4 +380,22 @@ class UserController extends Controller
             'photo' => $user->photo
         ];
     }
+
+    public function search(Request $request) {
+        if (!$request->input('value')) {
+            return [
+                'status' => 'error',
+                'error' => 'no value for search'
+            ];
+        }
+
+        $value = $request->input('value');
+
+        $users = User::where('first_name', 'like', "%$value%")->orWhere('last_name', 'like', "%$value%")->take(config('common.user_search_count'))->get();
+
+        return [
+            'status' => 'success',
+            'users' => $users
+        ];
+    }
 }

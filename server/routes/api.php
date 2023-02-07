@@ -31,6 +31,7 @@ Route::prefix('/user')->group(function () {
     Route::post('/events', [UserController::class, 'selfEvents'])->middleware('auth');
     Route::post('/email/verify', [UserController::class, 'emailVerify'])->middleware('auth');
     Route::post('/email/check', [UserController::class, 'emailCheck'])->middleware('auth');
+    Route::get('/search', [UserController::class, 'search'])->middleware('auth');
 });
 
 Route::prefix('/event')->group(function () {
@@ -43,4 +44,5 @@ Route::prefix('/event')->group(function () {
     Route::get('/host/verify/{id}', [EventController::class, 'getIsHost'])->middleware('auth');
     Route::delete('/{id}', [EventController::class, 'deleteEvent'])->middleware('auth');
     Route::post('/update', [EventController::class, 'update'])->middleware('auth');
+    Route::get('/search', [EventController::class, 'search'])->middleware('auth');
 });
