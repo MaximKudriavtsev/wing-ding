@@ -319,7 +319,7 @@ class EventController extends Controller
 
         $value = $request->input('value');
 
-        $users = User::where('first_name', 'like', "%$value%")->orWhere('last_name', 'like', "%$value%")->take(config('common.user_search_count'))->get();
+        $users = Event::where('title', 'like', "%$value%")->orWhere('place', 'like', "%$value%")->take(config('common.user_search_count'))->get();
 
         return [
             'status' => 'success',
