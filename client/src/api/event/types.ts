@@ -37,6 +37,7 @@ export type Event = {
 export type GetEventResponse = { data: Event };
 export type GetMembersResponse = { status: string; members: User[] };
 export type StatusResponse = { status: string };
+export type SearchEvent = { data: { status: string; events: Event[] } };
 
 export type EventApi = {
   createEvent: CreateEvent;
@@ -52,4 +53,6 @@ export type EventApi = {
   joinEvent: (id: string) => Promise<StatusResponse>;
 
   leaveEvent: (id: string) => Promise<StatusResponse>;
+
+  searchEvent: (name: string) => Promise<SearchEvent>;
 };

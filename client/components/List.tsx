@@ -2,14 +2,30 @@ import React from 'react';
 import { View, FlatList } from 'react-native';
 import { Text } from './ui/Text';
 import { SCREEN_STYLE } from './theme';
+import { User } from '../src/api/user/types';
+import { Event } from '../src/api/event/types';
 
-const idToString = id => id.toString();
+const idToString = (id: number | string) => id.toString();
 
-export const List = ({ data, Component, onOpen, onShowMembers }) => {
+type Props = {
+  data?: Event[] | User[];
+  Component: React.ElementType;
+  onOpen: ((event: Event) => void) | ((userId: string) => void);
+  onShowMembers?: () => void;
+  emptyText: string;
+};
+
+export const List: React.FC<Props> = ({
+  data,
+  Component,
+  onOpen,
+  onShowMembers,
+  emptyText = 'Здесь пока пусто...',
+}) => {
   if (!data || data.length == 0) {
     return (
       <View style={SCREEN_STYLE.listWrapper}>
-        <Text style={{ textAlign: 'center' }}>Здесь пока пусто...</Text>
+        <Text style={{ textAlign: 'center' }}>{emptyText}</Text>
       </View>
     );
   }

@@ -25,6 +25,7 @@ export const ProfileScreenNavigation = () => {
         headerStyle: { backgroundColor: THEME.DARKER_COLOR },
         headerShadowVisible: false,
         headerTintColor: '#fff',
+        headerBackVisible: false,
       })}
     >
       <ProfileStack.Screen
