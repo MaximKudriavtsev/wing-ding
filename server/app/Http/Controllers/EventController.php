@@ -319,11 +319,18 @@ class EventController extends Controller
 
         $value = $request->input('value');
 
-        $events = Event::where('title', 'like', "%$value%")->orWhere('place', 'like', "%$value%")->take(config('common.user_search_count'))->get();
+        $events = Event::where('title', 'like', "%$value%")->orWhere('place', 'like', "%$value%")->isNotDeleted()->take(config('common.user_search_count'))->get();
+
+        $data = [];
+
+        foreach ($events as $key => $event) {
+            $data[$key] = $event;
+            $data[$key]['members_photos'] = $event->users()->take(3)->pluck('photo');
+        }
 
         return [
             'status' => 'success',
-            'events' => $events
+            'events' => $data
         ];
     }
 }
