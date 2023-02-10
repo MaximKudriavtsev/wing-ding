@@ -12,21 +12,25 @@ import { THEME } from '../../components/theme';
 
 const SearchStack = createNativeStackNavigator();
 
+const setScreenOptions = () => ({
+  headerTitleStyle: {
+    fontFamily: THEME.BOLD_FONT,
+    fontSize: 22,
+  },
+  headerStyle: { backgroundColor: THEME.DARKER_COLOR },
+  headerShadowVisible: false,
+  headerTintColor: '#fff',
+  headerBackVisible: false,
+});
+
 export const SearchScreenNavigation = () => {
   return (
-    <SearchStack.Navigator
-      screenOptions={() => ({
-        headerTitleStyle: {
-          fontFamily: THEME.BOLD_FONT,
-          fontSize: 22,
-        },
-        headerStyle: { backgroundColor: THEME.DARKER_COLOR },
-        headerShadowVisible: false,
-        headerTintColor: '#fff',
-        headerBackVisible: false,
-      })}
-    >
-      <SearchStack.Screen name='SearchScreen' component={SearchScreen} options={{titlele: 'Поиск'}} />
+    <SearchStack.Navigator screenOptions={setScreenOptions}>
+      <SearchStack.Screen
+        name='SearchScreen'
+        component={SearchScreen}
+        options={{ title: 'Wing-Ding' }}
+      />
       <SearchStack.Screen name='ProfileScreen' component={ProfileScreen} options={{ title: '' }} />
       <SearchStack.Screen name='FriendListScreen' component={FriendListScreen} />
       <SearchStack.Screen name='MemberListScreen' component={MemberListScreen} />

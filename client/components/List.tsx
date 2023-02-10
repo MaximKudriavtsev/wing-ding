@@ -22,23 +22,20 @@ export const List: React.FC<Props> = ({
   onShowMembers,
   emptyText = 'Здесь пока пусто...',
 }) => {
-  if (!data || data.length == 0) {
-    return (
-      <View style={SCREEN_STYLE.listWrapper}>
-        <Text style={{ textAlign: 'center' }}>{emptyText}</Text>
-      </View>
-    );
-  }
   return (
     <View style={SCREEN_STYLE.listWrapper}>
-      <FlatList
-        style={{ flex: 1, paddingHorizontal: 15 }}
-        data={data}
-        keyExtractor={item => idToString(item.id)}
-        renderItem={({ item }) => (
-          <Component item={item} onOpen={onOpen} onShowMembers={onShowMembers} />
-        )}
-      />
+      {data == null || !data || data.length == 0 ? (
+        <Text style={{ textAlign: 'center' }}>{emptyText}</Text>
+      ) : (
+        <FlatList
+          style={{ flex: 1, paddingHorizontal: 15 }}
+          data={data}
+          keyExtractor={item => idToString(item.id)}
+          renderItem={({ item }) => (
+            <Component item={item} onOpen={onOpen} onShowMembers={onShowMembers} />
+          )}
+        />
+      )}
     </View>
   );
 };
