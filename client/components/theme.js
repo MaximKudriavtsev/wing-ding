@@ -70,7 +70,7 @@ export const SCREEN_STYLE = StyleSheet.create({
   bottomSheetWrapper: {
     position: 'absolute',
     width: THEME.SCREEN_WIDTH,
-    height: THEME.SCREEN_HEIGHT,
+    height: 0,
     top: 0,
     left: 0,
   },

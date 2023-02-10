@@ -1,10 +1,10 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome } from '@expo/vector-icons';
-import { SearchScreen } from '../../screens/SearchScreen';
 import { EventScreenNavigation } from './EventScreenNavigation';
 import { ProfileScreenNavigation } from './ProfileScreenNavigation';
 import { THEME } from '../../components/theme';
+import { SearchScreenNavigation } from './SearchScreenNavigation';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -27,7 +27,7 @@ export const BottomNavigation = () => {
     >
       <BottomTab.Screen
         name='Search'
-        component={SearchScreen}
+        component={SearchScreenNavigation}
         options={{
           tabBarLabel: 'Поиск',
           tabBarIcon: ({ color }) => {

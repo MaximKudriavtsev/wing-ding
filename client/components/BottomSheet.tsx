@@ -1,5 +1,5 @@
 import { View, StyleSheet } from 'react-native';
-import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
+import { GestureHandlerRootView, PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import React, { useEffect } from 'react';
 import Animated, {
   useAnimatedGestureHandler,
@@ -66,11 +66,13 @@ export const BottomSheet: React.FC<Props> = ({ children, isVisible, onClose }) =
     <>
       <Animated.View style={[styles.background, reanimatedBackgroundStyle]} />
       <Animated.View style={[styles.wrapper, reanimatedStyle]}>
-        <PanGestureHandler onGestureEvent={panGestureEvent}>
-          <Animated.View style={styles.anchorWrapper}>
-            <View style={styles.anchor} />
-          </Animated.View>
-        </PanGestureHandler>
+        <GestureHandlerRootView>
+          <PanGestureHandler onGestureEvent={panGestureEvent}>
+            <Animated.View style={styles.anchorWrapper}>
+              <View style={styles.anchor} />
+            </Animated.View>
+          </PanGestureHandler>
+        </GestureHandlerRootView>
         {children}
       </Animated.View>
     </>

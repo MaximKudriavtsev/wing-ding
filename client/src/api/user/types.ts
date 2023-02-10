@@ -25,6 +25,8 @@ export type GetUserFriends = { status: 200; friends: User[] };
 
 export type Status = { status: 200; error?: string };
 
+export type SearchUser = { data: { status: string; users: User[] } };
+
 export type UserApi = {
   auth: ({ email, password }: { email: string; password: string }) => Promise<AuthResponse>;
 
@@ -51,6 +53,8 @@ export type UserApi = {
   addToFriends: (id: string) => Promise<Status>;
 
   deleteFromFriends: (id: string) => Promise<Status>;
+
+  searchUser: (name: string) => Promise<SearchUser>;
 
   changeProfile: ({
     firstName,

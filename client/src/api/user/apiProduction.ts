@@ -41,6 +41,10 @@ const userApi: UserApi = {
     return apiQuery.post(`${USER_BASE_URL}/friends/delete/${id}`);
   },
 
+  searchUser: name => {
+    return apiQuery.get(`${USER_BASE_URL}/search`, { params: { value: name } });
+  },
+
   changeProfile: changes => {
     const { firstName, lastName, birthDate, description, photo } = changes;
     const formData = new FormData();

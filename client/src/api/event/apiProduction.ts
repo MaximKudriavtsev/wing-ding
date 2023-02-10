@@ -56,6 +56,10 @@ const eventApi: EventApi = {
     return apiQuery.post(`${EVENT_BASE_URL}/get/${id}`);
   },
 
+  searchEvent: name => {
+    return apiQuery.get(`${EVENT_BASE_URL}/search`, { params: { value: name } });
+  },
+
   getMembers: id => {
     return apiQuery.post(`${EVENT_BASE_URL}/get/${id}/users`);
   },
