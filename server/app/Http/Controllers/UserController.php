@@ -391,7 +391,11 @@ class UserController extends Controller
 
         $value = $request->input('value');
 
-        $users = User::where('first_name', 'like', "%$value%")->orWhere('last_name', 'like', "%$value%")->take(config('common.user_search_count'))->get();
+        $users = User::where('first_name', 'like', "%$value%")
+            ->orWhere('last_name', 'like', "%$value%")
+            ->orWhereRaw("CONCAT(last_name, ' ', first_name) like '%$value%'")
+            ->orWhereRaw("CONCAT(first_name, ' ', last_name) like '%$value%'")
+            ->take(config('common.user_search_count'))->get();
 
         return [
             'status' => 'success',
