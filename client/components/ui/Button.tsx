@@ -3,7 +3,7 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { THEME } from '../theme';
 import { Text } from './Text';
 
-enum ButtonType {
+export enum ButtonType {
   Primary = 'PRIMARY',
   Secondary = 'SECONDARY',
   Link = 'LINK',

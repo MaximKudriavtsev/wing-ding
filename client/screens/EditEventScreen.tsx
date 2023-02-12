@@ -1,4 +1,6 @@
 import React, { useContext, useState } from 'react';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RouteProp } from '@react-navigation/native';
 import { EventForm } from '../components/ui/EventForm';
 import { View, ScrollView } from 'react-native';
 import { PhotoPickerSheet } from '../components/ui/PhotoPickerSheet';

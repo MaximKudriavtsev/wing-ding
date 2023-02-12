@@ -14,14 +14,22 @@ import { MemberTab } from '../components/ui/MemberTab';
 import { Row } from '../components/Row';
 import { Text } from '../components/ui/Text';
 import { Button } from '../components/ui/Button';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { THEME } from '../components/theme.js';
+import { Event } from '../src/api/event/types';
+import { ButtonType } from '../components/ui/Button';
 
-export const EventScreen = ({ navigation, route }) => {
+type Props = {
+  navigation: any;
+  route: any;
+};
+
+export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
   const { eventId } = route.params;
   const { showAlertMessage } = useContext(AlertContext);
 
   const [isLoading, setIsLoading] = useState(true);
-  const [event, setEvent] = useState(null);
+  const [event, setEvent] = useState<Event | null>(null);
   const [isOptionsSheetVisible, setOptionsSheetVisible] = useState(false);
 
   const openOptionsSheet = () => {
@@ -63,6 +71,7 @@ export const EventScreen = ({ navigation, route }) => {
   };
 
   const toggleMember = () => {
+    if (event === null) return;
     setIsLoading(true);
     api.event[event.isMember ? 'leaveEvent' : 'joinEvent'](eventId)
       .then(() => {
@@ -110,26 +119,32 @@ export const EventScreen = ({ navigation, route }) => {
     <View style={styles.wrapper}>
       {isLoading ? (
         <Loader />
-      ) : (
+      ) : event != null ? (
         <>
           <ScrollView>
-            <Row style={{ height: 50 }}>
+            <Row style={{ height: 50, alignItems: 'center' }}>
               <UserIcon userPhoto={event.host.photo} />
               <Text bold={true} style={{ marginLeft: 10 }}>
                 {`${event.host.firstName} ${event.host.lastName}`}
               </Text>
             </Row>
             <Image style={styles.image} source={event.img} defaultImage={THEME.EVENT_IMAGE} />
-            <MemberTab
-              membersPhotos={event.membersPhotos}
-              membersCount={event.membersCount}
-              onOpen={showMembersHandler}
-            />
+            <Row style={styles.activitiesWrapper}>
+              <MemberTab
+                membersPhotos={event.membersPhotos}
+                membersCount={event.membersCount}
+                onOpen={showMembersHandler}
+                style={styles.memberTab}
+              />
+              <TouchableOpacity style={styles.commentsButton}>
+                <FontAwesome name={THEME.ICON_COMMENTS} size={24} color={THEME.FONT_COLOR} />
+                <Text style={{ marginLeft: 12 }}>132</Text>
+              </TouchableOpacity>
+            </Row>
             <Text style={styles.place}>
               <FontAwesome name={THEME.ICON_LOCATION} size={18} />
               {`  ${event.place}`}
             </Text>
-
             <Text style={styles.date}>
               <FontAwesome name={THEME.ICON_CLOCK} size={16} />
               {`  ${dateRu(event.date).format('DD.MM')} начало в ${dateRu(event.date).format(
@@ -138,7 +153,7 @@ export const EventScreen = ({ navigation, route }) => {
             </Text>
             <Text style={styles.text}>{event.text}</Text>
             <Button
-              type={event.isMember ? 'SECONDARY' : 'PRIMARY'}
+              type={event.isMember ? ButtonType.Secondary : ButtonType.Primary}
               style={styles.button}
               onPress={toggleMember}
             >
@@ -152,6 +167,8 @@ export const EventScreen = ({ navigation, route }) => {
             onClose={closeOptionsSheet}
           />
         </>
+      ) : (
+        <Text>Не удалось загрузить соьытие</Text>
       )}
     </View>
   );
@@ -196,5 +213,28 @@ const styles = StyleSheet.create({
     marginVertical: 25,
     borderWidth: 2,
     borderColor: THEME.BUTTON_COLOR,
+  },
+  activitiesWrapper: {
+    height: 80,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 12,
+  },
+  memberTab: {
+    backgroundColor: THEME.DARKER_COLOR,
+    borderRadius: 20,
+    height: '100%',
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+  },
+  commentsButton: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    backgroundColor: THEME.DARKER_COLOR,
+    borderRadius: 20,
+    height: '100%',
+    paddingHorizontal: 12,
   },
 });

@@ -83,9 +83,7 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
           iconName={THEME.ICON_SEARCH}
           placeholder={'Поиск...'}
           autoCapitalize={'sentences'}
-          onChangeText={(name: string) => {
-            setSearchString(name);
-          }}
+          onChangeText={setSearchString}
         />
         <Row style={styles.filterRow}>
           <ToggleButton

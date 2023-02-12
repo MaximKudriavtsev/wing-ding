@@ -2,8 +2,23 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { UserIcon } from './UserIcon';
 import { Text } from './Text';
+import { Event } from '../../src/api/event/types';
 
-export const MemberTab = ({ membersPhotos, membersCount, reverse, onOpen }) => {
+type Props = {
+  membersPhotos: (string | null)[];
+  membersCount: number;
+  reverse?: boolean;
+  onOpen?: () => void;
+  style?: object;
+};
+
+export const MemberTab: React.FC<Props> = ({
+  membersPhotos,
+  membersCount,
+  reverse,
+  onOpen,
+  style,
+}) => {
   const membersIcons = membersPhotos
     .slice(0, 3)
     .map(memberPhoto => (
@@ -15,12 +30,12 @@ export const MemberTab = ({ membersPhotos, membersCount, reverse, onOpen }) => {
     ));
 
   return (
-    <TouchableOpacity activeOpacity={0.7} onPress={onOpen}>
+    <TouchableOpacity activeOpacity={0.7} onPress={onOpen} style={style}>
       <View style={reverse ? styles.reversedWrapper : styles.wrapper}>
         <View style={styles.icons}>{membersIcons}</View>
         <View style={styles.text} key={'members_count'}>
-          <Text bold={true} style={styles.counter}>
-            <Text>{membersCount}</Text> участника(ов)
+          <Text bold={true} style={reverse ? { marginRight: 15 } : { marginRight: 0 }}>
+            {`Участники (${membersCount})`}
           </Text>
         </View>
       </View>
@@ -32,30 +47,22 @@ const styles = StyleSheet.create({
   wrapper: {
     display: 'flex',
     flexDirection: 'row',
-    paddingVertical: 10,
-    justifyContent: 'flex-start',
-    width: 220,
   },
   reversedWrapper: {
     display: 'flex',
     flexDirection: 'row-reverse',
-    justifyContent: 'flex-end',
-    width: 220,
+    justifyContent: 'space-between',
   },
   icons: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
   },
   text: {
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
-    marginLeft: 10,
-    width: '65%',
+    marginLeft: 20,
     height: 34,
-  },
-  counter: {
-    fontSize: 12,
   },
 });

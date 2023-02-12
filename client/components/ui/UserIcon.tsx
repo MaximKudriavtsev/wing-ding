@@ -3,10 +3,16 @@ import { StyleSheet } from 'react-native';
 import { Image } from './Image';
 import { THEME } from '../theme';
 
-export const UserIcon = ({ userPhoto, style, iconSize = 34 }) => {
+type Props = {
+  userPhoto: string | null;
+  style?: object;
+  iconSize?: number;
+};
+
+export const UserIcon: React.FC<Props> = ({ userPhoto, style, iconSize = 34 }) => {
   return (
     <Image
-      style={{ ...styles.icon, height: iconSize, width: iconSize, ...style }}
+      style={{ ...style, height: iconSize, width: iconSize, ...style }}
       imageStyle={styles.iconImage}
       source={userPhoto}
       defaultImage={THEME.USER_PHOTO}

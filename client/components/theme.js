@@ -44,6 +44,7 @@ export const THEME = {
   ICON_IMAGE: 'image',
   ICON_CAMERA: 'camera',
   ICON_OPTION_DOTS: 'ellipsis-h',
+  ICON_COMMENTS: 'comments-o',
 };
 
 export const SCREEN_STYLE = StyleSheet.create({
