@@ -110,6 +110,11 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
           Component={searchedType === SearchedType.Events ? EventTab : UserTab}
           onOpen={searchedType === SearchedType.Events ? openEventHandler : openProfileHandler}
           emptyText={'К сожалению, ничего не найдено'}
+          style={
+            searchedType === SearchedType.Events
+              ? { paddingHorizontal: 15 }
+              : { paddingHorizontal: 0 }
+          }
         />
       )}
     </View>

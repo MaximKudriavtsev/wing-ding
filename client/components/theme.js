@@ -49,6 +49,7 @@ export const THEME = {
 
 export const SCREEN_STYLE = StyleSheet.create({
   wrapper: {
+    display: 'flex',
     position: 'relative',
     backgroundColor: THEME.BACKGROUND_COLOR,
     width: '100%',

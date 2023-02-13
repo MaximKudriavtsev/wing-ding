@@ -25,7 +25,11 @@ export const TextInput: React.FC<Props> = ({
 }) => {
   return (
     <View style={{ ...styles.inputSection, ...style }}>
-      <FontAwesome style={styles.inputIcon} name={iconName} size={iconSize} color={iconColor} />
+      {iconName ? (
+        <FontAwesome style={styles.inputIcon} name={iconName} size={iconSize} color={iconColor} />
+      ) : (
+        <></>
+      )}
       <DefaultTextInput
         style={styles.input}
         placeholder={placeholder}

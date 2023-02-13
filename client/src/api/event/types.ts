@@ -34,6 +34,18 @@ export type Event = {
   isHost: boolean;
 };
 
+export type Comment = {
+  id: string;
+  author: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    photo: string;
+  };
+  text: string;
+  createdAt: string;
+};
+
 export type GetEventResponse = { data: Event };
 export type DeleteEventResponse = { status: number };
 export type GetMembersResponse = { status: string; members: User[] };

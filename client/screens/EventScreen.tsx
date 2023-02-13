@@ -32,6 +32,10 @@ export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
   const [event, setEvent] = useState<Event | null>(null);
   const [isOptionsSheetVisible, setOptionsSheetVisible] = useState(false);
 
+  const onOpenCommentsScreen = () => {
+    navigation.push('CommentListScreen');
+  };
+
   const openOptionsSheet = () => {
     setOptionsSheetVisible(true);
   };
@@ -136,7 +140,7 @@ export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
                 onOpen={showMembersHandler}
                 style={styles.memberTab}
               />
-              <TouchableOpacity style={styles.commentsButton}>
+              <TouchableOpacity style={styles.commentsButton} onPress={onOpenCommentsScreen}>
                 <FontAwesome name={THEME.ICON_COMMENTS} size={24} color={THEME.FONT_COLOR} />
                 <Text style={{ marginLeft: 12 }}>132</Text>
               </TouchableOpacity>

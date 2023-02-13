@@ -1,7 +1,12 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
-export const Column = ({ children, style }) => {
+type Props = {
+  children: React.ReactNode;
+  style?: object;
+};
+
+export const Column: React.FC<Props> = ({ children, style }) => {
   return <View style={{ ...styles.column, ...style }}>{children}</View>;
 };
 

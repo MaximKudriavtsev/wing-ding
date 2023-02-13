@@ -8,6 +8,7 @@ import { MemberListScreen } from '../../screens/MemberListScreen';
 import { EditEventScreen } from '../../screens/EditEventScreen';
 import { EventScreen } from '../../screens/EventScreen';
 import { CreateEventScreen } from '../../screens/CreateEventScreen';
+import { CommentListScreen } from '../../screens/CommentListScreen';
 import { THEME } from '../../components/theme';
 
 const SearchStack = createNativeStackNavigator();
@@ -45,6 +46,11 @@ export const SearchScreenNavigation = () => {
         name='CreateEventScreen'
         component={CreateEventScreen}
         options={{ title: 'Создать событие' }}
+      />
+      <SearchStack.Screen
+        name='CommentListScreen'
+        component={CommentListScreen}
+        options={{ title: 'Комментарии' }}
       />
     </SearchStack.Navigator>
   );
