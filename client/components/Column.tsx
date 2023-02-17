@@ -12,6 +12,7 @@ export const Column: React.FC<Props> = ({ children, style }) => {
 
 const styles = StyleSheet.create({
   column: {
+    position: 'relative',
     width: '100%',
     height: '100%',
     display: 'flex',

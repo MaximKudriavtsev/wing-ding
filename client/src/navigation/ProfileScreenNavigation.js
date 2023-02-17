@@ -21,7 +21,7 @@ export const ProfileScreenNavigation = () => {
       screenOptions={() => ({
         headerTitleStyle: {
           fontFamily: THEME.BOLD_FONT,
-          fontSize: 22,
+          fontSize: THEME.HEADER_FONT_SIZE,
         },
         headerStyle: { backgroundColor: THEME.DARKER_COLOR },
         headerShadowVisible: false,
@@ -39,7 +39,11 @@ export const ProfileScreenNavigation = () => {
       />
       <ProfileStack.Screen name='FriendListScreen' component={FriendListScreen} />
       <ProfileStack.Screen name='MemberListScreen' component={MemberListScreen} />
-      <ProfileStack.Screen name='ProfileEditScreen' component={ProfileEditScreen} />
+      <ProfileStack.Screen
+        name='ProfileEditScreen'
+        component={ProfileEditScreen}
+        options={{ title: 'Редактировать профиль' }}
+      />
       <ProfileStack.Screen name='EventDetails' component={EventScreen} options={{ title: '' }} />
       <ProfileStack.Screen
         name='CreateEventScreen'

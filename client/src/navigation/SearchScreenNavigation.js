@@ -16,7 +16,7 @@ const SearchStack = createNativeStackNavigator();
 const setScreenOptions = () => ({
   headerTitleStyle: {
     fontFamily: THEME.BOLD_FONT,
-    fontSize: 22,
+    fontSize: THEME.HEADER_FONT_SIZE,
   },
   headerStyle: { backgroundColor: THEME.DARKER_COLOR },
   headerShadowVisible: false,
@@ -35,7 +35,11 @@ export const SearchScreenNavigation = () => {
       <SearchStack.Screen name='ProfileScreen' component={ProfileScreen} options={{ title: '' }} />
       <SearchStack.Screen name='FriendListScreen' component={FriendListScreen} />
       <SearchStack.Screen name='MemberListScreen' component={MemberListScreen} />
-      <SearchStack.Screen name='ProfileEditScreen' component={ProfileEditScreen} />
+      <SearchStack.Screen
+        name='ProfileEditScreen'
+        component={ProfileEditScreen}
+        options={{ title: 'Редактировать профиль' }}
+      />
       <SearchStack.Screen name='EventDetails' component={EventScreen} options={{ title: '' }} />
       <SearchStack.Screen
         name='EditEventScreen'

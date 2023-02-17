@@ -103,9 +103,8 @@ export const EventForm: React.FC<Props> = ({
           setTitle(title);
           setTitleValidations(validate(title, { isRequired: true }));
         }}
-      >
-        {title}
-      </TextInput>
+        value={title}
+      />
       <Row style={styles.row}>
         <PhotoPicker
           style={styles.photoPicker}
@@ -122,9 +121,8 @@ export const EventForm: React.FC<Props> = ({
               setDateString(dateString);
               setDateValidations(validate(dateString, { isDateString: true }));
             }}
-          >
-            {dateString}
-          </TextInput>
+            value={dateString}
+          />
           <Text style={styles.label}>Время:</Text>
           <TextInput
             iconName={THEME.ICON_CLOCK}
@@ -133,9 +131,8 @@ export const EventForm: React.FC<Props> = ({
               setTimeString(timeString);
               setTimeValidations(validate(timeString, { isTimeString: true }));
             }}
-          >
-            {timeString}
-          </TextInput>
+            value={timeString}
+          />
         </Column>
       </Row>
       <Text style={styles.label}>Место</Text>

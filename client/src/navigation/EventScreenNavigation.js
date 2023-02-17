@@ -15,7 +15,7 @@ export const EventScreenNavigation = () => {
       screenOptions={() => ({
         headerTitleStyle: {
           fontFamily: THEME.BOLD_FONT,
-          fontSize: 22,
+          fontSize: THEME.HEADER_FONT_SIZE,
         },
         headerStyle: { backgroundColor: THEME.DARKER_COLOR },
         headerShadowVisible: false,

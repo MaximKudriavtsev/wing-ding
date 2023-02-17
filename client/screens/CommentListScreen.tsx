@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { List } from '../components/List';
 import { CommentTab } from '../components/CommentTab';
 import { Loader } from '../components/ui/Loader';
-import { View } from 'react-native';
 import { Comment } from '../src/api/event/types';
-import { SCREEN_STYLE } from '../components/theme';
+import { SCREEN_STYLE, THEME } from '../components/theme';
 import { MessageInputBar } from '../components/ui/MessageInputBar';
+import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
 
-type Props = {
-  navigation: any;
-};
+type Props = { navigation: any };
 
 export const CommentListScreen: React.FC<Props> = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -95,7 +93,14 @@ export const CommentListScreen: React.FC<Props> = ({ navigation }) => {
   ];
 
   return (
-    <View style={{ ...SCREEN_STYLE.wrapper, paddingHorizontal: 0, paddingVertical: 0 }}>
+    <KeyboardAvoidingView
+      style={{
+        ...SCREEN_STYLE.wrapper,
+        paddingHorizontal: 0,
+        paddingVertical: 0,
+      }}
+      fixedHeight={'100%'}
+    >
       {isLoading ? (
         <Loader />
       ) : (
@@ -111,9 +116,10 @@ export const CommentListScreen: React.FC<Props> = ({ navigation }) => {
             message={commentText}
             onSetMessage={setCommentText}
             onSend={onSendComment}
+            messageMaxLength={300}
           />
         </>
       )}
-    </View>
+    </KeyboardAvoidingView>
   );
 };

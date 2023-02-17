@@ -14,6 +14,7 @@ import { TextInput } from '../components/ui/TextInput';
 import { Loader } from '../components/ui/Loader';
 import { dateRu, validate, getObjectChanges } from '../src/utils';
 import { SCREEN_STYLE, THEME } from '../components/theme.js';
+import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
 
 export const ProfileEditScreen = ({ navigation }) => {
   const { showAlertMessage } = useContext(AlertContext);
@@ -91,15 +92,11 @@ export const ProfileEditScreen = ({ navigation }) => {
           <Item title='Confirm' iconName={THEME.ICON_CHECK} onPress={onApplyChanges} />
         </HeaderButtons>
       ),
-      headerTitleStyle: {
-        fontSize: 18,
-      },
-      title: 'Редактировать профиль',
     });
   }, [navigation, firstName, lastName, birthDateString, description, userPhoto]);
 
   return (
-    <View style={SCREEN_STYLE.listWrapper}>
+    <KeyboardAvoidingView>
       {isLoading ? (
         <Loader />
       ) : (
@@ -120,9 +117,8 @@ export const ProfileEditScreen = ({ navigation }) => {
                   setFirstName(firstName);
                   setFirstNameValidations(validate(firstName, { isRequired: true, isName: true }));
                 }}
-              >
-                {firstName}
-              </TextInput>
+                value={firstName}
+              />
               <Text style={styles.label}>Фамилия</Text>
               <TextInput
                 iconName={THEME.ICON_USER}
@@ -131,9 +127,8 @@ export const ProfileEditScreen = ({ navigation }) => {
                   setLastName(lastName);
                   setLastNameValidations(validate(lastName, { isRequired: true, isName: true }));
                 }}
-              >
-                {lastName}
-              </TextInput>
+                value={lastName}
+              />
               <Text style={styles.label}>День рождения</Text>
               <TextInput
                 iconName={THEME.ICON_CAKE}
@@ -141,13 +136,15 @@ export const ProfileEditScreen = ({ navigation }) => {
                   setBirthDateString(birthDateString);
                   setBirthDateValidations(validate(birthDateString, { isDateString: true }));
                 }}
-              >
-                {birthDateString}
-              </TextInput>
+                value={birthDateString}
+              />
               <Text style={styles.label}>О себе</Text>
-              <TextInput maxLength={250} onChangeText={setDescription} iconName={THEME.ICON_PENCIL}>
-                {description}
-              </TextInput>
+              <TextInput
+                maxLength={250}
+                onChangeText={setDescription}
+                iconName={THEME.ICON_PENCIL}
+                value={description}
+              />
               <Button
                 type={'link'}
                 fontColor={THEME.DANGER_COLOR}
@@ -164,7 +161,7 @@ export const ProfileEditScreen = ({ navigation }) => {
           />
         </>
       )}
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { validate } from '../src/utils';
-import { View } from 'react-native';
 import { Title } from '../components/ui/Title';
 import { Button } from '../components/ui/Button';
 import { TextInput } from '../components/ui/TextInput';
 import { ValidationHint } from '../components/ui/ValidationHint';
 import { THEME, SCREEN_STYLE } from '../components/theme';
+import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
 
 export const SetPasswordScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
@@ -21,7 +21,7 @@ export const SetPasswordScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={SCREEN_STYLE.wrapper}>
+    <KeyboardAvoidingView style={SCREEN_STYLE.wrapper}>
       <Title>Установить новый пароль</Title>
       <ValidationHint validations={passwordValidations} />
       <TextInput
@@ -50,6 +50,6 @@ export const SetPasswordScreen = ({ navigation }) => {
       <Button type='LINK' onPress={() => navigation.navigate('RestoringPassword')}>
         Я не получил сообщение
       </Button>
-    </View>
+    </KeyboardAvoidingView>
   );
 };

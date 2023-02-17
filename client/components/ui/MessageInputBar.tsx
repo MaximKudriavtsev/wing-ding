@@ -10,6 +10,7 @@ type Props = {
   message?: string;
   onSetMessage?: (message: string) => void;
   onSend: () => void;
+  messageMaxLength: number;
 };
 
 export const MessageInputBar: React.FC<Props> = ({
@@ -18,6 +19,7 @@ export const MessageInputBar: React.FC<Props> = ({
   message,
   onSetMessage,
   onSend,
+  messageMaxLength,
 }) => {
   return (
     <View style={{ ...styles.wrapper, ...style }}>
@@ -26,9 +28,9 @@ export const MessageInputBar: React.FC<Props> = ({
         placeholder={placeholder}
         multiline={true}
         onChangeText={onSetMessage}
-      >
-        {message}
-      </TextInput>
+        maxLength={messageMaxLength}
+        value={message}
+      />
       <Button
         style={{ height: 50 }}
         type={ButtonType.Link}

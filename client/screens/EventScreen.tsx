@@ -14,7 +14,7 @@ import { MemberTab } from '../components/ui/MemberTab';
 import { Row } from '../components/Row';
 import { Text } from '../components/ui/Text';
 import { Button } from '../components/ui/Button';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native';
 import { THEME } from '../components/theme.js';
 import { Event } from '../src/api/event/types';
 import { ButtonType } from '../components/ui/Button';
@@ -140,7 +140,11 @@ export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
                 onOpen={showMembersHandler}
                 style={styles.memberTab}
               />
-              <TouchableOpacity style={styles.commentsButton} onPress={onOpenCommentsScreen}>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                style={styles.commentsButton}
+                onPress={onOpenCommentsScreen}
+              >
                 <FontAwesome name={THEME.ICON_COMMENTS} size={24} color={THEME.FONT_COLOR} />
                 <Text style={{ marginLeft: 12 }}>132</Text>
               </TouchableOpacity>

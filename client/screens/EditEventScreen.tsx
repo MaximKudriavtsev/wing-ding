@@ -2,15 +2,17 @@ import React, { useContext, useState } from 'react';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
 import { EventForm } from '../components/ui/EventForm';
-import { View, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { PhotoPickerSheet } from '../components/ui/PhotoPickerSheet';
 import { api } from '../src/api';
 import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertContext';
 import { Button } from '../components/ui/Button';
 import { Loader } from '../components/ui/Loader';
+import { Column } from '../components/Column';
 import { SCREEN_STYLE } from '../components/theme.js';
 import { getObjectChanges } from '../src/utils';
 import { Event } from '../src/api/event/types';
+import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
 
 type Props = {
   navigation: any;
@@ -27,7 +29,6 @@ export const EditEventScreen: React.FC<Props> = ({ navigation, route }) => {
   const [isPickerSheetVisible, setPickerSheetVisible] = useState(false);
   const [eventPhotoUri, setEventPhotoUri] = useState(event.img || '');
   const [eventObject, setEventObject] = useState({});
-  let date;
 
   const openPickerSheet = () => {
     setPickerSheetVisible(true);
@@ -62,21 +63,23 @@ export const EditEventScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   return (
-    <View style={SCREEN_STYLE.wrapper}>
+    <KeyboardAvoidingView>
       {isLoading ? (
         <Loader />
       ) : (
         <>
           <ScrollView>
-            <EventForm
-              event={event}
-              eventPhoto={eventPhotoUri}
-              onOpenPhotoPicker={openPickerSheet}
-              onValidate={setFormValid}
-              onSetValidationMessage={setValidationMessage}
-              onSetEventObject={setEventObject}
-            />
-            <Button onPress={onChangeEvent}>Изменить событие</Button>
+            <Column style={{ padding: 15 }}>
+              <EventForm
+                event={event}
+                eventPhoto={eventPhotoUri}
+                onOpenPhotoPicker={openPickerSheet}
+                onValidate={setFormValid}
+                onSetValidationMessage={setValidationMessage}
+                onSetEventObject={setEventObject}
+              />
+              <Button onPress={onChangeEvent}>Изменить событие</Button>
+            </Column>
           </ScrollView>
           <PhotoPickerSheet
             isVisible={isPickerSheetVisible}
@@ -85,6 +88,6 @@ export const EditEventScreen: React.FC<Props> = ({ navigation, route }) => {
           />
         </>
       )}
-    </View>
+    </KeyboardAvoidingView>
   );
 };
