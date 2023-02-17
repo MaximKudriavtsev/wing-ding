@@ -39,4 +39,12 @@ class Event extends Model
     public function scopeIsNotDeleted($query) {
         return $query->where('is_deleted', false);
     }
+
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function commentsCount() {
+        return $this->comments()->count();
+    }
 }

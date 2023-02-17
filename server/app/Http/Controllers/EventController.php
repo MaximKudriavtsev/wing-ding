@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CommentUserResource;
+use App\Models\Comment;
 use App\Models\Event;
 use App\Models\User;
 use App\Models\Participation;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -177,6 +180,7 @@ class EventController extends Controller
         $event['host'] = $event->host()->select('id', 'photo', 'first_name', 'last_name')->first();
         $event['members_photos'] = $event->users()->take(3)->pluck('photo');
         $event['is_member'] = $event->users()->whereId($user->id)->exists();
+        $event['comments_count'] = $event->commentsCount();
         return \response()->json($event);
     }
 
@@ -326,11 +330,65 @@ class EventController extends Controller
         foreach ($events as $key => $event) {
             $data[$key] = $event;
             $data[$key]['members_photos'] = $event->users()->take(3)->pluck('photo');
+            $data[$key]['comments_count'] = $event->commentsCount();
         }
 
         return [
             'status' => 'success',
             'events' => $data
+        ];
+    }
+
+    public function sendComment(Request $request) {
+
+        if (!$request->input('event_id')) {
+            return [
+                'status' => 'error',
+                'error' => 'event_id is required'
+            ];
+        }
+
+        $text = $request->input('text');
+
+        if (!$text || !strlen(trim($text))) {
+            return [
+                'status' => 'error',
+                'error' => 'text is required'
+            ];
+        }
+
+        $user = auth()->user();
+
+        if (!Event::whereId($request->input('event_id'))->isNotDeleted()->exists()) {
+            return [
+                'status' => 'error',
+                'error' => 'no such event'
+            ];
+        }
+
+        Comment::createComment($user->id, $request->input('event_id'), $text);
+
+        return [
+            'status' => 'success'
+        ];
+    }
+
+    public function getComments($id) {
+
+        $event = Event::find($id);
+
+        if (!$event || $event->is_deleted) {
+            return [
+                'status' => 'error',
+                'error' => 'no such event'
+            ];
+        }
+
+        $comments = $event->comments()->with('user')->get();
+
+        return [
+            'status' => 'success',
+            'comments' => CommentUserResource::collection($comments),
         ];
     }
 }

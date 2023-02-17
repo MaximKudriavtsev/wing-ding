@@ -45,4 +45,6 @@ Route::prefix('/event')->group(function () {
     Route::delete('/{id}', [EventController::class, 'deleteEvent'])->middleware('auth');
     Route::post('/update', [EventController::class, 'update'])->middleware('auth');
     Route::get('/search', [EventController::class, 'search'])->middleware('auth');
+    Route::post('/comments/send', [EventController::class, 'sendComment'])->middleware('auth');
+    Route::get('/{id}/comments', [EventController::class, 'getComments'])->middleware('auth');
 });
