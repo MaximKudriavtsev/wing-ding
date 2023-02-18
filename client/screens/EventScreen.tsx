@@ -33,7 +33,7 @@ export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
   const [isOptionsSheetVisible, setOptionsSheetVisible] = useState(false);
 
   const onOpenCommentsScreen = () => {
-    navigation.push('CommentListScreen');
+    navigation.push('CommentListScreen', { eventId });
   };
 
   const openOptionsSheet = () => {
@@ -146,7 +146,7 @@ export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
                 onPress={onOpenCommentsScreen}
               >
                 <FontAwesome name={THEME.ICON_COMMENTS} size={24} color={THEME.FONT_COLOR} />
-                <Text style={{ marginLeft: 12 }}>132</Text>
+                <Text style={{ marginLeft: 12 }}>{event.commentsCount}</Text>
               </TouchableOpacity>
             </Row>
             <Text style={styles.place}>

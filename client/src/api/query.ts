@@ -2,22 +2,41 @@ import axios from 'axios';
 
 const BASE_URL = 'http://5.101.7.207';
 
-const camelizeString = (s: string) =>
+const snakeToCamelString = (s: string) =>
   s.replace(/([-_][a-z])/gi, $1 => $1.toUpperCase().replace('-', '').replace('_', ''));
 
-const camelizeKeys = (object: any): any => {
+const camelToSnakeString = (s: string) => s.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+const snakeToCamelObject = (object: any): any => {
   if (typeof object === 'object' && !Array.isArray(object) && object != null) {
     const camelObject: any = {};
 
     Object.keys(object).forEach(key => {
-      camelObject[camelizeString(key)] = camelizeKeys(object[key]);
+      camelObject[snakeToCamelString(key)] = snakeToCamelObject(object[key]);
     });
 
     return camelObject;
   }
 
   if (Array.isArray(object)) {
-    return object.map(i => camelizeKeys(i));
+    return object.map(i => snakeToCamelObject(i));
+  }
+
+  return object;
+};
+
+const camelToSnakeObject = (object: any): any => {
+  if (typeof object === 'object' && !Array.isArray(object) && object != null) {
+    const snakeObject: any = {};
+
+    Object.keys(object).forEach(key => {
+      snakeObject[camelToSnakeString(key)] = camelToSnakeObject(object[key]);
+    });
+
+    return snakeObject;
+  }
+
+  if (Array.isArray(object)) {
+    return object.map(i => camelToSnakeObject(i));
   }
 
   return object;
@@ -33,15 +52,16 @@ apiQuery.interceptors.response.use(response => {
     throw error;
   }
 
-  return camelizeKeys(response);
+  return snakeToCamelObject(response);
 });
 
 export const createAuthorizationInterceptor = (token: string) => {
-    //returns interceptors id
-    return apiQuery.interceptors.request.use(config => {
+  //returns interceptors id
+  return apiQuery.interceptors.request.use(config => {
     if (config && config.headers) {
       config.headers.Authorization = token;
     }
+    config.data = camelToSnakeObject(config.data);
     return config;
   });
 };
