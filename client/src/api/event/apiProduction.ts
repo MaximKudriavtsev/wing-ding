@@ -71,6 +71,17 @@ const eventApi: EventApi = {
   leaveEvent: id => {
     return apiQuery.post(`${EVENT_BASE_URL}/leave/${id}`);
   },
+
+  getEventComments: id => {
+    return apiQuery.get(`${EVENT_BASE_URL}/${id}/comments`);
+  },
+
+  sendComment: (eventId, text) => {
+    return apiQuery.post(`${EVENT_BASE_URL}/comments/send`, {
+      eventId,
+      text,
+    });
+  },
 };
 
 export default eventApi;

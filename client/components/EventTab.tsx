@@ -33,7 +33,7 @@ export const EventTab: React.FC<Props> = ({ item, onOpen, onShowMembers }) => {
         <Row style={styles.activitiesWrapper}>
           <View style={styles.commentsLabel}>
             <FontAwesome name={THEME.ICON_COMMENTS} size={24} color={THEME.FONT_COLOR} />
-            <Text style={{ marginLeft: 12 }}>122</Text>
+            <Text style={{ marginLeft: 12 }}>{item.commentsCount}</Text>
           </View>
           <MemberTab
             reverse={true}
