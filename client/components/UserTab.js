@@ -27,8 +27,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    borderBottomColor: THEME.DARKER_COLOR,
-    borderBottomWidth: 1,
     overflow: 'hidden',
   },
   row: {

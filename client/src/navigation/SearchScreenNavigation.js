@@ -8,6 +8,7 @@ import { MemberListScreen } from '../../screens/MemberListScreen';
 import { EditEventScreen } from '../../screens/EditEventScreen';
 import { EventScreen } from '../../screens/EventScreen';
 import { CreateEventScreen } from '../../screens/CreateEventScreen';
+import { CommentListScreen } from '../../screens/CommentListScreen';
 import { THEME } from '../../components/theme';
 
 const SearchStack = createNativeStackNavigator();
@@ -15,7 +16,7 @@ const SearchStack = createNativeStackNavigator();
 const setScreenOptions = () => ({
   headerTitleStyle: {
     fontFamily: THEME.BOLD_FONT,
-    fontSize: 22,
+    fontSize: THEME.HEADER_FONT_SIZE,
   },
   headerStyle: { backgroundColor: THEME.DARKER_COLOR },
   headerShadowVisible: false,
@@ -34,7 +35,11 @@ export const SearchScreenNavigation = () => {
       <SearchStack.Screen name='ProfileScreen' component={ProfileScreen} options={{ title: '' }} />
       <SearchStack.Screen name='FriendListScreen' component={FriendListScreen} />
       <SearchStack.Screen name='MemberListScreen' component={MemberListScreen} />
-      <SearchStack.Screen name='ProfileEditScreen' component={ProfileEditScreen} />
+      <SearchStack.Screen
+        name='ProfileEditScreen'
+        component={ProfileEditScreen}
+        options={{ title: 'Редактировать профиль' }}
+      />
       <SearchStack.Screen name='EventDetails' component={EventScreen} options={{ title: '' }} />
       <SearchStack.Screen
         name='EditEventScreen'
@@ -45,6 +50,11 @@ export const SearchScreenNavigation = () => {
         name='CreateEventScreen'
         component={CreateEventScreen}
         options={{ title: 'Создать событие' }}
+      />
+      <SearchStack.Screen
+        name='CommentListScreen'
+        component={CommentListScreen}
+        options={{ title: 'Комментарии' }}
       />
     </SearchStack.Navigator>
   );

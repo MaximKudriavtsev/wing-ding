@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, TextInput as DefaultTextInput, StyleSheet } from 'react-native';
+import { Text } from './Text';
 import { TextInputProps } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { THEME } from '../theme';
@@ -8,6 +9,7 @@ type Props = TextInputProps & {
   iconName?: string;
   iconColor?: string;
   iconSize?: number;
+  style?: object;
 };
 
 export const TextInput: React.FC<Props> = ({
@@ -21,22 +23,36 @@ export const TextInput: React.FC<Props> = ({
   numberOfLines = 1,
   secureTextEntry = false,
   multiline = false,
-  children,
+  value,
+  maxLength,
 }) => {
+  const [valueLength, setValueLength] = useState<number>(0);
+
+  useEffect(() => {
+    if (value == undefined) return;
+    setValueLength(value.length);
+  }, [value]);
+
   return (
     <View style={{ ...styles.inputSection, ...style }}>
-      <FontAwesome style={styles.inputIcon} name={iconName} size={iconSize} color={iconColor} />
+      {iconName ? (
+        <FontAwesome style={styles.inputIcon} name={iconName} size={iconSize} color={iconColor} />
+      ) : null}
       <DefaultTextInput
         style={styles.input}
         placeholder={placeholder}
-        value={children}
+        value={value}
         placeholderTextColor={THEME.PLACEHOLDER_COLOR}
         autoCapitalize={autoCapitalize}
         secureTextEntry={secureTextEntry}
         onChangeText={onChangeText}
         multiline={multiline}
         numberOfLines={numberOfLines}
+        maxLength={maxLength}
       />
+      {maxLength == undefined ? null : (
+        <Text style={styles.counter}>{`${valueLength}/${maxLength} `}</Text>
+      )}
     </View>
   );
 };
@@ -61,5 +77,11 @@ const styles = StyleSheet.create({
     color: THEME.FONT_COLOR,
     fontFamily: THEME.REGULAR_FONT,
     backgroundColor: 'transparent',
+  },
+  counter: {
+    alignSelf: 'flex-end',
+    color: THEME.PLACEHOLDER_COLOR,
+    fontSize: 12,
+    padding: 5,
   },
 });

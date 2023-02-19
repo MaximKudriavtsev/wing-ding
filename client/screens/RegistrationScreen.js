@@ -3,13 +3,13 @@ import { AlertContext, AlertType } from '../src/context/AlertContext';
 import { TokenContext } from '../src/context/TokenContext';
 import { api } from '../src/api';
 import { validate, decodeError } from '../src/utils';
-import { View } from 'react-native';
 import { Title } from '../components/ui/Title';
 import { Button } from '../components/ui/Button';
 import { TextInput } from '../components/ui/TextInput';
 import { ValidationHint } from '../components/ui/ValidationHint';
 import { THEME, SCREEN_STYLE } from '../components/theme';
 import { TOKEN_PROP } from '../src/config';
+import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
 
 export const RegistrationScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
@@ -48,7 +48,7 @@ export const RegistrationScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={SCREEN_STYLE.wrapper}>
+    <KeyboardAvoidingView style={SCREEN_STYLE.wrapper}>
       <Title>Регистрация</Title>
       <ValidationHint validations={emailValidations} />
       <TextInput
@@ -95,6 +95,6 @@ export const RegistrationScreen = ({ navigation }) => {
       <Button type={'LINK'} onPress={() => navigation.navigate('Authentication')}>
         Уже есть аккаунт? Войти
       </Button>
-    </View>
+    </KeyboardAvoidingView>
   );
 };

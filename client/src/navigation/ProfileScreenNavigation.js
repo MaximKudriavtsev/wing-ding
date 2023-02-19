@@ -9,6 +9,7 @@ import { CreateEventScreen } from '../../screens/CreateEventScreen';
 import { EditEventScreen } from '../../screens/EditEventScreen';
 import { EventScreen } from '../../screens/EventScreen';
 import { THEME } from '../../components/theme';
+import { CommentListScreen } from '../../screens/CommentListScreen';
 
 const ProfileStack = createNativeStackNavigator();
 
@@ -20,7 +21,7 @@ export const ProfileScreenNavigation = () => {
       screenOptions={() => ({
         headerTitleStyle: {
           fontFamily: THEME.BOLD_FONT,
-          fontSize: 22,
+          fontSize: THEME.HEADER_FONT_SIZE,
         },
         headerStyle: { backgroundColor: THEME.DARKER_COLOR },
         headerShadowVisible: false,
@@ -38,7 +39,11 @@ export const ProfileScreenNavigation = () => {
       />
       <ProfileStack.Screen name='FriendListScreen' component={FriendListScreen} />
       <ProfileStack.Screen name='MemberListScreen' component={MemberListScreen} />
-      <ProfileStack.Screen name='ProfileEditScreen' component={ProfileEditScreen} />
+      <ProfileStack.Screen
+        name='ProfileEditScreen'
+        component={ProfileEditScreen}
+        options={{ title: 'Редактировать профиль' }}
+      />
       <ProfileStack.Screen name='EventDetails' component={EventScreen} options={{ title: '' }} />
       <ProfileStack.Screen
         name='CreateEventScreen'
@@ -49,6 +54,11 @@ export const ProfileScreenNavigation = () => {
         name='EditEventScreen'
         component={EditEventScreen}
         options={{ title: 'Изменить событие' }}
+      />
+      <ProfileStack.Screen
+        name={'CommentListScreen'}
+        component={CommentListScreen}
+        options={{ title: 'Комментарии' }}
       />
     </ProfileStack.Navigator>
   );

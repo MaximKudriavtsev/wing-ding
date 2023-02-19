@@ -32,19 +32,34 @@ export type Event = {
   membersPhotos: User['photo'][];
   isMember: boolean;
   isHost: boolean;
+  commentsCount: number;
+};
+
+export type Comment = {
+  id: string;
+  text: string;
+  createdAt: string;
+  author: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    photo: string;
+  };
 };
 
 export type GetEventResponse = { data: Event };
+export type DeleteEventResponse = { status: number };
 export type GetMembersResponse = { status: string; members: User[] };
 export type StatusResponse = { status: string };
 export type SearchEvent = { data: { status: string; events: Event[] } };
+export type GetEventComments = { data: { status: string; comments: Comment[] } };
 
 export type EventApi = {
   createEvent: CreateEvent;
 
   updateEvent: UpdateEvent;
 
-  deleteEvent: (id: string) => Promise<GetEventResponse>;
+  deleteEvent: (id: string) => Promise<DeleteEventResponse>;
 
   getEvent: (id: string) => Promise<GetEventResponse>;
 
@@ -55,4 +70,8 @@ export type EventApi = {
   leaveEvent: (id: string) => Promise<StatusResponse>;
 
   searchEvent: (name: string) => Promise<SearchEvent>;
+
+  getEventComments: (id: string) => Promise<GetEventComments>;
+
+  sendComment: (eventId: number, text: string) => Promise<StatusResponse>;
 };

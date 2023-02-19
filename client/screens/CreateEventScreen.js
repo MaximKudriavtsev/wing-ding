@@ -1,12 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { EventForm } from '../components/ui/EventForm';
-import { View, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { PhotoPickerSheet } from '../components/ui/PhotoPickerSheet';
 import { api } from '../src/api';
 import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertContext';
 import { Button } from '../components/ui/Button';
 import { Loader } from '../components/ui/Loader';
+import { Column } from '../components/Column';
 import { SCREEN_STYLE } from '../components/theme.js';
+import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
 
 export const CreateEventScreen = ({ navigation }) => {
   const { showAlertMessage } = useContext(AlertContext);
@@ -17,7 +19,6 @@ export const CreateEventScreen = ({ navigation }) => {
   const [isPickerSheetVisible, setPickerSheetVisible] = useState(false);
   const [eventPhotoUri, setEventPhotoUri] = useState('');
   const [eventObject, setEventObject] = useState({});
-  let date;
 
   const openPickerSheet = () => {
     setPickerSheetVisible(true);
@@ -39,32 +40,33 @@ export const CreateEventScreen = ({ navigation }) => {
       .then(({ status }) => {
         if (status === 200) {
           showAlertMessage('Событие успешно создано', AlertType.Info);
-          setIsLoading(false);
           navigation.navigate('ProfileScreen');
         }
       })
       .catch(error => {
         showAlertMessage(AlertMessages.unknownError, AlertType.Error);
         console.log(error.response);
-        setIsLoading(false);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
-    <View style={SCREEN_STYLE.wrapper}>
+    <KeyboardAvoidingView>
       {isLoading ? (
         <Loader />
       ) : (
         <>
           <ScrollView>
-            <EventForm
-              eventPhoto={eventPhotoUri}
-              onOpenPhotoPicker={openPickerSheet}
-              onValidate={setFormValid}
-              onSetValidationMessage={setValidationMessage}
-              onSetEventObject={setEventObject}
-            />
-            <Button onPress={onCreateEvent}>Создать событие</Button>
+            <Column style={{ padding: 15 }}>
+              <EventForm
+                eventPhoto={eventPhotoUri}
+                onOpenPhotoPicker={openPickerSheet}
+                onValidate={setFormValid}
+                onSetValidationMessage={setValidationMessage}
+                onSetEventObject={setEventObject}
+              />
+              <Button onPress={onCreateEvent}>Создать событие</Button>
+            </Column>
           </ScrollView>
           <PhotoPickerSheet
             isVisible={isPickerSheetVisible}
@@ -73,6 +75,6 @@ export const CreateEventScreen = ({ navigation }) => {
           />
         </>
       )}
-    </View>
+    </KeyboardAvoidingView>
   );
 };

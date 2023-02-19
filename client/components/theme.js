@@ -13,6 +13,8 @@ export const THEME = {
   DANGER_COLOR: '#e9072b',
   TITLE_FONT_SIZE: 28,
   LABEL_FONT_SIZE: 16,
+  HEADER_FONT_SIZE: 18,
+  BOTTOM_NAVIGATION_BAR_HEIGHT: 80,
   //Button
   BUTTON_COLOR: '#99d9d9',
   BUTTON_FONT_COLOR: '#1a1523',
@@ -44,10 +46,12 @@ export const THEME = {
   ICON_IMAGE: 'image',
   ICON_CAMERA: 'camera',
   ICON_OPTION_DOTS: 'ellipsis-h',
+  ICON_COMMENTS: 'comments-o',
 };
 
 export const SCREEN_STYLE = StyleSheet.create({
   wrapper: {
+    display: 'flex',
     position: 'relative',
     backgroundColor: THEME.BACKGROUND_COLOR,
     width: '100%',

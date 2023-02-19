@@ -23,7 +23,12 @@ export const EventListScreen = ({ navigation }) => {
   }, [navigation]);
   return (
     <View style={SCREEN_STYLE.wrapper}>
-      <List data={[]} Component={EventTab} onOpen={openEventHandler} />
+      <List
+        data={[]}
+        Component={EventTab}
+        onOpen={openEventHandler}
+        style={{ paddingHorizontal: 15 }}
+      />
     </View>
   );
 };

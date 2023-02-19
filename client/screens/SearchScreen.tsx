@@ -55,23 +55,21 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
         .searchEvent(searchString)
         .then(({ data }) => {
           setFoundItems(data.events);
-          setIsLoading(false);
         })
         .catch(error => {
           console.log(error.response);
-          setIsLoading(false);
-        });
+        })
+        .finally(() => setIsLoading(false));
     } else {
       api.user
         .searchUser(searchString)
         .then(({ data }) => {
           setFoundItems(data.users);
-          setIsLoading(false);
         })
         .catch(error => {
           console.log(error);
-          setIsLoading(false);
-        });
+        })
+        .finally(() => setIsLoading(false));
     }
   }, [searchedType, searchString]);
 
@@ -83,9 +81,7 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
           iconName={THEME.ICON_SEARCH}
           placeholder={'Поиск...'}
           autoCapitalize={'sentences'}
-          onChangeText={(name: string) => {
-            setSearchString(name);
-          }}
+          onChangeText={setSearchString}
         />
         <Row style={styles.filterRow}>
           <ToggleButton
@@ -112,6 +108,11 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
           Component={searchedType === SearchedType.Events ? EventTab : UserTab}
           onOpen={searchedType === SearchedType.Events ? openEventHandler : openProfileHandler}
           emptyText={'К сожалению, ничего не найдено'}
+          style={
+            searchedType === SearchedType.Events
+              ? { paddingHorizontal: 15 }
+              : { paddingHorizontal: 0 }
+          }
         />
       )}
     </View>

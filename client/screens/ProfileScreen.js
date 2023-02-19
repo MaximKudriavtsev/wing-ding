@@ -185,7 +185,12 @@ export const ProfileScreen = ({ navigation, route }) => {
       {isEventLoading ? (
         <Loader />
       ) : (
-        <List data={events} Component={EventTab} onOpen={openEventHandler} />
+        <List
+          data={events}
+          Component={EventTab}
+          onOpen={openEventHandler}
+          style={{ paddingHorizontal: 15 }}
+        />
       )}
     </View>
   );
