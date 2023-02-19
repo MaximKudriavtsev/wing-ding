@@ -20,10 +20,10 @@ export const CommentTab: React.FC<Props> = ({ item }) => {
         <Column style={styles.textColumn}>
           <Text
             bold={true}
-            style={{ fontSize: 16, marginBottom: 10 }}
+            style={styles.authorText}
           >{`${item.author.firstName} ${item.author.lastName}`}</Text>
           <Text>{item.text}</Text>
-          <Text style={{ color: THEME.PLACEHOLDER_COLOR, marginTop: 5 }}>
+          <Text style={styles.dateText}>
             {dateRu(item.createdAt).format(`D MMMM YYYY в HH:mm`)}
           </Text>
         </Column>
@@ -50,5 +50,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginVertical: 5,
     width: '85%',
+  },
+  authorText: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  dateText: {
+    color: THEME.PLACEHOLDER_COLOR,
+    marginTop: 5,
   },
 });

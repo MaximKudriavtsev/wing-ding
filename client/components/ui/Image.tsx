@@ -12,7 +12,7 @@ export const Image: React.FC<Props> = ({ style, source, defaultImage, imageStyle
   return (
     <ImageBackground
       style={style}
-      source={!source || source === null ? defaultImage : { uri: source }}
+      source={!source ? defaultImage : { uri: source }}
       imageStyle={imageStyle}
     />
   );

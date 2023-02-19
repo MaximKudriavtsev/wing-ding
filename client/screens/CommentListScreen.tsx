@@ -24,12 +24,11 @@ export const CommentListScreen: React.FC<Props> = ({ navigation, route }) => {
       .getEventComments(eventId)
       .then(({ data }) => {
         setComments(data.comments);
-        setIsLoading(false);
       })
       .catch(error => {
         console.log(error.response);
-        setIsLoading(false);
-      });
+      })
+      .finally(() => setIsLoading(false));
   }, [eventId]);
 
   const onSendComment = () => {

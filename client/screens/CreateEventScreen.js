@@ -40,15 +40,14 @@ export const CreateEventScreen = ({ navigation }) => {
       .then(({ status }) => {
         if (status === 200) {
           showAlertMessage('Событие успешно создано', AlertType.Info);
-          setIsLoading(false);
           navigation.navigate('ProfileScreen');
         }
       })
       .catch(error => {
         showAlertMessage(AlertMessages.unknownError, AlertType.Error);
         console.log(error.response);
-        setIsLoading(false);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (

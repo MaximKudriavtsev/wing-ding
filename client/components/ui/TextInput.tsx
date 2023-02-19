@@ -37,9 +37,7 @@ export const TextInput: React.FC<Props> = ({
     <View style={{ ...styles.inputSection, ...style }}>
       {iconName ? (
         <FontAwesome style={styles.inputIcon} name={iconName} size={iconSize} color={iconColor} />
-      ) : (
-        <></>
-      )}
+      ) : null}
       <DefaultTextInput
         style={styles.input}
         placeholder={placeholder}
@@ -52,9 +50,7 @@ export const TextInput: React.FC<Props> = ({
         numberOfLines={numberOfLines}
         maxLength={maxLength}
       />
-      {maxLength == undefined ? (
-        <></>
-      ) : (
+      {maxLength == undefined ? null : (
         <Text style={styles.counter}>{`${valueLength}/${maxLength} `}</Text>
       )}
     </View>

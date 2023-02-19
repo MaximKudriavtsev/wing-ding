@@ -2,7 +2,6 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { UserIcon } from './UserIcon';
 import { Text } from './Text';
-import { Event } from '../../src/api/event/types';
 
 type Props = {
   membersPhotos: (string | null)[];

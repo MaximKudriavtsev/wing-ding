@@ -74,15 +74,14 @@ export const ProfileEditScreen = ({ navigation }) => {
             lastName,
             userPhoto,
           });
-          setIsLoading(false);
         }
       })
       .catch(error => {
         const errorMessage = decodeError(error.response.data.error);
         showAlertMessage(errorMessage, AlertType.Error);
         console.log(error.response);
-        setIsLoading(false);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {

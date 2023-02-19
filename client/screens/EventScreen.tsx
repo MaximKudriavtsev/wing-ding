@@ -56,15 +56,14 @@ export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
       .then(({ status }) => {
         if (status === 200) {
           showAlertMessage('Событие успешно удалено', AlertType.Info);
-          setIsLoading(false);
           navigation.goBack();
         }
       })
       .catch(error => {
         showAlertMessage(AlertMessages.unknownError, AlertType.Error);
         console.log(error.response);
-        setIsLoading(false);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   const showMembersHandler = () => {
@@ -83,14 +82,13 @@ export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
           .getEvent(eventId)
           .then(({ data }) => {
             setEvent(data);
-            setIsLoading(false);
           });
       })
       .catch(error => {
         showAlertMessage(AlertMessages.unknownError, AlertType.Error);
         console.log(error.response);
-        setIsLoading(false);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
@@ -110,13 +108,12 @@ export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
           },
           title: data.title,
         });
-        setIsLoading(false);
       })
       .catch(error => {
         showAlertMessage(AlertMessages.unknownError, AlertType.Error);
         console.log(error.response);
-        setIsLoading(false);
-      });
+      })
+      .finally(() => setIsLoading(false));
   }, [eventId]);
 
   return (

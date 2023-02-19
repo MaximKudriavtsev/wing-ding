@@ -31,13 +31,12 @@ export const MemberListScreen = ({ route, navigation }) => {
         .getMembers(eventId)
         .then(({ data }) => {
           setUsers(data.members);
-          setIsLoading(false);
         })
         .catch(error => {
           showAlertMessage(AlertMessages.unknownError, AlertType.Error);
           console.log(error.response);
-          setIsLoading(false);
-        });
+        })
+        .finally(() => setIsLoading(false));
     }
   }, [eventId]);
 

@@ -30,10 +30,6 @@ export const KeyboardAvoidingView: React.FC<Props> = ({ style, children, fixedHe
     paddingBottom: keyboardHeight.value,
     height: fixedHeight || 'auto',
   }));
-  // scrolled
-  //   ? { height: '100%', paddingBottom: keyboardHeight.value }
-  //   : { height: '100%', paddingBottom: keyboardHeight.value },
-  //);
 
   return (
     <View style={style}>

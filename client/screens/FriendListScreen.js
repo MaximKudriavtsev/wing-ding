@@ -31,13 +31,12 @@ export const FriendListScreen = ({ route, navigation }) => {
       .getFriendList(userId)
       .then(({ data }) => {
         setUsers(data.friends);
-        setIsLoading(false);
       })
       .catch(error => {
         showAlertMessage(AlertMessages.unknownError, AlertType.Error);
         console.log(error.response);
-        setIsLoading(false);
-      });
+      })
+      .finally(() => setIsLoading(false));
   }, [userId]);
 
   return (

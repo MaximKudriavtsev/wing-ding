@@ -55,23 +55,21 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
         .searchEvent(searchString)
         .then(({ data }) => {
           setFoundItems(data.events);
-          setIsLoading(false);
         })
         .catch(error => {
           console.log(error.response);
-          setIsLoading(false);
-        });
+        })
+        .finally(() => setIsLoading(false));
     } else {
       api.user
         .searchUser(searchString)
         .then(({ data }) => {
           setFoundItems(data.users);
-          setIsLoading(false);
         })
         .catch(error => {
           console.log(error);
-          setIsLoading(false);
-        });
+        })
+        .finally(() => setIsLoading(false));
     }
   }, [searchedType, searchString]);
 

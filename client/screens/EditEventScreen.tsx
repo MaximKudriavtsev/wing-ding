@@ -51,15 +51,14 @@ export const EditEventScreen: React.FC<Props> = ({ navigation, route }) => {
       .then(({ status }) => {
         if (status === 200) {
           showAlertMessage('Событие успешно обновлено', AlertType.Info);
-          setIsLoading(false);
           navigation.navigate('EventDetails', { eventId: event.id });
         }
       })
       .catch(error => {
         showAlertMessage(AlertMessages.unknownError, AlertType.Error);
         console.log(error.response);
-        setIsLoading(false);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
