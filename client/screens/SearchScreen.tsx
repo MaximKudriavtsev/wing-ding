@@ -73,33 +73,36 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
     }
   }, [searchedType, searchString]);
 
+  const searchBar = (
+    <View style={styles.searchBar}>
+      <TextInput
+        style={styles.searchInput}
+        iconName={THEME.ICON_SEARCH}
+        placeholder={'Поиск...'}
+        autoCapitalize={'sentences'}
+        onChangeText={setSearchString}
+      />
+      <Row style={styles.filterRow}>
+        <ToggleButton
+          isActive={searchedType === SearchedType.Users}
+          style={styles.filterButton}
+          onPress={showUsers}
+        >
+          Пользователи
+        </ToggleButton>
+        <ToggleButton
+          isActive={searchedType === SearchedType.Events}
+          style={styles.filterButton}
+          onPress={showEvents}
+        >
+          События
+        </ToggleButton>
+      </Row>
+    </View>
+  );
+
   return (
     <View style={{ ...SCREEN_STYLE.wrapper, ...styles.wrapper }}>
-      <View style={styles.searchBar}>
-        <TextInput
-          style={styles.searchInput}
-          iconName={THEME.ICON_SEARCH}
-          placeholder={'Поиск...'}
-          autoCapitalize={'sentences'}
-          onChangeText={setSearchString}
-        />
-        <Row style={styles.filterRow}>
-          <ToggleButton
-            isActive={searchedType === SearchedType.Users}
-            style={styles.filterButton}
-            onPress={showUsers}
-          >
-            Пользователи
-          </ToggleButton>
-          <ToggleButton
-            isActive={searchedType === SearchedType.Events}
-            style={styles.filterButton}
-            onPress={showEvents}
-          >
-            События
-          </ToggleButton>
-        </Row>
-      </View>
       {isLoading ? (
         <Loader />
       ) : (
@@ -113,6 +116,8 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
               ? { paddingHorizontal: 15 }
               : { paddingHorizontal: 0 }
           }
+          listHeader={searchBar}
+          stickyHeader={true}
         />
       )}
     </View>
@@ -127,13 +132,12 @@ const styles = StyleSheet.create({
   },
 
   searchBar: {
-    backgroundColor: THEME.DARKER_COLOR,
+    backgroundColor: THEME.BACKGROUND_COLOR,
     paddingBottom: 0,
     alignItems: 'flex-start',
   },
 
   searchInput: {
-    backgroundColor: THEME.BACKGROUND_COLOR,
     margin: 15,
     marginBottom: 30,
   },
