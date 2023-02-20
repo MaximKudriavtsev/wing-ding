@@ -11,9 +11,7 @@ export const ToggleButton = ({ children, onPress, style, isActive, fontSize = 14
       style={{
         ...styles.button,
         ...style,
-        ...(isActive
-          ? { backgroundColor: THEME.BRIGHTER_COLOR }
-          : { backgroundColor: THEME.DARKER_COLOR }),
+        ...(isActive ? { borderBottomWidth: 3, borderBottomColor: THEME.BRIGHTER_COLOR } : null),
       }}
     >
       <View>
@@ -33,6 +31,7 @@ export const ToggleButton = ({ children, onPress, style, isActive, fontSize = 14
 
 const styles = StyleSheet.create({
   button: {
+    backgroundColor: THEME.BACKGROUND_COLOR,
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',

@@ -18,10 +18,11 @@ export const BottomNavigation = () => {
           height: THEME.BOTTOM_NAVIGATION_BAR_HEIGHT,
           paddingBottom: '3%',
           paddingTop: '2%',
-          backgroundColor: THEME.DARKER_COLOR,
-          borderTopWidth: 0,
+          backgroundColor: THEME.BACKGROUND_COLOR,
+          borderTopWidth: 1,
+          borderTopColor: THEME.DARKER_COLOR,
         },
-        tabBarActiveTintColor: THEME.FONT_COLOR,
+        tabBarActiveTintColor: THEME.BRIGHTER_COLOR,
         tabBarInactiveTintColor: THEME.PLACEHOLDER_COLOR,
       })}
     >

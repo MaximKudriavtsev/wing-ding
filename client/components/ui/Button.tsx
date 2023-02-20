@@ -39,8 +39,7 @@ export const Button: React.FC<Props> = ({
       break;
     case ButtonType.Link:
       backgroundColor = 'transparent';
-      fontColor;
-      break;
+      fontColor = THEME.BRIGHTER_COLOR;
   }
 
   return (

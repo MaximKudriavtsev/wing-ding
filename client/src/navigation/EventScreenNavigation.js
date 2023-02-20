@@ -17,9 +17,9 @@ export const EventScreenNavigation = () => {
           fontFamily: THEME.BOLD_FONT,
           fontSize: THEME.HEADER_FONT_SIZE,
         },
-        headerStyle: { backgroundColor: THEME.DARKER_COLOR },
+        headerStyle: { backgroundColor: THEME.BACKGROUND_COLOR },
         headerShadowVisible: false,
-        headerTintColor: '#fff',
+        headerTintColor: THEME.FONT_COLOR,
       })}
     >
       <EventStack.Screen name='EventList' component={EventListScreen} />

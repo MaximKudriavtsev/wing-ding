@@ -13,6 +13,7 @@ export type User = {
   updatedAt: string;
   friends: number;
   events: number;
+  isFriend: boolean;
 };
 
 export type AuthResponse = { status: 200; data: { accessToken?: string; error?: string } };

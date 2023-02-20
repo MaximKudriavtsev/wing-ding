@@ -6,22 +6,23 @@ export const THEME = {
   SCREEN_HEIGHT: Dimensions.get('screen').height,
   REGULAR_FONT: 'comfortaa-regular',
   BOLD_FONT: 'comfortaa-bold',
-  FONT_COLOR: '#ddd',
-  BACKGROUND_COLOR: '#001628',
-  DARKER_COLOR: '#00111e',
-  BRIGHTER_COLOR: '#68a2b9',
+  FONT_COLOR: '#111',
+  WHITE_FONT_COLOR: '#fefefe',
+  BACKGROUND_COLOR: '#fefefe',
+  DARKER_COLOR: '#eeeeee',
+  BRIGHTER_COLOR: '#6667ab',
   DANGER_COLOR: '#e9072b',
   TITLE_FONT_SIZE: 28,
   LABEL_FONT_SIZE: 16,
   HEADER_FONT_SIZE: 18,
   BOTTOM_NAVIGATION_BAR_HEIGHT: 80,
   //Button
-  BUTTON_COLOR: '#99d9d9',
+  BUTTON_COLOR: '#6667ab',
   BUTTON_FONT_COLOR: '#1a1523',
   BUTTON_FONT_SIZE: 18,
   ACTIVE_OPACITY: 0.7,
   //Input
-  PLACEHOLDER_COLOR: '#666',
+  PLACEHOLDER_COLOR: '#999',
   //Default pictures
   USER_PHOTO: require('../assets/user.jpg'),
   EVENT_IMAGE: require('../assets/event.jpg'),
@@ -47,6 +48,7 @@ export const THEME = {
   ICON_CAMERA: 'camera',
   ICON_OPTION_DOTS: 'ellipsis-h',
   ICON_COMMENTS: 'comments-o',
+  ICON_BOMB: 'bomb',
 };
 
 export const SCREEN_STYLE = StyleSheet.create({
