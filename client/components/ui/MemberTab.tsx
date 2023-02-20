@@ -34,7 +34,7 @@ export const MemberTab: React.FC<Props> = ({
         <View style={styles.icons}>{membersIcons}</View>
         <View style={styles.text} key={'members_count'}>
           <Text bold={true} style={reverse ? { marginRight: 15 } : { marginRight: 0 }}>
-            {`Участники (${membersCount})`}
+            {membersCount}
           </Text>
         </View>
       </View>
