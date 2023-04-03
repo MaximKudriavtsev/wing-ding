@@ -40,7 +40,11 @@ export const SearchScreenNavigation = () => {
         component={ProfileEditScreen}
         options={{ title: 'Редактировать профиль' }}
       />
-      <SearchStack.Screen name='EventDetails' component={EventScreen} options={{ title: '' }} />
+      <SearchStack.Screen
+        name='EventDetails'
+        component={EventScreen}
+        options={{ headerShown: false }}
+      />
       <SearchStack.Screen
         name='EditEventScreen'
         component={EditEventScreen}
