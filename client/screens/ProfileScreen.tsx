@@ -25,6 +25,11 @@ type Props = {
   route: any;
 };
 
+enum Filter {
+  Upcoming = 'UPCOMING',
+  Past = 'PAST',
+}
+
 export const ProfileScreen: React.FC<Props> = ({ navigation, route }) => {
   const { userId } = route.params;
   const { authorizedUser } = useContext(UserContext);
@@ -36,7 +41,8 @@ export const ProfileScreen: React.FC<Props> = ({ navigation, route }) => {
   const [isEventLoading, setIsEventLoading] = useState<boolean>(false);
   const [friendsCount, setFriendsCount] = useState<number>(0);
   const [events, setEvents] = useState<Event[]>([]);
-  const [filter, setFilter] = useState('all');
+  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
+  const [filter, setFilter] = useState<Filter>(Filter.Upcoming);
 
   const openEventHandler = (event: Event) => {
     if (!user) return;
@@ -48,17 +54,17 @@ export const ProfileScreen: React.FC<Props> = ({ navigation, route }) => {
     navigation.push('FriendListScreen', { userId: user.id, title: 'Друзья' });
   };
 
-  const showAllEvents = () => {
+  const showUpcomingEvents = () => {
     if (!!events) {
-      setEvents(events);
-      setFilter('all');
+      setFilteredEvents(events.filter(event => dateRu(event.date).isAfter(dateRu())));
+      setFilter(Filter.Upcoming);
     }
   };
 
-  const showUpcomingEvents = () => {
+  const showPastEvents = () => {
     if (!!events) {
-      setEvents(events.filter(event => dateRu(event.date).isAfter(dateRu())));
-      setFilter('upcoming');
+      setFilteredEvents(events.filter(event => dateRu(event.date).isBefore(dateRu())));
+      setFilter(Filter.Past);
     }
   };
 
@@ -69,11 +75,12 @@ export const ProfileScreen: React.FC<Props> = ({ navigation, route }) => {
       .then(() => {
         setIsFriend(!isFriend);
         setFriendsCount(isFriend ? friendsCount - 1 : friendsCount + 1);
-        setIsUserLoading(false);
       })
       .catch(error => {
         showAlertMessage(AlertMessages.unknownError, AlertType.Error);
         console.log(error.response);
+      })
+      .finally(() => {
         setIsUserLoading(false);
       });
   };
@@ -84,11 +91,12 @@ export const ProfileScreen: React.FC<Props> = ({ navigation, route }) => {
       .getUser(userId)
       .then(({ data }) => {
         setUser(data.user);
-        setIsUserLoading(false);
       })
       .catch(error => {
         showAlertMessage(AlertMessages.unknownError, AlertType.Error);
         console.log(error.response);
+      })
+      .finally(() => {
         setIsUserLoading(false);
       });
   }, [userId]);
@@ -102,14 +110,17 @@ export const ProfileScreen: React.FC<Props> = ({ navigation, route }) => {
       .getUserEvents(userId)
       .then(({ data }) => {
         setEvents(data.events);
-        setIsEventLoading(false);
       })
       .catch(error => {
         showAlertMessage(AlertMessages.unknownError, AlertType.Error);
         console.log(error.response);
-        setIsEventLoading(false);
-      });
+      })
+      .finally(() => setIsEventLoading(false));
   }, [user]);
+
+  useEffect(() => {
+    showUpcomingEvents();
+  }, [events]);
 
   useEffect(() => {
     if (!user || !authorizedUser) return;
@@ -174,18 +185,18 @@ export const ProfileScreen: React.FC<Props> = ({ navigation, route }) => {
         </Column>
         <Row style={styles.filterRow}>
           <ToggleButton
-            isActive={filter === 'all'}
+            isActive={filter === Filter.Upcoming}
             style={styles.filterButton}
-            onPress={showAllEvents}
+            onPress={showUpcomingEvents}
           >
             {user.id === authorizedUser.id ? `Мои события` : `События`}
           </ToggleButton>
           <ToggleButton
-            isActive={filter === 'upcoming'}
+            isActive={filter === Filter.Past}
             style={styles.filterButton}
-            onPress={showUpcomingEvents}
+            onPress={showPastEvents}
           >
-            Будущие события
+            История событий
           </ToggleButton>
         </Row>
       </>
@@ -204,7 +215,7 @@ export const ProfileScreen: React.FC<Props> = ({ navigation, route }) => {
         <List
           style={styles.listWrapper}
           listHeader={listHeader}
-          data={events}
+          data={filteredEvents}
           Component={EventTab}
           onOpen={openEventHandler}
           stickyHeader={true}
