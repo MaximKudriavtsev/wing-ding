@@ -26,7 +26,7 @@ export const ProfileScreenNavigation = () => {
         headerStyle: { backgroundColor: THEME.BACKGROUND_COLOR },
         headerShadowVisible: false,
         headerTintColor: THEME.FONT_COLOR,
-        headerBackVisible: false,
+        headerBackTitle: '',
       })}
     >
       <ProfileStack.Screen
@@ -44,7 +44,11 @@ export const ProfileScreenNavigation = () => {
         component={ProfileEditScreen}
         options={{ title: 'Редактировать профиль' }}
       />
-      <ProfileStack.Screen name='EventDetails' component={EventScreen} options={{ title: '' }} />
+      <ProfileStack.Screen
+        name='EventDetails'
+        component={EventScreen}
+        options={{ headerShown: false }}
+      />
       <ProfileStack.Screen
         name='CreateEventScreen'
         component={CreateEventScreen}

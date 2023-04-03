@@ -16,7 +16,7 @@ export const BottomNavigation = () => {
         headerShown: false,
         tabBarStyle: {
           height: THEME.BOTTOM_NAVIGATION_BAR_HEIGHT,
-          paddingBottom: '3%',
+          paddingBottom: 20,
           paddingTop: '2%',
           backgroundColor: THEME.BACKGROUND_COLOR,
           borderTopWidth: 1,

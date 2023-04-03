@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { View, TextInput as DefaultTextInput, StyleSheet } from 'react-native';
 import { Text } from './Text';
 import { TextInputProps } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
 import { THEME } from '../theme';
+import { Loader } from './Loader';
+import { Icon } from './Icon';
 
 type Props = TextInputProps & {
   iconName?: string;
   iconColor?: string;
   iconSize?: number;
   style?: object;
+  isLoading?: boolean;
 };
 
 export const TextInput: React.FC<Props> = ({
@@ -25,6 +27,7 @@ export const TextInput: React.FC<Props> = ({
   multiline = false,
   value,
   maxLength,
+  isLoading = false,
 }) => {
   const [valueLength, setValueLength] = useState<number>(0);
 
@@ -36,7 +39,7 @@ export const TextInput: React.FC<Props> = ({
   return (
     <View style={{ ...styles.inputSection, ...style }}>
       {iconName ? (
-        <FontAwesome style={styles.inputIcon} name={iconName} size={iconSize} color={iconColor} />
+        <Icon style={styles.inputIcon} name={iconName} size={iconSize} color={iconColor} />
       ) : null}
       <DefaultTextInput
         style={styles.input}
@@ -50,6 +53,7 @@ export const TextInput: React.FC<Props> = ({
         numberOfLines={numberOfLines}
         maxLength={maxLength}
       />
+      {isLoading ? <Loader /> : null}
       {maxLength == undefined ? null : (
         <Text style={styles.counter}>{`${valueLength}/${maxLength} `}</Text>
       )}
@@ -60,7 +64,7 @@ export const TextInput: React.FC<Props> = ({
 const styles = StyleSheet.create({
   inputSection: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: THEME.DARKER_COLOR,
     paddingHorizontal: 10,

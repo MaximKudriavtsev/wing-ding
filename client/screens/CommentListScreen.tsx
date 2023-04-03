@@ -4,14 +4,19 @@ import { List } from '../components/List';
 import { CommentTab } from '../components/CommentTab';
 import { Loader } from '../components/ui/Loader';
 import { Comment } from '../src/api/event/types';
-import { SCREEN_STYLE, THEME } from '../components/theme';
+import { SCREEN_STYLE } from '../components/theme';
 import { MessageInputBar } from '../components/ui/MessageInputBar';
 import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
+import { View } from 'react-native';
 import api from '../src/api/production';
 
-type Props = { navigation: any; route: any };
+type Props = { navigation: any; route: any; hasDefaultOffset?: boolean };
 
-export const CommentListScreen: React.FC<Props> = ({ navigation, route }) => {
+export const CommentListScreen: React.FC<Props> = ({
+  navigation,
+  route,
+  hasDefaultOffset = true,
+}) => {
   const { showAlertMessage } = useContext(AlertContext);
   const { eventId } = route.params;
   const [comments, setComments] = useState<Comment[]>([]);
@@ -50,26 +55,27 @@ export const CommentListScreen: React.FC<Props> = ({ navigation, route }) => {
         paddingVertical: 0,
       }}
       fixedHeight={'100%'}
+      hasDefaultOffset={hasDefaultOffset}
     >
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
+      <View style={{ flex: 1 }}>
+        {isLoading ? (
+          <Loader />
+        ) : (
           <List
             data={comments}
             Component={CommentTab}
             emptyText={'Еще никто не оставил комментарий. Будьте первыми!'}
             style={{ paddingTop: 10 }}
           />
-          <MessageInputBar
-            placeholder={'Добавьте комментарий...'}
-            message={commentText}
-            onSetMessage={setCommentText}
-            onSend={onSendComment}
-            messageMaxLength={300}
-          />
-        </>
-      )}
+        )}
+      </View>
+      <MessageInputBar
+        placeholder={'Добавьте комментарий...'}
+        message={commentText}
+        onSetMessage={setCommentText}
+        onSend={onSendComment}
+        messageMaxLength={300}
+      />
     </KeyboardAvoidingView>
   );
 };

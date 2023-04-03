@@ -18,6 +18,7 @@ import {
 import { TokenProvider } from './src/context/TokenContext';
 import { UserProvider } from './src/context/UserContext';
 import { User } from './src/api/user/types';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const LoadFonts = async () => {
   await useFont();
@@ -75,13 +76,15 @@ export default function App() {
   }
 
   return (
-    <TokenProvider value={{ userToken, setUserToken }}>
-      <UserProvider value={{ authorizedUser, setAuthorizedUser }}>
-        <AlertProvider value={{ showAlertMessage }}>
-          <TopAlert message={alertMessage} type={alertType} isVisible={isAlertVisible} />
-          {!!authorizedUser ? <AppNavigation /> : <LoginNavigation />}
-        </AlertProvider>
-      </UserProvider>
-    </TokenProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <TokenProvider value={{ userToken, setUserToken }}>
+        <UserProvider value={{ authorizedUser, setAuthorizedUser }}>
+          <AlertProvider value={{ showAlertMessage }}>
+            <TopAlert message={alertMessage} type={alertType} isVisible={isAlertVisible} />
+            {!!authorizedUser ? <AppNavigation /> : <LoginNavigation />}
+          </AlertProvider>
+        </UserProvider>
+      </TokenProvider>
+    </GestureHandlerRootView>
   );
 }

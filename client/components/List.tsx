@@ -17,6 +17,7 @@ type Props = {
   style?: object;
   listHeader?: JSX.Element;
   stickyHeader?: boolean;
+  listEmptyComponent?: JSX.Element;
 };
 
 export const List: React.FC<Props> = ({
@@ -28,6 +29,7 @@ export const List: React.FC<Props> = ({
   listHeader,
   emptyText = 'Здесь пока пусто...',
   stickyHeader = false,
+  listEmptyComponent,
 }) => {
   return (
     <View style={SCREEN_STYLE.listWrapper}>
@@ -41,7 +43,7 @@ export const List: React.FC<Props> = ({
         renderItem={({ item }) => (
           <Component item={item} onOpen={onOpen} onShowMembers={onShowMembers} />
         )}
-        ListEmptyComponent={<Text style={styles.empty}>{emptyText}</Text>}
+        ListEmptyComponent={listEmptyComponent || <Text style={styles.empty}>{emptyText}</Text>}
       />
     </View>
   );

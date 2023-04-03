@@ -4,7 +4,7 @@ import { HeaderIcon } from '../components/HeaderIcon';
 import { View } from 'react-native';
 import { THEME, SCREEN_STYLE } from '../components/theme';
 import { List } from '../components/List';
-import { EventTab } from '../components/EventTab';
+import { EventTab } from '../components/event/EventTab';
 
 export const EventListScreen = ({ navigation }) => {
   const openEventHandler = event => {

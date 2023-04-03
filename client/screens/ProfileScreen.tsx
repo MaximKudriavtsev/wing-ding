@@ -8,7 +8,7 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { Row } from '../components/Row';
 import { Column } from '../components/Column';
 import { List } from '../components/List';
-import { EventTab } from '../components/EventTab';
+import { EventTab } from '../components/event/EventTab';
 import { HeaderIcon } from '../components/HeaderIcon';
 import { UserIcon } from '../components/ui/UserIcon';
 import { Button, ButtonType } from '../components/ui/Button';
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
   wrapper: {
     justifyContent: 'flex-start',
     paddingHorizontal: 0,
-    paddingTop: 0,
+    paddingVertical: 0,
   },
   userBar: {
     height: 150,

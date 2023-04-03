@@ -3,7 +3,6 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { UserIcon } from './ui/UserIcon';
 import { Row } from './Row';
 import { Text } from './ui/Text';
-import { THEME } from './theme';
 
 export const UserTab = ({ item, onOpen }) => {
   return (
@@ -11,7 +10,7 @@ export const UserTab = ({ item, onOpen }) => {
       <View style={styles.wrapper}>
         <Row style={styles.row}>
           <UserIcon userPhoto={item.photo} iconSize={46} />
-          <Text style={{ marginLeft: 15 }}>{`${item.firstName} ${item.lastName}`}</Text>
+          <Text style={styles.name}>{`${item.firstName} ${item.lastName}`}</Text>
         </Row>
       </View>
     </TouchableOpacity>
@@ -33,4 +32,5 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
   },
+  name: { marginLeft: 15 },
 });

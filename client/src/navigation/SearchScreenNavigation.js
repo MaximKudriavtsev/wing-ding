@@ -21,7 +21,7 @@ const setScreenOptions = () => ({
   headerStyle: { backgroundColor: THEME.BACKGROUND_COLOR },
   headerShadowVisible: false,
   headerTintColor: THEME.FONT_COLOR,
-  headerBackVisible: false,
+  headerBackTitle: '',
 });
 
 export const SearchScreenNavigation = () => {

@@ -5,8 +5,7 @@ import { TextInput } from '../components/ui/TextInput';
 import { ToggleButton } from '../components/ui/ToggleButton';
 import { List } from '../components/List';
 import { UserTab } from '../components/UserTab';
-import { EventTab } from '../components/EventTab';
-import { Loader } from '../components/ui/Loader';
+import { EventTab } from '../components/event/EventTab';
 import { SCREEN_STYLE, THEME } from '../components/theme';
 import { api } from '../src/api';
 import { Event } from '../src/api/event/types';
@@ -50,27 +49,29 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
   useEffect(() => {
     if (searchString.length < MIN_SEARCH_STRING_LENGTH) return;
     setIsLoading(true);
-    if (searchedType === SearchedType.Events) {
-      api.event
-        .searchEvent(searchString)
-        .then(({ data }) => {
-          setFoundItems(data.events);
-        })
-        .catch(error => {
-          console.log(error.response);
-        })
-        .finally(() => setIsLoading(false));
-    } else {
-      api.user
-        .searchUser(searchString)
-        .then(({ data }) => {
-          setFoundItems(data.users);
-        })
-        .catch(error => {
-          console.log(error);
-        })
-        .finally(() => setIsLoading(false));
-    }
+    setTimeout(() => {
+      if (searchedType === SearchedType.Events) {
+        api.event
+          .searchEvent(searchString)
+          .then(({ data }) => {
+            setFoundItems(data.events);
+          })
+          .catch(error => {
+            console.log(error.response);
+          })
+          .finally(() => setIsLoading(false));
+      } else {
+        api.user
+          .searchUser(searchString)
+          .then(({ data }) => {
+            setFoundItems(data.users);
+          })
+          .catch(error => {
+            console.log(error);
+          })
+          .finally(() => setIsLoading(false));
+      }
+    }, 500);
   }, [searchedType, searchString]);
 
   const searchBar = (
@@ -81,6 +82,7 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
         placeholder={'Поиск...'}
         autoCapitalize={'sentences'}
         onChangeText={setSearchString}
+        isLoading={isLoading}
       />
       <Row style={styles.filterRow}>
         <ToggleButton
@@ -103,23 +105,15 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <View style={{ ...SCREEN_STYLE.wrapper, ...styles.wrapper }}>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <List
-          data={foundItems}
-          Component={searchedType === SearchedType.Events ? EventTab : UserTab}
-          onOpen={searchedType === SearchedType.Events ? openEventHandler : openProfileHandler}
-          emptyText={'К сожалению, ничего не найдено'}
-          style={
-            searchedType === SearchedType.Events
-              ? { paddingHorizontal: 15 }
-              : { paddingHorizontal: 0 }
-          }
-          listHeader={searchBar}
-          stickyHeader={true}
-        />
-      )}
+      <List
+        data={foundItems}
+        Component={searchedType === SearchedType.Events ? EventTab : UserTab}
+        onOpen={searchedType === SearchedType.Events ? openEventHandler : openProfileHandler}
+        emptyText={'К сожалению, ничего не найдено'}
+        style={{ paddingHorizontal: 15 }}
+        listHeader={searchBar}
+        stickyHeader={true}
+      />
     </View>
   );
 };
@@ -138,8 +132,7 @@ const styles = StyleSheet.create({
   },
 
   searchInput: {
-    margin: 15,
-    marginBottom: 30,
+    marginVertical: 15,
   },
 
   filterRow: {

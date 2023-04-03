@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import Constants from 'expo-constants';
 
 export const THEME = {
   //General
@@ -12,10 +13,12 @@ export const THEME = {
   DARKER_COLOR: '#eeeeee',
   BRIGHTER_COLOR: '#6667ab',
   DANGER_COLOR: '#e9072b',
+  WHITE_TRANSPARENT: 'rgba(255,255,255,.6)',
   TITLE_FONT_SIZE: 28,
   LABEL_FONT_SIZE: 16,
   HEADER_FONT_SIZE: 18,
   BOTTOM_NAVIGATION_BAR_HEIGHT: 80,
+  STATUS_BAR_HEIGHT: Constants.statusBarHeight,
   //Button
   BUTTON_COLOR: '#6667ab',
   BUTTON_FONT_COLOR: '#1a1523',
@@ -48,7 +51,8 @@ export const THEME = {
   ICON_CAMERA: 'camera',
   ICON_OPTION_DOTS: 'ellipsis-h',
   ICON_COMMENTS: 'comments-o',
-  ICON_BOMB: 'bomb',
+  ICON_INFO: 'info',
+  ICON_ARROW_BACK: 'chevron-left',
 };
 
 export const SCREEN_STYLE = StyleSheet.create({
