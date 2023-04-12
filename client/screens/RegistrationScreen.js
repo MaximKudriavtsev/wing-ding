@@ -7,9 +7,10 @@ import { Title } from '../components/ui/Title';
 import { Button } from '../components/ui/Button';
 import { TextInput } from '../components/ui/TextInput';
 import { ValidationHint } from '../components/ui/ValidationHint';
-import { THEME, SCREEN_STYLE } from '../components/theme';
+import { SCREEN_STYLE } from '../components/theme';
 import { TOKEN_PROP } from '../src/config';
 import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
+import { IconNames } from '../components/ui/Icon';
 
 export const RegistrationScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
@@ -52,7 +53,7 @@ export const RegistrationScreen = ({ navigation }) => {
       <Title>Регистрация</Title>
       <ValidationHint validations={emailValidations} />
       <TextInput
-        iconName={THEME.ICON_ENVELOPE}
+        iconName={IconNames.ICON_ENVELOPE}
         placeholder={'E-mail'}
         onChangeText={email => {
           setEmail(email);
@@ -61,7 +62,7 @@ export const RegistrationScreen = ({ navigation }) => {
       />
       <ValidationHint validations={passwordValidations} />
       <TextInput
-        iconName={THEME.ICON_LOCK}
+        iconName={IconNames.ICON_LOCK}
         placeholder={'Пароль'}
         secureTextEntry={true}
         onChangeText={password => {
@@ -71,7 +72,7 @@ export const RegistrationScreen = ({ navigation }) => {
       />
       <ValidationHint validations={firstNameValidations} />
       <TextInput
-        iconName={THEME.ICON_USER}
+        iconName={IconNames.ICON_USER}
         placeholder={'Имя'}
         autoCapitalize={'words'}
         onChangeText={firstName => {
@@ -81,7 +82,7 @@ export const RegistrationScreen = ({ navigation }) => {
       />
       <ValidationHint validations={lastNameValidations} />
       <TextInput
-        iconName={THEME.ICON_USER}
+        iconName={IconNames.ICON_USER}
         placeholder={'Фамилия'}
         autoCapitalize={'words'}
         onChangeText={lastName => {

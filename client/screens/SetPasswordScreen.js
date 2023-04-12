@@ -4,8 +4,9 @@ import { Title } from '../components/ui/Title';
 import { Button } from '../components/ui/Button';
 import { TextInput } from '../components/ui/TextInput';
 import { ValidationHint } from '../components/ui/ValidationHint';
-import { THEME, SCREEN_STYLE } from '../components/theme';
+import { SCREEN_STYLE } from '../components/theme';
 import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
+import { IconNames } from '../components/ui/Icon';
 
 export const SetPasswordScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
@@ -25,7 +26,7 @@ export const SetPasswordScreen = ({ navigation }) => {
       <Title>Установить новый пароль</Title>
       <ValidationHint validations={passwordValidations} />
       <TextInput
-        iconName={THEME.ICON_UNLOCK}
+        iconName={IconNames.ICON_UNLOCK}
         placeholder={'Новый пароль'}
         secureTextEntry={true}
         onChangeText={password => {
@@ -36,7 +37,7 @@ export const SetPasswordScreen = ({ navigation }) => {
       />
       <ValidationHint validations={confirmingValidations} />
       <TextInput
-        iconName={THEME.ICON_LOCK}
+        iconName={IconNames.ICON_LOCK}
         placeholder={'Подтвердите пароль'}
         secureTextEntry={true}
         onChangeText={confirming => {

@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
 import { Text } from '../ui/Text';
 import { MemberListScreen } from '../../screens/MemberListScreen';
 import { CommentListScreen } from '../../screens/CommentListScreen';
 import { THEME } from '../theme';
 import { EventInfoPage } from './EventInfoPage';
 import { Event } from '../../src/api/event/types';
-import { TabView, SceneMap, TabBar, TabBarProps } from 'react-native-tab-view';
-import { Icon } from '../ui/Icon';
+import { TabView, TabBar, TabBarProps, Route } from 'react-native-tab-view';
+import { Icon, IconNames } from '../ui/Icon';
 
 type Props = {
   navigation: any;
@@ -15,19 +14,27 @@ type Props = {
   event: Event;
 };
 
+interface RouteType extends Route {
+  icon: IconNames;
+}
+
+type RenderSceneProps = {
+  route: RouteType;
+};
+
 export const EventPages: React.FC<Props> = ({ navigation, route, event }) => {
   const componentRoute = route;
   const [index, setIndex] = useState<number>(0);
 
-  const routes = [
-    { key: 'info', icon: THEME.ICON_INFO },
-    { key: 'members', icon: THEME.ICON_USER },
-    { key: 'comments', icon: THEME.ICON_COMMENTS },
-    { key: 'gallery', icon: THEME.ICON_IMAGE },
+  const routes: RouteType[] = [
+    { key: 'info', icon: IconNames.ICON_INFO },
+    { key: 'members', icon: IconNames.ICON_USER },
+    { key: 'comments', icon: IconNames.ICON_COMMENTS },
+    { key: 'gallery', icon: IconNames.ICON_IMAGE },
   ];
 
-  const renderScene = ({ route }) => {
-    switch (route.key) {
+  const renderScene = (props: RenderSceneProps) => {
+    switch (props.route.key) {
       case 'info':
         return <EventInfoPage event={event} />;
       case 'members':
@@ -45,7 +52,7 @@ export const EventPages: React.FC<Props> = ({ navigation, route, event }) => {
     }
   };
 
-  const renderTabBar = (props: TabBarProps) => (
+  const renderTabBar = (props: TabBarProps<RouteType>) => (
     <TabBar
       {...props}
       indicatorStyle={{ backgroundColor: THEME.BRIGHTER_COLOR }}

@@ -2,10 +2,10 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity, GestureResponderEvent } from 'react-native';
 import { Text } from './Text';
 import { THEME } from '../theme';
-import { Icon } from './Icon';
+import { Icon, IconNames } from './Icon';
 
 type Props = {
-  icon: string;
+  icon: IconNames;
   text: string;
   onPress: (event: GestureResponderEvent) => void;
 };

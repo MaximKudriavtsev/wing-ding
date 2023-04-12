@@ -5,7 +5,7 @@ import { Button, ButtonType } from '../ui/Button';
 import { Text } from '../ui/Text';
 import { THEME } from '../theme';
 import { dateRu } from '../../src/utils';
-import { Icon } from '../ui/Icon';
+import { Icon, IconNames } from '../ui/Icon';
 
 type Props = {
   event: Event;
@@ -19,14 +19,14 @@ export const EventInfoPage: React.FC<Props> = ({ event }) => {
       </Text>
       <View>
         <View style={styles.infoRow}>
-          <Icon name={THEME.ICON_CLOCK} size={28} style={styles.icon} />
+          <Icon name={IconNames.ICON_CLOCK} size={28} style={styles.icon} />
           <View style={styles.infoText}>
             <Text style={styles.infoMajorText}>{dateRu(event.date).format('DD.MM.YYYY')}</Text>
             <Text style={styles.infoMinorText}>{dateRu(event.date).format('HH:mm')}</Text>
           </View>
         </View>
         <View style={styles.infoRow}>
-          <Icon name={THEME.ICON_LOCATION} size={28} style={styles.icon} />
+          <Icon name={IconNames.ICON_LOCATION} size={28} style={styles.icon} />
           <View style={styles.infoText}>
             <Text style={styles.infoMajorText}>{event.place}</Text>
             <Text style={styles.infoMinorText}>Тула</Text>

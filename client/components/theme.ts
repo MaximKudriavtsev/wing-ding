@@ -1,5 +1,8 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import Constants from 'expo-constants';
+import { FontAwesome } from '@expo/vector-icons';
+
+type FontAwesomeName = React.ComponentProps<typeof FontAwesome>['name'];
 
 export const THEME = {
   //General
@@ -29,30 +32,6 @@ export const THEME = {
   //Default pictures
   USER_PHOTO: require('../assets/user.jpg'),
   EVENT_IMAGE: require('../assets/event.jpg'),
-  //Icons
-  ICON_USER: 'user-o',
-  ICON_ENVELOPE: 'envelope-o',
-  ICON_LOCK: 'lock',
-  ICON_UNLOCK: 'unlock-alt',
-  ICON_SEARCH: 'search',
-  ICON_EVENTS: 'home',
-  ICON_APPEND: 'plus-square-o',
-  ICON_EDIT: 'edit',
-  ICON_CHECK: 'check',
-  ICON_CROSS: 'remove',
-  ICON_WARNING: 'warning',
-  ICON_LOCATION: 'map-marker',
-  ICON_CALENDAR: 'calendar',
-  ICON_CLOCK: 'clock-o',
-  ICON_PENCIL: 'pencil',
-  ICON_CAKE: 'birthday-cake',
-  ICON_FILTER: 'filter',
-  ICON_IMAGE: 'image',
-  ICON_CAMERA: 'camera',
-  ICON_OPTION_DOTS: 'ellipsis-h',
-  ICON_COMMENTS: 'comments-o',
-  ICON_INFO: 'info',
-  ICON_ARROW_BACK: 'chevron-left',
 };
 
 export const SCREEN_STYLE = StyleSheet.create({

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Row } from '../components/Row';
 import { StyleSheet, View } from 'react-native';
 import { TextInput } from '../components/ui/TextInput';
@@ -10,6 +10,7 @@ import { SCREEN_STYLE, THEME } from '../components/theme';
 import { api } from '../src/api';
 import { Event } from '../src/api/event/types';
 import { User } from '../src/api/user/types';
+import { IconNames } from '../components/ui/Icon';
 
 type Props = {
   navigation: any;
@@ -27,6 +28,7 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
   const [searchString, setSearchString] = useState<string>('');
   const [searchedType, setSearchedType] = useState<SearchedType>(SearchedType.Users);
   const [foundItems, setFoundItems] = useState<User[] | Event[]>([]);
+  const timeoutEditing = useRef(null);
 
   const openEventHandler = (event: Event) => {
     navigation.push('EventDetails', { eventId: event.id });
@@ -48,8 +50,8 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
 
   useEffect(() => {
     if (searchString.length < MIN_SEARCH_STRING_LENGTH) return;
-    setIsLoading(true);
-    setTimeout(() => {
+    const timeoutEditing = setTimeout(() => {
+      setIsLoading(true);
       if (searchedType === SearchedType.Events) {
         api.event
           .searchEvent(searchString)
@@ -71,14 +73,16 @@ export const SearchScreen: React.FC<Props> = ({ navigation }) => {
           })
           .finally(() => setIsLoading(false));
       }
-    }, 500);
+    }, 400);
+
+    return () => clearTimeout(timeoutEditing);
   }, [searchedType, searchString]);
 
   const searchBar = (
     <View style={styles.searchBar}>
       <TextInput
         style={styles.searchInput}
-        iconName={THEME.ICON_SEARCH}
+        iconName={IconNames.ICON_SEARCH}
         placeholder={'Поиск...'}
         autoCapitalize={'sentences'}
         onChangeText={setSearchString}

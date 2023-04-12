@@ -5,6 +5,7 @@ import { EventScreenNavigation } from './EventScreenNavigation';
 import { ProfileScreenNavigation } from './ProfileScreenNavigation';
 import { THEME } from '../../components/theme';
 import { SearchScreenNavigation } from './SearchScreenNavigation';
+import { IconNames } from '../../components/ui/Icon';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -32,7 +33,7 @@ export const BottomNavigation = () => {
         options={{
           tabBarLabel: 'Поиск',
           tabBarIcon: ({ color }) => {
-            return <FontAwesome name={THEME.ICON_SEARCH} size={25} color={color} />;
+            return <FontAwesome name={IconNames.ICON_SEARCH} size={25} color={color} />;
           },
         }}
       />
@@ -42,7 +43,7 @@ export const BottomNavigation = () => {
         options={{
           tabBarLabel: 'События',
           tabBarIcon: ({ color }) => {
-            return <FontAwesome name={THEME.ICON_EVENTS} size={25} color={color} />;
+            return <FontAwesome name={IconNames.ICON_EVENTS} size={25} color={color} />;
           },
         }}
       />
@@ -52,7 +53,7 @@ export const BottomNavigation = () => {
         options={{
           tabBarLabel: 'Профиль',
           tabBarIcon: ({ color }) => {
-            return <FontAwesome name={THEME.ICON_USER} size={25} color={color} />;
+            return <FontAwesome name={IconNames.ICON_USER} size={25} color={color} />;
           },
         }}
       />

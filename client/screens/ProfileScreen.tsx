@@ -15,10 +15,11 @@ import { Button, ButtonType } from '../components/ui/Button';
 import { ToggleButton } from '../components/ui/ToggleButton';
 import { Text } from '../components/ui/Text';
 import { Loader } from '../components/ui/Loader';
-import { SCREEN_STYLE, THEME } from '../components/theme.js';
+import { SCREEN_STYLE, THEME } from '../components/theme';
 import { User } from '../src/api/user/types';
 import { Event } from '../src/api/event/types';
 import { AlertMessages } from '../src/context/AlertContext';
+import { IconNames } from '../components/ui/Icon';
 
 type Props = {
   navigation: any;
@@ -132,12 +133,12 @@ export const ProfileScreen: React.FC<Props> = ({ navigation, route }) => {
         <HeaderButtons HeaderButtonComponent={HeaderIcon}>
           <Item
             title='Edit Profile'
-            iconName={THEME.ICON_EDIT}
+            iconName={IconNames.ICON_EDIT}
             onPress={() => navigation.navigate('ProfileEditScreen')}
           />
           <Item
             title='Create Event'
-            iconName={THEME.ICON_APPEND}
+            iconName={IconNames.ICON_APPEND}
             onPress={() => navigation.navigate('CreateEventScreen')}
           />
         </HeaderButtons>
@@ -147,7 +148,7 @@ export const ProfileScreen: React.FC<Props> = ({ navigation, route }) => {
         <HeaderButtons HeaderButtonComponent={HeaderIcon}>
           <Item
             title='Toggle friend'
-            iconName={isFriend ? THEME.ICON_CROSS : THEME.ICON_CHECK}
+            iconName={isFriend ? IconNames.ICON_CROSS : IconNames.ICON_CHECK}
             onPress={() => toggleFriend()}
           />
         </HeaderButtons>

@@ -5,7 +5,7 @@ import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertCont
 import { Loader } from '../components/ui/Loader';
 import { EventOptionsSheet } from '../components/ui/EventOptionsSheet';
 import { Text } from '../components/ui/Text';
-import { THEME } from '../components/theme.js';
+import { THEME } from '../components/theme';
 import { Event } from '../src/api/event/types';
 import { BottomScrolledTab } from '../components/BottomScrolledTab';
 import { EventPages } from '../components/event/EventPages';

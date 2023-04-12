@@ -7,9 +7,10 @@ import { Title } from '../components/ui/Title';
 import { Button } from '../components/ui/Button';
 import { TextInput } from '../components/ui/TextInput';
 import { ValidationHint } from '../components/ui/ValidationHint';
-import { THEME, SCREEN_STYLE } from '../components/theme.js';
+import { SCREEN_STYLE } from '../components/theme';
 import { TOKEN_PROP } from '../src/config';
 import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
+import { IconNames } from '../components/ui/Icon';
 
 export const AuthenticationScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -42,7 +43,7 @@ export const AuthenticationScreen = ({ navigation }) => {
       <Title>Добро пожаловать!</Title>
       <ValidationHint validations={emailValidations} />
       <TextInput
-        iconName={THEME.ICON_ENVELOPE}
+        iconName={IconNames.ICON_ENVELOPE}
         placeholder={'E-mail'}
         onChangeText={email => {
           setEmail(email);
@@ -52,7 +53,7 @@ export const AuthenticationScreen = ({ navigation }) => {
       <ValidationHint validations={passwordValidations} />
       <TextInput
         secureTextEntry={true}
-        iconName={THEME.ICON_LOCK}
+        iconName={IconNames.ICON_LOCK}
         placeholder={'Пароль'}
         onChangeText={password => {
           setPassword(password);

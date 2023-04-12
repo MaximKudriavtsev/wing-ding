@@ -6,6 +6,7 @@ import { TextInput } from '../components/ui/TextInput';
 import { ValidationHint } from '../components/ui/ValidationHint';
 import { THEME, SCREEN_STYLE } from '../components/theme';
 import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
+import { IconNames } from '../components/ui/Icon';
 
 export const ResetPasswordScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -23,7 +24,7 @@ export const ResetPasswordScreen = ({ navigation }) => {
       <Title>Восстановление пароля</Title>
       <ValidationHint validations={emailValidations} />
       <TextInput
-        iconName={THEME.ICON_ENVELOPE}
+        iconName={IconNames.ICON_ENVELOPE}
         placeholder={'E-mail'}
         onChangeText={email => {
           setEmail(email);

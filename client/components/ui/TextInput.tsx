@@ -4,10 +4,10 @@ import { Text } from './Text';
 import { TextInputProps } from 'react-native';
 import { THEME } from '../theme';
 import { Loader } from './Loader';
-import { Icon } from './Icon';
+import { Icon, IconNames } from './Icon';
 
 type Props = TextInputProps & {
-  iconName?: string;
+  iconName?: IconNames;
   iconColor?: string;
   iconSize?: number;
   style?: object;

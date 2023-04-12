@@ -9,7 +9,7 @@ import { Text } from '../ui/Text';
 import { THEME } from '../theme';
 import { Event } from '../../src/api/event/types';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Icon } from '../ui/Icon';
+import { Icon, IconNames } from '../ui/Icon';
 
 type Props = {
   item: Event;
@@ -30,7 +30,7 @@ export const EventTab: React.FC<Props> = ({ item, onOpen, onShowMembers }) => {
         <View style={styles.tabContent}>
           <Row style={styles.activitiesWrapper}>
             <View style={styles.commentsLabel}>
-              <Icon name={THEME.ICON_COMMENTS} size={24} color={THEME.FONT_COLOR} />
+              <Icon name={IconNames.ICON_COMMENTS} size={24} color={THEME.FONT_COLOR} />
               <Text style={{ marginLeft: 12 }} bold={true}>
                 {item.commentsCount}
               </Text>

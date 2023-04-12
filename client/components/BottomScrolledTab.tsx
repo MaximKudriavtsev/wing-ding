@@ -19,6 +19,7 @@ type Props = {
 };
 
 const SCROLL_TAB_HEIGHT = 320;
+const SLIDE_DOWN_OFFSET = 120;
 const ANCHOR_HEIGHT = 50;
 const BACKGROUND_BOTTOM_MARGIN = -50;
 const MIN_SCROLL_TRANSLATION = 0;
@@ -27,6 +28,7 @@ const MAX_SCROLL_TRANSLATION =
   SCROLL_TAB_HEIGHT -
   BACKGROUND_BOTTOM_MARGIN +
   (THEME.STATUS_BAR_HEIGHT || 0);
+const ANIMATION_DAMPING = 13;
 
 export const BottomScrolledTab: React.FC<Props> = ({
   backgroundNode,
@@ -46,14 +48,14 @@ export const BottomScrolledTab: React.FC<Props> = ({
 
   const slideUp = () => {
     setCurrentScrollTranslation(MAX_SCROLL_TRANSLATION);
-    translateScrolledTab.value = withSpring(MAX_SCROLL_TRANSLATION, { damping: 13 });
+    translateScrolledTab.value = withSpring(MAX_SCROLL_TRANSLATION, { damping: ANIMATION_DAMPING });
     backgroundOpacity.value = withSpring(0);
     setFullScreen(true);
   };
 
   const slideDown = () => {
     setCurrentScrollTranslation(MIN_SCROLL_TRANSLATION);
-    translateScrolledTab.value = withSpring(MIN_SCROLL_TRANSLATION, { damping: 13 });
+    translateScrolledTab.value = withSpring(MIN_SCROLL_TRANSLATION, { damping: ANIMATION_DAMPING });
     backgroundOpacity.value = withSpring(1);
     setFullScreen(false);
   };
@@ -63,8 +65,7 @@ export const BottomScrolledTab: React.FC<Props> = ({
       if (
         // Prevent move scroll over screen
         (!fullScreen && event.translationY >= 0) ||
-        (fullScreen && event.translationY <= 0) ||
-        (fullScreen && event.translationY > -MAX_SCROLL_TRANSLATION)
+        (fullScreen && event.translationY <= 0 && event.translationY > -MAX_SCROLL_TRANSLATION)
       )
         return;
 
@@ -77,7 +78,7 @@ export const BottomScrolledTab: React.FC<Props> = ({
     },
     onEnd: event => {
       if (fullScreen) {
-        if (event.translationY > 150) {
+        if (event.translationY > SLIDE_DOWN_OFFSET) {
           runOnJS(slideDown)();
           return;
         }

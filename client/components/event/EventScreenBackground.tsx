@@ -7,11 +7,11 @@ import { Row } from '../../components/Row';
 import { Text } from '../../components/ui/Text';
 import { Button } from '../../components/ui/Button';
 import { TouchableOpacity } from 'react-native';
-import { THEME } from '../../components/theme.js';
+import { THEME } from '../../components/theme';
 import { Event } from '../../src/api/event/types';
 import { ButtonType } from '../../components/ui/Button';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Icon } from '../ui/Icon';
+import { Icon, IconNames } from '../ui/Icon';
 
 type Props = {
   event: Event;
@@ -44,7 +44,7 @@ export const EventScreenBackground: React.FC<Props> = ({
           }}
           type={ButtonType.Round}
           onPress={onGoBack}
-          icon={<Icon name={THEME.ICON_ARROW_BACK} size={20} color={THEME.FONT_COLOR} />}
+          icon={<Icon name={IconNames.ICON_ARROW_BACK} size={20} color={THEME.FONT_COLOR} />}
         />
         {event.isHost ? (
           <Button
@@ -54,7 +54,7 @@ export const EventScreenBackground: React.FC<Props> = ({
             }}
             type={ButtonType.Round}
             onPress={onOpenOptionsSheet}
-            icon={<Icon name={THEME.ICON_OPTION_DOTS} size={26} color={THEME.FONT_COLOR} />}
+            icon={<Icon name={IconNames.ICON_OPTION_DOTS} size={26} color={THEME.FONT_COLOR} />}
           />
         ) : null}
       </Row>
@@ -77,7 +77,7 @@ export const EventScreenBackground: React.FC<Props> = ({
             style={styles.commentsButton}
             onPress={onOpenCommentsScreen}
           >
-            <Icon name={THEME.ICON_COMMENTS} size={24} color={THEME.FONT_COLOR} />
+            <Icon name={IconNames.ICON_COMMENTS} size={24} color={THEME.FONT_COLOR} />
             <Text style={{ marginLeft: 12 }}>{event.commentsCount}</Text>
           </TouchableOpacity>
         </View>

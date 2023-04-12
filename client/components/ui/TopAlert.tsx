@@ -3,7 +3,7 @@ import { Modal, StyleSheet, View } from 'react-native';
 import { AlertType } from '../../src/context/AlertContext';
 import { THEME } from '../theme';
 import { Text } from './Text';
-import { Icon } from './Icon';
+import { Icon, IconNames } from './Icon';
 
 type Props = {
   type: AlertType;
@@ -12,16 +12,16 @@ type Props = {
 };
 
 export const TopAlert: React.FC<Props> = ({ type, message, isVisible }) => {
-  let icon = '';
+  let icon = IconNames.ICON_WARNING;
   switch (type) {
     case AlertType.Error:
-      icon = THEME.ICON_CROSS;
+      icon = IconNames.ICON_CROSS;
       break;
     case AlertType.Warning:
-      icon = THEME.ICON_WARNING;
+      icon = IconNames.ICON_WARNING;
       break;
     default:
-      icon = THEME.ICON_CHECK;
+      icon = IconNames.ICON_CHECK;
   }
 
   return (
