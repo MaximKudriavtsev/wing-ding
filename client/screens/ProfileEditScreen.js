@@ -4,7 +4,7 @@ import { PhotoPicker } from '../components/ui/PhotoPicker';
 import { PhotoPickerSheet } from '../components/ui/PhotoPickerSheet';
 import { AlertContext, AlertType } from '../src/context/AlertContext';
 import { UserContext } from '../src/context/UserContext';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { HeaderIcon } from '../components/HeaderIcon';
 import { Column } from '../components/Column';
@@ -13,8 +13,9 @@ import { Text } from '../components/ui/Text';
 import { TextInput } from '../components/ui/TextInput';
 import { Loader } from '../components/ui/Loader';
 import { dateRu, validate, getObjectChanges } from '../src/utils';
-import { SCREEN_STYLE, THEME } from '../components/theme.js';
+import { THEME } from '../components/theme';
 import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
+import { IconNames } from '../components/ui/Icon';
 
 export const ProfileEditScreen = ({ navigation }) => {
   const { showAlertMessage } = useContext(AlertContext);
@@ -88,7 +89,7 @@ export const ProfileEditScreen = ({ navigation }) => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={HeaderIcon}>
-          <Item title='Confirm' iconName={THEME.ICON_CHECK} onPress={onApplyChanges} />
+          <Item title='Confirm' iconName={IconNames.ICON_CHECK} onPress={onApplyChanges} />
         </HeaderButtons>
       ),
     });
@@ -110,7 +111,7 @@ export const ProfileEditScreen = ({ navigation }) => {
               />
               <Text style={styles.label}>Имя</Text>
               <TextInput
-                iconName={THEME.ICON_USER}
+                iconName={IconNames.ICON_USER}
                 autoCapitalize={'words'}
                 onChangeText={firstName => {
                   setFirstName(firstName);
@@ -120,7 +121,7 @@ export const ProfileEditScreen = ({ navigation }) => {
               />
               <Text style={styles.label}>Фамилия</Text>
               <TextInput
-                iconName={THEME.ICON_USER}
+                iconName={IconNames.ICON_USER}
                 autoCapitalize={'words'}
                 onChangeText={lastName => {
                   setLastName(lastName);
@@ -130,7 +131,7 @@ export const ProfileEditScreen = ({ navigation }) => {
               />
               <Text style={styles.label}>День рождения</Text>
               <TextInput
-                iconName={THEME.ICON_CAKE}
+                iconName={IconNames.ICON_CAKE}
                 onChangeText={birthDateString => {
                   setBirthDateString(birthDateString);
                   setBirthDateValidations(validate(birthDateString, { isDateString: true }));
@@ -141,7 +142,7 @@ export const ProfileEditScreen = ({ navigation }) => {
               <TextInput
                 maxLength={250}
                 onChangeText={setDescription}
-                iconName={THEME.ICON_PENCIL}
+                iconName={IconNames.ICON_PENCIL}
                 value={description}
               />
               <Button

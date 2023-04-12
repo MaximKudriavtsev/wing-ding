@@ -7,11 +7,10 @@ import { Row } from '../Row';
 import { Text } from './Text';
 import { TextInput } from './TextInput';
 import { dateRu, validate } from '../../src/utils';
-import { THEME } from '../theme.js';
+import { IconNames } from './Icon';
 
 type Props = {
   event?: Event;
-
   /**
    *  Required photo from photo picker
    */
@@ -115,7 +114,7 @@ export const EventForm: React.FC<Props> = ({
         <Column style={{ width: '50%' }}>
           <Text style={styles.label}>Дата</Text>
           <TextInput
-            iconName={THEME.ICON_CALENDAR}
+            iconName={IconNames.ICON_CALENDAR}
             placeholder={'Дата'}
             onChangeText={dateString => {
               setDateString(dateString);
@@ -125,7 +124,7 @@ export const EventForm: React.FC<Props> = ({
           />
           <Text style={styles.label}>Время:</Text>
           <TextInput
-            iconName={THEME.ICON_CLOCK}
+            iconName={IconNames.ICON_CLOCK}
             placeholder={'Время'}
             onChangeText={timeString => {
               setTimeString(timeString);
@@ -137,7 +136,7 @@ export const EventForm: React.FC<Props> = ({
       </Row>
       <Text style={styles.label}>Место</Text>
       <TextInput
-        iconName={THEME.ICON_LOCATION}
+        iconName={IconNames.ICON_LOCATION}
         placeholder={'Место'}
         onChangeText={place => {
           setPlace(place);
@@ -149,7 +148,7 @@ export const EventForm: React.FC<Props> = ({
       <Text style={styles.label}>Описание</Text>
       <TextInput
         style={{ height: 100, marginBottom: 30 }}
-        iconName={THEME.ICON_PENCIL}
+        iconName={IconNames.ICON_PENCIL}
         multiline={true}
         numberOfLines={4}
         placeholder={'Добавьте описание'}

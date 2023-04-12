@@ -3,7 +3,23 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { THEME } from '../theme';
 import { Text } from './Text';
 
-export const ToggleButton = ({ children, onPress, style, isActive, fontSize = 14 }) => {
+type Props = {
+  children?: React.ReactNode;
+  onPress: () => void;
+  style: object;
+  isActive?: boolean;
+  activeColor?: string;
+  fontSize?: number;
+};
+
+export const ToggleButton: React.FC<Props> = ({
+  children,
+  onPress,
+  style,
+  isActive,
+  activeColor = THEME.FONT_COLOR,
+  fontSize = 14,
+}) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -11,16 +27,14 @@ export const ToggleButton = ({ children, onPress, style, isActive, fontSize = 14
       style={{
         ...styles.button,
         ...style,
-        ...(isActive
-          ? { backgroundColor: THEME.BRIGHTER_COLOR }
-          : { backgroundColor: THEME.DARKER_COLOR }),
+        ...(isActive ? { borderBottomWidth: 3, borderBottomColor: THEME.BRIGHTER_COLOR } : null),
       }}
     >
       <View>
         <Text
           style={{
             fontSize,
-            ...(isActive ? { color: THEME.FONT_COLOR } : { color: THEME.PLACEHOLDER_COLOR }),
+            ...(isActive ? { color: activeColor } : { color: THEME.PLACEHOLDER_COLOR }),
           }}
           bold={true}
         >
@@ -33,6 +47,7 @@ export const ToggleButton = ({ children, onPress, style, isActive, fontSize = 14
 
 const styles = StyleSheet.create({
   button: {
+    backgroundColor: THEME.BACKGROUND_COLOR,
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',

@@ -7,6 +7,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 import { AlertContext, AlertType } from '../../src/context/AlertContext';
 import { THEME, SCREEN_STYLE } from './../theme';
+import { IconNames } from './Icon';
 
 type Props = {
   isVisible: boolean;
@@ -83,11 +84,15 @@ export const PhotoPickerSheet: React.FC<Props> = ({ isVisible, onSetPhoto, onClo
     <View style={SCREEN_STYLE.bottomSheetWrapper}>
       <BottomSheet isVisible={isVisible} onClose={onClose}>
         <BottomSheetOption
-          icon={THEME.ICON_IMAGE}
+          icon={IconNames.ICON_IMAGE}
           text={'Загрузить из галереи'}
           onPress={openImagePicker}
         />
-        <BottomSheetOption icon={THEME.ICON_CAMERA} text={'Сделать фото'} onPress={openCamera} />
+        <BottomSheetOption
+          icon={IconNames.ICON_CAMERA}
+          text={'Сделать фото'}
+          onPress={openCamera}
+        />
       </BottomSheet>
     </View>
   );

@@ -18,10 +18,10 @@ const setScreenOptions = () => ({
     fontFamily: THEME.BOLD_FONT,
     fontSize: THEME.HEADER_FONT_SIZE,
   },
-  headerStyle: { backgroundColor: THEME.DARKER_COLOR },
+  headerStyle: { backgroundColor: THEME.BACKGROUND_COLOR },
   headerShadowVisible: false,
-  headerTintColor: '#fff',
-  headerBackVisible: false,
+  headerTintColor: THEME.FONT_COLOR,
+  headerBackTitle: '',
 });
 
 export const SearchScreenNavigation = () => {
@@ -40,7 +40,11 @@ export const SearchScreenNavigation = () => {
         component={ProfileEditScreen}
         options={{ title: 'Редактировать профиль' }}
       />
-      <SearchStack.Screen name='EventDetails' component={EventScreen} options={{ title: '' }} />
+      <SearchStack.Screen
+        name='EventDetails'
+        component={EventScreen}
+        options={{ headerShown: false }}
+      />
       <SearchStack.Screen
         name='EditEventScreen'
         component={EditEventScreen}

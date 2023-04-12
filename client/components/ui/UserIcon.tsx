@@ -24,6 +24,5 @@ const styles = StyleSheet.create({
   iconImage: {
     borderRadius: 50,
     borderColor: THEME.DARKER_COLOR,
-    borderWidth: 2,
   },
 });

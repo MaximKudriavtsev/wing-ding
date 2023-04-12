@@ -1,4 +1,8 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import Constants from 'expo-constants';
+import { FontAwesome } from '@expo/vector-icons';
+
+type FontAwesomeName = React.ComponentProps<typeof FontAwesome>['name'];
 
 export const THEME = {
   //General
@@ -6,47 +10,28 @@ export const THEME = {
   SCREEN_HEIGHT: Dimensions.get('screen').height,
   REGULAR_FONT: 'comfortaa-regular',
   BOLD_FONT: 'comfortaa-bold',
-  FONT_COLOR: '#ddd',
-  BACKGROUND_COLOR: '#001628',
-  DARKER_COLOR: '#00111e',
-  BRIGHTER_COLOR: '#68a2b9',
+  FONT_COLOR: '#111',
+  WHITE_FONT_COLOR: '#fefefe',
+  BACKGROUND_COLOR: '#fefefe',
+  DARKER_COLOR: '#eeeeee',
+  BRIGHTER_COLOR: '#6667ab',
   DANGER_COLOR: '#e9072b',
+  WHITE_TRANSPARENT: 'rgba(255,255,255,.6)',
   TITLE_FONT_SIZE: 28,
   LABEL_FONT_SIZE: 16,
   HEADER_FONT_SIZE: 18,
   BOTTOM_NAVIGATION_BAR_HEIGHT: 80,
+  STATUS_BAR_HEIGHT: Constants.statusBarHeight,
   //Button
-  BUTTON_COLOR: '#99d9d9',
+  BUTTON_COLOR: '#6667ab',
   BUTTON_FONT_COLOR: '#1a1523',
   BUTTON_FONT_SIZE: 18,
   ACTIVE_OPACITY: 0.7,
   //Input
-  PLACEHOLDER_COLOR: '#666',
+  PLACEHOLDER_COLOR: '#999',
   //Default pictures
   USER_PHOTO: require('../assets/user.jpg'),
   EVENT_IMAGE: require('../assets/event.jpg'),
-  //Icons
-  ICON_USER: 'user-o',
-  ICON_ENVELOPE: 'envelope-o',
-  ICON_LOCK: 'lock',
-  ICON_UNLOCK: 'unlock-alt',
-  ICON_SEARCH: 'search',
-  ICON_EVENTS: 'home',
-  ICON_APPEND: 'plus-square-o',
-  ICON_EDIT: 'edit',
-  ICON_CHECK: 'check',
-  ICON_CROSS: 'remove',
-  ICON_WARNING: 'warning',
-  ICON_LOCATION: 'map-marker',
-  ICON_CALENDAR: 'calendar',
-  ICON_CLOCK: 'clock-o',
-  ICON_PENCIL: 'pencil',
-  ICON_CAKE: 'birthday-cake',
-  ICON_FILTER: 'filter',
-  ICON_IMAGE: 'image',
-  ICON_CAMERA: 'camera',
-  ICON_OPTION_DOTS: 'ellipsis-h',
-  ICON_COMMENTS: 'comments-o',
 };
 
 export const SCREEN_STYLE = StyleSheet.create({

@@ -32,7 +32,7 @@ export const MessageInputBar: React.FC<Props> = ({
         value={message}
       />
       <Button
-        style={{ height: 50 }}
+        style={styles.button}
         type={ButtonType.Link}
         fontColor={THEME.BRIGHTER_COLOR}
         onPress={onSend}
@@ -48,9 +48,9 @@ const styles = StyleSheet.create({
     width: '100%',
     display: 'flex',
     flexDirection: 'row',
-    alignSelf: 'flex-end',
+    alignSelf: 'center',
     justifyContent: 'space-between',
-    alignItems: 'flex-end',
+    alignItems: 'center',
     paddingHorizontal: 15,
     paddingVertical: 20,
     borderTopColor: THEME.DARKER_COLOR,
@@ -61,5 +61,8 @@ const styles = StyleSheet.create({
     width: '70%',
     height: 'auto',
     minHeight: 50,
+  },
+  button: {
+    height: 50,
   },
 });

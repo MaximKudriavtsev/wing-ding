@@ -1,34 +1,34 @@
 import React from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
 import { AlertType } from '../../src/context/AlertContext';
 import { THEME } from '../theme';
 import { Text } from './Text';
+import { Icon, IconNames } from './Icon';
 
 type Props = {
-  type: AlertType,
+  type: AlertType;
   message: string;
   isVisible: boolean;
 };
 
 export const TopAlert: React.FC<Props> = ({ type, message, isVisible }) => {
-  let icon = '';
-    switch (type) {
-      case AlertType.Error:
-        icon = THEME.ICON_CROSS;
-        break;
-      case AlertType.Warning:
-        icon = THEME.ICON_WARNING;
-        break;
-      default:
-        icon = THEME.ICON_CHECK;
+  let icon = IconNames.ICON_WARNING;
+  switch (type) {
+    case AlertType.Error:
+      icon = IconNames.ICON_CROSS;
+      break;
+    case AlertType.Warning:
+      icon = IconNames.ICON_WARNING;
+      break;
+    default:
+      icon = IconNames.ICON_CHECK;
   }
 
   return (
     <View style={styles.wrapper}>
       <Modal animationType='fade' transparent={true} visible={isVisible}>
         <View style={styles.modal}>
-          <FontAwesome name={icon} color={'#fff'} size={24} style={{ width: '15%' }} />
+          <Icon name={icon} color={'#fff'} size={24} style={{ width: '15%' }} />
           <Text style={{ width: '85%', textAlign: 'left' }}>{message}</Text>
         </View>
       </Modal>
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'flex-end',
-    marginTop: 22,
+    marginTop: 22 + THEME.STATUS_BAR_HEIGHT,
   },
   modal: {
     display: 'flex',

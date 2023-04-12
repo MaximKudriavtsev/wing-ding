@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ElementType, ReactNode } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { THEME } from '../theme';
 import { Text } from './Text';
@@ -7,10 +7,12 @@ export enum ButtonType {
   Primary = 'PRIMARY',
   Secondary = 'SECONDARY',
   Link = 'LINK',
+  Round = 'ROUND',
 }
 
 type Props = {
-  children: string;
+  children?: string;
+  icon?: ReactNode;
   onPress: () => void;
   style?: any;
   type?: ButtonType;
@@ -20,6 +22,7 @@ type Props = {
 
 export const Button: React.FC<Props> = ({
   children,
+  icon,
   onPress,
   style,
   type,
@@ -39,16 +42,21 @@ export const Button: React.FC<Props> = ({
       break;
     case ButtonType.Link:
       backgroundColor = 'transparent';
-      fontColor;
+      fontColor = THEME.BRIGHTER_COLOR;
       break;
+    case ButtonType.Round:
+      backgroundColor = THEME.WHITE_TRANSPARENT;
   }
 
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={THEME.ACTIVE_OPACITY}>
       <View style={{ ...styles.button, backgroundColor, ...style }}>
-        <Text style={{ color: fontColor, fontSize }} bold={true}>
-          {children}
-        </Text>
+        {icon}
+        {children ? (
+          <Text style={{ color: fontColor, fontSize }} bold={true}>
+            {children}
+          </Text>
+        ) : null}
       </View>
     </TouchableOpacity>
   );
@@ -67,5 +75,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 55,
     borderRadius: 50,
+    margin: 'auto',
   },
 });

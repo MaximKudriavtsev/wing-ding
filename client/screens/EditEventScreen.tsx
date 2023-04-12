@@ -9,7 +9,7 @@ import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertCont
 import { Button } from '../components/ui/Button';
 import { Loader } from '../components/ui/Loader';
 import { Column } from '../components/Column';
-import { SCREEN_STYLE } from '../components/theme.js';
+import { SCREEN_STYLE } from '../components/theme';
 import { getObjectChanges } from '../src/utils';
 import { Event } from '../src/api/event/types';
 import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
