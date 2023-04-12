@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { EventForm } from '../components/ui/EventForm';
 import { ScrollView } from 'react-native';
-import { PhotoPickerSheet } from '../components/ui/PhotoPickerSheet';
+import { PhotoPickerSheet } from '../components/sheets/PhotoPickerSheet';
 import { api } from '../src/api';
 import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertContext';
 import { Button } from '../components/ui/Button';
 import { Loader } from '../components/ui/Loader';
-import { Column } from '../components/Column';
-import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
+import { Column } from '../components/ui/Column';
+import { KeyboardAvoidingView } from '../components/ui/KeyboardAvoidingView';
 
 export const CreateEventScreen = ({ navigation }) => {
   const { showAlertMessage } = useContext(AlertContext);

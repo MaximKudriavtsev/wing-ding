@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { PhotoPicker } from './PhotoPicker';
+import { PhotoPicker } from '../pickers/PhotoPicker';
 import { Event } from '../../src/api/event/types';
-import { Column } from '../Column';
-import { Row } from '../Row';
+import { Column } from './Column';
+import { Row } from './Row';
 import { Text } from './Text';
 import { TextInput } from './TextInput';
 import { dateRu, validate } from '../../src/utils';
 import { IconNames } from './Icon';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 type Props = {
   event?: Event;
@@ -50,6 +51,7 @@ export const EventForm: React.FC<Props> = ({
   const [descriptionValidations, setDescriptionValidations] = useState({
     isValid: event || false,
   });
+
   let date;
 
   useEffect(() => {
@@ -159,6 +161,8 @@ export const EventForm: React.FC<Props> = ({
       >
         {description}
       </TextInput>
+      <DateTimePicker display='spinner' mode='date' value={new Date()} />
+      <DateTimePicker display='spinner' mode='time' value={new Date()} />
     </>
   );
 };

@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertContext';
-import { List } from '../components/List';
-import { CommentTab } from '../components/CommentTab';
+import { List } from '../components/ui/List';
+import { CommentTab } from '../components/ui/CommentTab';
 import { Loader } from '../components/ui/Loader';
 import { Comment } from '../src/api/event/types';
 import { SCREEN_STYLE } from '../components/theme';
 import { MessageInputBar } from '../components/ui/MessageInputBar';
-import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
+import { KeyboardAvoidingView } from '../components/ui/KeyboardAvoidingView';
 import { View } from 'react-native';
 import api from '../src/api/production';
 

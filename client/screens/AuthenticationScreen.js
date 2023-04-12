@@ -9,7 +9,7 @@ import { TextInput } from '../components/ui/TextInput';
 import { ValidationHint } from '../components/ui/ValidationHint';
 import { SCREEN_STYLE } from '../components/theme';
 import { TOKEN_PROP } from '../src/config';
-import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
+import { KeyboardAvoidingView } from '../components/ui/KeyboardAvoidingView';
 import { IconNames } from '../components/ui/Icon';
 
 export const AuthenticationScreen = ({ navigation }) => {

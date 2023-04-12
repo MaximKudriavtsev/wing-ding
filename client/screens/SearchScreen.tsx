@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Row } from '../components/Row';
+import { Row } from '../components/ui/Row';
 import { StyleSheet, View } from 'react-native';
 import { TextInput } from '../components/ui/TextInput';
 import { ToggleButton } from '../components/ui/ToggleButton';
-import { List } from '../components/List';
-import { UserTab } from '../components/UserTab';
+import { List } from '../components/ui/List';
+import { UserTab } from '../components/ui/UserTab';
 import { EventTab } from '../components/event/EventTab';
 import { SCREEN_STYLE, THEME } from '../components/theme';
 import { api } from '../src/api';

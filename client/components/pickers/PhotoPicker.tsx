@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
-import { Text } from './Text';
-import { Image } from './Image';
+import { Text } from '../ui/Text';
+import { Image } from '../ui/Image';
 import { THEME } from '../theme';
 
 type Props = {

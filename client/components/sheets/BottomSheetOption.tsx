@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity, GestureResponderEvent } from 'react-native';
-import { Text } from './Text';
+import { Text } from '../ui/Text';
 import { THEME } from '../theme';
-import { Icon, IconNames } from './Icon';
+import { Icon, IconNames } from '../ui/Icon';
 
 type Props = {
   icon: IconNames;

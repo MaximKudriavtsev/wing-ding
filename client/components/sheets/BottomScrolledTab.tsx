@@ -9,7 +9,7 @@ import Animated, {
   runOnJS,
 } from 'react-native-reanimated';
 import PagerView from 'react-native-pager-view';
-import { THEME } from './theme';
+import { THEME } from '../theme';
 
 type Props = {
   backgroundNode: JSX.Element;

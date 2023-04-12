@@ -2,8 +2,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertContext';
 import { api } from '../src/api';
 import { View } from 'react-native';
-import { List } from '../components/List';
-import { UserTab } from '../components/UserTab';
+import { List } from '../components/ui/List';
+import { UserTab } from '../components/ui/UserTab';
 import { Loader } from '../components/ui/Loader';
 import { THEME } from '../components/theme';
 

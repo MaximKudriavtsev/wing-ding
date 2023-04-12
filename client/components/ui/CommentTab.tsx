@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { dateRu } from '../src/utils';
-import { Comment } from '../src/api/event/types';
+import { dateRu } from '../../src/utils';
+import { Comment } from '../../src/api/event/types';
 import { Column } from './Column';
 import { Row } from './Row';
-import { THEME } from './theme';
-import { Text } from './ui/Text';
-import { UserIcon } from './ui/UserIcon';
+import { THEME } from '../theme';
+import { Text } from './Text';
+import { UserIcon } from './UserIcon';
 
 type Props = {
   item: Comment;

@@ -1,20 +1,20 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { api } from '../src/api';
-import { PhotoPicker } from '../components/ui/PhotoPicker';
-import { PhotoPickerSheet } from '../components/ui/PhotoPickerSheet';
+import { PhotoPicker } from '../components/pickers/PhotoPicker';
+import { PhotoPickerSheet } from '../components/sheets/PhotoPickerSheet';
 import { AlertContext, AlertType } from '../src/context/AlertContext';
 import { UserContext } from '../src/context/UserContext';
 import { StyleSheet, ScrollView } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { HeaderIcon } from '../components/HeaderIcon';
-import { Column } from '../components/Column';
+import { HeaderIcon } from '../components/ui/HeaderIcon';
+import { Column } from '../components/ui/Column';
 import { Button } from '../components/ui/Button';
 import { Text } from '../components/ui/Text';
 import { TextInput } from '../components/ui/TextInput';
 import { Loader } from '../components/ui/Loader';
 import { dateRu, validate, getObjectChanges } from '../src/utils';
 import { THEME } from '../components/theme';
-import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
+import { KeyboardAvoidingView } from '../components/ui/KeyboardAvoidingView';
 import { IconNames } from '../components/ui/Icon';
 
 export const ProfileEditScreen = ({ navigation }) => {
