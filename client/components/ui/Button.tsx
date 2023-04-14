@@ -31,18 +31,23 @@ export const Button: React.FC<Props> = ({
 }) => {
   let backgroundColor;
 
+  Button.defaultProps = {
+    type: ButtonType.Primary,
+    fontSize: 14,
+  };
+
   switch (type) {
     case ButtonType.Primary:
       backgroundColor = THEME.BUTTON_COLOR;
-      fontColor = THEME.BACKGROUND_COLOR;
+      fontColor = fontColor || THEME.BACKGROUND_COLOR;
       break;
     case ButtonType.Secondary:
       backgroundColor = THEME.BACKGROUND_COLOR;
-      fontColor = THEME.BUTTON_COLOR;
+      fontColor = fontColor || THEME.BUTTON_COLOR;
       break;
     case ButtonType.Link:
       backgroundColor = 'transparent';
-      fontColor = THEME.BRIGHTER_COLOR;
+      fontColor = fontColor || THEME.BRIGHTER_COLOR;
       break;
     case ButtonType.Round:
       backgroundColor = THEME.WHITE_TRANSPARENT;
@@ -60,12 +65,6 @@ export const Button: React.FC<Props> = ({
       </View>
     </TouchableOpacity>
   );
-};
-
-Button.defaultProps = {
-  type: ButtonType.Primary,
-  fontColor: THEME.FONT_COLOR,
-  fontSize: 14,
 };
 
 const styles = StyleSheet.create({
