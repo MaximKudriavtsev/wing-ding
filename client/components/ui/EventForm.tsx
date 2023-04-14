@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { PhotoPicker } from '../pickers/PhotoPicker';
 import { Event } from '../../src/api/event/types';
 import { Column } from './Column';
 import { Row } from './Row';
 import { Text } from './Text';
 import { TextInput } from './TextInput';
+import { Button } from './Button';
 import { dateRu, validate } from '../../src/utils';
 import { IconNames } from './Icon';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { DateTimeInput } from './DateTimeInput';
+import { DateTimePickerType } from '../pickers/DateTimePicker';
 
 type Props = {
   event?: Event;
@@ -40,19 +42,25 @@ export const EventForm: React.FC<Props> = ({
   const [title, setTitle] = useState(event ? event.title : ''); // Set event props if they exist
   const [timeString, setTimeString] = useState(event ? dateRu(event.date).format('HH:mm') : '');
   const [dateString, setDateString] = useState(
-    event ? dateRu(event.date).format('DD.MM.YYYY') : '',
+    event ? dateRu(event.date).format('DD/MM/YYYY') : '',
   );
   const [place, setPlace] = useState(event ? event.place : '');
   const [description, setDescription] = useState(event ? event.text : '');
   const [titleValidations, setTitleValidations] = useState({ isValid: event || false }); // If we got event - its props valid
-  const [timeValidations, setTimeValidations] = useState({ isValid: event || false });
-  const [dateValidations, setDateValidations] = useState({ isValid: event || false });
   const [placeValidations, setPlaceValidations] = useState({ isValid: event || false });
   const [descriptionValidations, setDescriptionValidations] = useState({
     isValid: event || false,
   });
 
   let date;
+
+  const onChangeDate = (dateTime: Date) => {
+    setDateString(dateRu(dateTime).format('DD/MM/YYYY'));
+  };
+
+  const onChangeTime = (dateTime: Date) => {
+    setTimeString(dateRu(dateTime).format('HH:mm'));
+  };
 
   useEffect(() => {
     setEventPhotoUri(eventPhoto); // Update image by photo picker
@@ -65,16 +73,6 @@ export const EventForm: React.FC<Props> = ({
       onSetValidationMessage('Введите название события');
       return;
     }
-    if (!dateValidations.isValid) {
-      onValidate(false);
-      onSetValidationMessage('Введите дату события в формате DD.MM.YYYY');
-      return;
-    }
-    if (!timeValidations.isValid) {
-      onValidate(false);
-      onSetValidationMessage('Введите время события в формате HH:MM');
-      return;
-    }
     if (!placeValidations.isValid) {
       onValidate(false);
       onSetValidationMessage('Введите место проведения события');
@@ -85,7 +83,7 @@ export const EventForm: React.FC<Props> = ({
       onSetValidationMessage('Добавьте описание события');
       return;
     }
-    date = dateRu(`${dateString} ${timeString}`, 'DD.MM.YYYY HH:mm');
+    date = dateRu(`${dateString} ${timeString}`, 'DD/MM/YYYY HH:mm');
     if (dateRu(date).isBefore(dateRu())) {
       onValidate(false);
       onSetValidationMessage('Время события уже прошло');
@@ -97,72 +95,66 @@ export const EventForm: React.FC<Props> = ({
 
   return (
     <>
-      <Text style={styles.label}>Название</Text>
-      <TextInput
-        placeholder={'Введите название'}
-        onChangeText={title => {
-          setTitle(title);
-          setTitleValidations(validate(title, { isRequired: true }));
-        }}
-        value={title}
-      />
-      <Row style={styles.row}>
-        <PhotoPicker
-          style={styles.photoPicker}
-          source={eventPhotoUri}
-          onPress={onOpenPhotoPicker}
-          photoDiameter={130}
+      <View>
+        <Text style={styles.label}>Название</Text>
+        <TextInput
+          placeholder={'Введите название'}
+          onChangeText={title => {
+            setTitle(title);
+            setTitleValidations(validate(title, { isRequired: true }));
+          }}
+          value={title}
         />
-        <Column style={{ width: '50%' }}>
-          <Text style={styles.label}>Дата</Text>
-          <TextInput
-            iconName={IconNames.ICON_CALENDAR}
-            placeholder={'Дата'}
-            onChangeText={dateString => {
-              setDateString(dateString);
-              setDateValidations(validate(dateString, { isDateString: true }));
-            }}
-            value={dateString}
+        <Row style={styles.row}>
+          <PhotoPicker
+            style={styles.photoPicker}
+            source={eventPhotoUri}
+            onPress={onOpenPhotoPicker}
+            photoDiameter={130}
           />
-          <Text style={styles.label}>Время:</Text>
-          <TextInput
-            iconName={IconNames.ICON_CLOCK}
-            placeholder={'Время'}
-            onChangeText={timeString => {
-              setTimeString(timeString);
-              setTimeValidations(validate(timeString, { isTimeString: true }));
-            }}
-            value={timeString}
-          />
-        </Column>
-      </Row>
-      <Text style={styles.label}>Место</Text>
-      <TextInput
-        iconName={IconNames.ICON_LOCATION}
-        placeholder={'Место'}
-        onChangeText={place => {
-          setPlace(place);
-          setPlaceValidations(validate(place, { isRequired: true }));
-        }}
-      >
-        {place}
-      </TextInput>
-      <Text style={styles.label}>Описание</Text>
-      <TextInput
-        style={{ height: 100, marginBottom: 30 }}
-        iconName={IconNames.ICON_PENCIL}
-        multiline={true}
-        numberOfLines={4}
-        placeholder={'Добавьте описание'}
-        onChangeText={description => {
-          setDescription(description);
-          setDescriptionValidations(validate(description, { isRequired: true }));
-        }}
-      >
-        {description}
-      </TextInput>
-      <DateTimePicker display='spinner' mode='date' value={new Date()} />
-      <DateTimePicker display='spinner' mode='time' value={new Date()} />
+          <Column style={{ width: '50%' }}>
+            <Text style={styles.label}>Дата</Text>
+            <DateTimeInput
+              type={DateTimePickerType.Date}
+              onChange={onChangeDate}
+              dateTime={event ? new Date(event.date) : new Date()}
+              minimumDate={new Date()}
+            />
+            <Text style={styles.label}>Время:</Text>
+            <DateTimeInput
+              type={DateTimePickerType.Time}
+              onChange={onChangeTime}
+              dateTime={event ? new Date(event.date) : new Date()}
+              minimumDate={new Date()}
+            />
+          </Column>
+        </Row>
+        <Text style={styles.label}>Место</Text>
+        <TextInput
+          iconName={IconNames.ICON_LOCATION}
+          placeholder={'Место'}
+          onChangeText={place => {
+            setPlace(place);
+            setPlaceValidations(validate(place, { isRequired: true }));
+          }}
+        >
+          {place}
+        </TextInput>
+        <Text style={styles.label}>Описание</Text>
+        <TextInput
+          style={{ height: 100, marginBottom: 30 }}
+          iconName={IconNames.ICON_PENCIL}
+          multiline={true}
+          numberOfLines={4}
+          placeholder={'Добавьте описание'}
+          onChangeText={description => {
+            setDescription(description);
+            setDescriptionValidations(validate(description, { isRequired: true }));
+          }}
+        >
+          {description}
+        </TextInput>
+      </View>
     </>
   );
 };
