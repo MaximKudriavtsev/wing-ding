@@ -7,7 +7,7 @@ import { PhotoPickerSheet } from '../components/sheets/PhotoPickerSheet';
 import { api } from '../src/api';
 import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertContext';
 import { Button } from '../components/ui/Button';
-import { Loader } from '../components/ui/Loader';
+import { Loader } from '../components/loaders/Loader';
 import { Column } from '../components/ui/Column';
 import { SCREEN_STYLE } from '../components/theme';
 import { getObjectChanges } from '../src/utils';
