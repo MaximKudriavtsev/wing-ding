@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Text } from './Text';
 import { THEME } from '../theme';
@@ -34,11 +34,8 @@ export const DateTimeInput: React.FC<Props> = ({
   const onSetDateTime = (dateTime: Date) => {
     setPickedDateTime(dateTime);
     setDateTimePickerVisible(false);
+    onChange ? onChange(dateTime) : null;
   };
-
-  useEffect(() => {
-    onChange ? onChange(pickedDateTime) : null;
-  }, [pickedDateTime]);
 
   let dateTimeString: string;
   let icon: IconNames;

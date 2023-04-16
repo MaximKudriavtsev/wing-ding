@@ -33,11 +33,10 @@ export const DateTimePicker: React.FC<Props> = ({
   maximumDate,
 }) => {
   const today = new Date();
-  const [dateTime, setDateTime] = useState(date || today);
+  const [pickedDateTime, setPickedDateTime] = useState(date || today);
 
   const onChange = (event: DateTimePickerEvent, date?: Date) => {
-    const currentDate = date;
-    setDateTime(currentDate || today);
+    setPickedDateTime(date || today);
     if (OPERATING_SYSTEM === OperatingSystemType.Android) {
       if (event.type === 'set') {
         onClose();
@@ -53,7 +52,7 @@ export const DateTimePicker: React.FC<Props> = ({
       <Modal visible={isVisible} transparent={true} animationType='slide'>
         <View style={styles.picker}>
           <DefaultDateTimePicker
-            value={dateTime}
+            value={pickedDateTime}
             mode={type}
             display='spinner'
             locale='ru-RU'
@@ -73,7 +72,7 @@ export const DateTimePicker: React.FC<Props> = ({
             <Button
               style={styles.confirmButton}
               type={ButtonType.Primary}
-              onPress={() => onSubmit(dateTime)}
+              onPress={() => onSubmit(pickedDateTime)}
             >
               {'Принять'}
             </Button>
@@ -85,7 +84,7 @@ export const DateTimePicker: React.FC<Props> = ({
     <>
       {isVisible && (
         <DefaultDateTimePicker
-          value={dateTime}
+          value={pickedDateTime}
           mode={type}
           locale='ru-RU'
           minimumDate={minimumDate}
