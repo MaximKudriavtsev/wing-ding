@@ -14,12 +14,13 @@ import { UserIcon } from '../components/ui/UserIcon';
 import { Button, ButtonType } from '../components/ui/Button';
 import { ToggleButton } from '../components/ui/ToggleButton';
 import { Text } from '../components/ui/Text';
-import { Loader } from '../components/ui/Loader';
-import { SCREEN_STYLE, THEME } from '../components/theme';
+import { SCREEN_STYLE, THEME, PROFILE_STYLE } from '../components/theme';
 import { User } from '../src/api/user/types';
 import { Event } from '../src/api/event/types';
 import { AlertMessages } from '../src/context/AlertContext';
 import { IconNames } from '../components/ui/Icon';
+import { ProfileHeaderLoader } from '../components/loaders/ProfileHeaderLoader';
+import { EventTabLoader } from '../components/loaders/EventTabLoader';
 
 type Props = {
   navigation: any;
@@ -162,28 +163,28 @@ export const ProfileScreen: React.FC<Props> = ({ navigation, route }) => {
   }, [isUserLoading, isFriend]);
 
   const listHeader =
-    !authorizedUser || !user || isUserLoading ? (
-      <View style={styles.userBar}>
-        <Loader />
-      </View>
-    ) : (
+    !authorizedUser || !user ? undefined : (
       <>
-        <Column style={styles.userBar}>
-          <Row style={styles.userBarRow}>
-            <View style={{ width: '20%' }}>
-              <UserIcon userPhoto={user.photo} iconSize={82} />
-            </View>
-            <Row style={styles.buttonsRow}>
-              <Text>{`Событий: ${user.events}`}</Text>
-              <Button
-                type={ButtonType.Link}
-                fontColor={THEME.BUTTON_COLOR}
-                onPress={showFriendsHandler}
-              >{`Друзей: ${friendsCount}`}</Button>
+        {isUserLoading ? (
+          <ProfileHeaderLoader />
+        ) : (
+          <Column style={PROFILE_STYLE.userBar}>
+            <Row style={PROFILE_STYLE.userBarRow}>
+              <View style={PROFILE_STYLE.userIconWrapper}>
+                <UserIcon userPhoto={user.photo} iconSize={THEME.PROFILE_ICON_SIZE} />
+              </View>
+              <Row style={PROFILE_STYLE.userBarButtons}>
+                <Text>{`Событий: ${user.events}`}</Text>
+                <Button
+                  type={ButtonType.Link}
+                  fontColor={THEME.BUTTON_COLOR}
+                  onPress={showFriendsHandler}
+                >{`Друзей: ${friendsCount}`}</Button>
+              </Row>
             </Row>
-          </Row>
-          <Text>{user.description ? user.description : 'Текст о себе...'}</Text>
-        </Column>
+            <Text>{user.description ? user.description : 'Текст о себе...'}</Text>
+          </Column>
+        )}
         <Row style={styles.filterRow}>
           <ToggleButton
             isActive={filter === Filter.Upcoming}
@@ -210,18 +211,17 @@ export const ProfileScreen: React.FC<Props> = ({ navigation, route }) => {
         ...styles.wrapper,
       }}
     >
-      {isEventLoading ? (
-        <Loader />
-      ) : (
-        <List
-          style={styles.listWrapper}
-          listHeader={listHeader}
-          data={filteredEvents}
-          Component={EventTab}
-          onOpen={openEventHandler}
-          stickyHeader={true}
-        />
-      )}
+      <List
+        style={styles.listWrapper}
+        listHeader={listHeader}
+        data={filteredEvents}
+        Component={EventTab}
+        onOpen={openEventHandler}
+        onLoadComponentsCount={5}
+        stickyHeader={true}
+        isDataLoaded={!isEventLoading}
+        OnLoadComponent={EventTabLoader}
+      />
     </View>
   );
 };
@@ -232,23 +232,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     paddingVertical: 0,
   },
-  userBar: {
-    height: 150,
-    backgroundColor: THEME.BACKGROUND_COLOR,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    alignItems: 'flex-start',
-  },
-  userBarRow: {
-    height: 'auto',
-    marginBottom: 10,
-  },
-  buttonsRow: {
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    height: 'auto',
-    width: '80%',
-  },
+
   filterRow: {
     justifyContent: 'center',
     width: '100%',
