@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { UserIcon } from './ui/UserIcon';
+import { UserIcon } from './UserIcon';
 import { Row } from './Row';
-import { Text } from './ui/Text';
+import { Text } from './Text';
 
 export const UserTab = ({ item, onOpen }) => {
   return (

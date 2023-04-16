@@ -5,7 +5,7 @@ import { Button } from '../components/ui/Button';
 import { TextInput } from '../components/ui/TextInput';
 import { ValidationHint } from '../components/ui/ValidationHint';
 import { THEME, SCREEN_STYLE } from '../components/theme';
-import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
+import { KeyboardAvoidingView } from '../components/ui/KeyboardAvoidingView';
 import { IconNames } from '../components/ui/Icon';
 
 export const ResetPasswordScreen = ({ navigation }) => {

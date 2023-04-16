@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Image } from '../ui/Image';
-import { Row } from '../Row';
-import { Column } from '../Column';
+import { Row } from '../ui/Row';
+import { Column } from '../ui/Column';
 import { DateTab } from '../ui/DateTab';
 import { MemberTab } from '../ui/MemberTab';
 import { Text } from '../ui/Text';

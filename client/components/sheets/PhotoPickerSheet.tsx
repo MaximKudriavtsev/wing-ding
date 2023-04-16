@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import { cutPhoto } from '../../src/utils';
 import { View } from 'react-native';
-import { BottomSheet } from '../BottomSheet';
+import { BottomSheet } from './BottomSheet';
 import { BottomSheetOption } from './BottomSheetOption';
 import * as ImagePicker from 'expo-image-picker';
 import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 import { AlertContext, AlertType } from '../../src/context/AlertContext';
-import { THEME, SCREEN_STYLE } from './../theme';
-import { IconNames } from './Icon';
+import { SCREEN_STYLE } from '../theme';
+import { IconNames } from '../ui/Icon';
 
 type Props = {
   isVisible: boolean;

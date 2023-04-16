@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
-import { Text } from './ui/Text';
-import { SCREEN_STYLE } from './theme';
-import { User } from '../src/api/user/types';
-import { Event } from '../src/api/event/types';
-import { Comment } from '../src/api/event/types';
+import { Text } from './Text';
+import { SCREEN_STYLE } from '../theme';
+import { User } from '../../src/api/user/types';
+import { Event } from '../../src/api/event/types';
+import { Comment } from '../../src/api/event/types';
 
 const idToString = (id: number | string) => id.toString();
 

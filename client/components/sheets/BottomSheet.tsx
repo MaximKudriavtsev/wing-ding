@@ -10,7 +10,7 @@ import Animated, {
   withDelay,
   runOnJS,
 } from 'react-native-reanimated';
-import { THEME } from './theme';
+import { THEME } from '../theme';
 
 type Props = {
   children?: React.ReactNode;

@@ -1,9 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
-import { BottomSheet } from '../BottomSheet';
+import { BottomSheet } from './BottomSheet';
 import { BottomSheetOption } from './BottomSheetOption';
-import { SCREEN_STYLE } from './../theme';
-import { IconNames } from './Icon';
+import { SCREEN_STYLE } from '../theme';
+import { IconNames } from '../ui/Icon';
 
 type Props = {
   isVisible: boolean;

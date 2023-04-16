@@ -3,16 +3,16 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
 import { EventForm } from '../components/ui/EventForm';
 import { ScrollView } from 'react-native';
-import { PhotoPickerSheet } from '../components/ui/PhotoPickerSheet';
+import { PhotoPickerSheet } from '../components/sheets/PhotoPickerSheet';
 import { api } from '../src/api';
 import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertContext';
 import { Button } from '../components/ui/Button';
 import { Loader } from '../components/ui/Loader';
-import { Column } from '../components/Column';
+import { Column } from '../components/ui/Column';
 import { SCREEN_STYLE } from '../components/theme';
 import { getObjectChanges } from '../src/utils';
 import { Event } from '../src/api/event/types';
-import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
+import { KeyboardAvoidingView } from '../components/ui/KeyboardAvoidingView';
 
 type Props = {
   navigation: any;

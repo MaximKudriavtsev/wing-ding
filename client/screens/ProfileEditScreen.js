@@ -1,36 +1,36 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { api } from '../src/api';
-import { PhotoPicker } from '../components/ui/PhotoPicker';
-import { PhotoPickerSheet } from '../components/ui/PhotoPickerSheet';
+import { PhotoPicker } from '../components/pickers/PhotoPicker';
+import { PhotoPickerSheet } from '../components/sheets/PhotoPickerSheet';
 import { AlertContext, AlertType } from '../src/context/AlertContext';
 import { UserContext } from '../src/context/UserContext';
 import { StyleSheet, ScrollView } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { HeaderIcon } from '../components/HeaderIcon';
-import { Column } from '../components/Column';
+import { HeaderIcon } from '../components/ui/HeaderIcon';
+import { Column } from '../components/ui/Column';
 import { Button } from '../components/ui/Button';
 import { Text } from '../components/ui/Text';
 import { TextInput } from '../components/ui/TextInput';
 import { Loader } from '../components/ui/Loader';
 import { dateRu, validate, getObjectChanges } from '../src/utils';
 import { THEME } from '../components/theme';
-import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
+import { KeyboardAvoidingView } from '../components/ui/KeyboardAvoidingView';
 import { IconNames } from '../components/ui/Icon';
+import { DateTimeInput } from '../components/ui/DateTimeInput';
+import { DateTimePickerType } from '../components/pickers/DateTimePicker';
 
 export const ProfileEditScreen = ({ navigation }) => {
   const { showAlertMessage } = useContext(AlertContext);
   const { authorizedUser, setAuthorizedUser } = useContext(UserContext);
-  const date = dateRu(authorizedUser.birthDate);
+  const [date, setDate] = useState(authorizedUser.birthDate || new Date());
   const [isLoading, setIsLoading] = useState(false);
   const [isPickerSheetVisible, setPickerSheetVisible] = useState(false);
   const [userPhoto, setUserPhoto] = useState(authorizedUser.photo);
   const [firstName, setFirstName] = useState(authorizedUser.firstName);
   const [lastName, setLastName] = useState(authorizedUser.lastName);
-  const [birthDateString, setBirthDateString] = useState(date.format('DD.MM.YYYY'));
   const [description, setDescription] = useState(authorizedUser.description);
   const [firstNameValidations, setFirstNameValidations] = useState({ isValid: true });
   const [lastNameValidations, setLastNameValidations] = useState({ isValid: true });
-  const [birthDateValidations, setBirthDateValidations] = useState({ isValid: true });
 
   const openPickerSheet = () => {
     setPickerSheetVisible(true);
@@ -45,15 +45,11 @@ export const ProfileEditScreen = ({ navigation }) => {
       showAlertMessage('Введите настоящие имя и фамилию', AlertType.Error);
       return;
     }
-    if (!birthDateValidations.isValid) {
-      showAlertMessage('Дата должна быть в формате DD.MM.YYYY', AlertType.Error);
-      return;
-    }
 
     const newData = {
       firstName,
       lastName,
-      birthDate: dateRu(birthDateString, 'DD.MM.YYYY').toJSON(),
+      birthDate: dateRu(date).toJSON(),
       description,
       photo: userPhoto,
     };
@@ -61,7 +57,6 @@ export const ProfileEditScreen = ({ navigation }) => {
     const changes = getObjectChanges(newData, authorizedUser);
 
     setIsLoading(true);
-    const birthDate = dateRu(birthDateString, 'DD.MM.YYYY');
     api.user
       .changeProfile(changes)
       .then(({ status }) => {
@@ -69,7 +64,7 @@ export const ProfileEditScreen = ({ navigation }) => {
           showAlertMessage('Данные успешно обновлены', AlertType.Info);
           setAuthorizedUser({
             ...authorizedUser,
-            birthDate,
+            date,
             description,
             firstName,
             lastName,
@@ -93,7 +88,7 @@ export const ProfileEditScreen = ({ navigation }) => {
         </HeaderButtons>
       ),
     });
-  }, [navigation, firstName, lastName, birthDateString, description, userPhoto]);
+  }, [navigation, firstName, lastName, date, description, userPhoto]);
 
   return (
     <KeyboardAvoidingView>
@@ -130,13 +125,12 @@ export const ProfileEditScreen = ({ navigation }) => {
                 value={lastName}
               />
               <Text style={styles.label}>День рождения</Text>
-              <TextInput
-                iconName={IconNames.ICON_CAKE}
-                onChangeText={birthDateString => {
-                  setBirthDateString(birthDateString);
-                  setBirthDateValidations(validate(birthDateString, { isDateString: true }));
-                }}
-                value={birthDateString}
+              <DateTimeInput
+                type={DateTimePickerType.Date}
+                onChange={setDate}
+                style={{ width: '100%' }}
+                dateTime={new Date(date)}
+                maximumDate={new Date()}
               />
               <Text style={styles.label}>О себе</Text>
               <TextInput

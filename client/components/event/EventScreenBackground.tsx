@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Image } from '../../components/ui/Image';
 import { UserIcon } from '../../components/ui/UserIcon';
 import { MemberTab } from '../../components/ui/MemberTab';
-import { Row } from '../../components/Row';
+import { Row } from '../ui/Row';
 import { Text } from '../../components/ui/Text';
 import { Button } from '../../components/ui/Button';
 import { TouchableOpacity } from 'react-native';

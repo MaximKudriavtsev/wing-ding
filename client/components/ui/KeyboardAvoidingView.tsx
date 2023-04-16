@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { Keyboard, View } from 'react-native';
 import Animated, { withTiming, useSharedValue, useAnimatedStyle } from 'react-native-reanimated';
-import { THEME } from './theme';
-import { OPERATING_SYSTEM, OperatingSystemType } from '../src/config';
+import { THEME } from '../theme';
+import { OPERATING_SYSTEM, OperatingSystemType } from '../../src/config';
 
 type Props = {
   style?: object;

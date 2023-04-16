@@ -4,12 +4,12 @@ import { TokenContext } from '../src/context/TokenContext';
 import { validate, decodeError } from '../src/utils';
 import { api } from '../src/api';
 import { Title } from '../components/ui/Title';
-import { Button } from '../components/ui/Button';
+import { Button, ButtonType } from '../components/ui/Button';
 import { TextInput } from '../components/ui/TextInput';
 import { ValidationHint } from '../components/ui/ValidationHint';
 import { SCREEN_STYLE } from '../components/theme';
 import { TOKEN_PROP } from '../src/config';
-import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
+import { KeyboardAvoidingView } from '../components/ui/KeyboardAvoidingView';
 import { IconNames } from '../components/ui/Icon';
 
 export const AuthenticationScreen = ({ navigation }) => {
@@ -60,7 +60,7 @@ export const AuthenticationScreen = ({ navigation }) => {
           setPasswordValidations(validate(password, { isRequired: true }));
         }}
       />
-      <Button style={{ marginVertical: 25 }} onPress={onSignIn}>
+      <Button style={{ marginVertical: 25 }} type={ButtonType.Primary} onPress={onSignIn}>
         Войти
       </Button>
       <Button type={'LINK'} onPress={() => navigation.navigate('RestoringPassword')}>

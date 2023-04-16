@@ -1,13 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { EventForm } from '../components/ui/EventForm';
-import { ScrollView } from 'react-native';
-import { PhotoPickerSheet } from '../components/ui/PhotoPickerSheet';
+import { ScrollView, StyleSheet } from 'react-native';
+import { PhotoPickerSheet } from '../components/sheets/PhotoPickerSheet';
 import { api } from '../src/api';
 import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertContext';
 import { Button } from '../components/ui/Button';
 import { Loader } from '../components/ui/Loader';
-import { Column } from '../components/Column';
-import { KeyboardAvoidingView } from '../components/KeyboardAvoidingView';
+import { KeyboardAvoidingView } from '../components/ui/KeyboardAvoidingView';
 
 export const CreateEventScreen = ({ navigation }) => {
   const { showAlertMessage } = useContext(AlertContext);
@@ -55,17 +54,15 @@ export const CreateEventScreen = ({ navigation }) => {
         <Loader />
       ) : (
         <>
-          <ScrollView>
-            <Column style={{ padding: 15 }}>
-              <EventForm
-                eventPhoto={eventPhotoUri}
-                onOpenPhotoPicker={openPickerSheet}
-                onValidate={setFormValid}
-                onSetValidationMessage={setValidationMessage}
-                onSetEventObject={setEventObject}
-              />
-              <Button onPress={onCreateEvent}>Создать событие</Button>
-            </Column>
+          <ScrollView style={styles.scrollWrapper}>
+            <EventForm
+              eventPhoto={eventPhotoUri}
+              onOpenPhotoPicker={openPickerSheet}
+              onValidate={setFormValid}
+              onSetValidationMessage={setValidationMessage}
+              onSetEventObject={setEventObject}
+            />
+            <Button onPress={onCreateEvent}>Создать событие</Button>
           </ScrollView>
           <PhotoPickerSheet
             isVisible={isPickerSheetVisible}
@@ -77,3 +74,11 @@ export const CreateEventScreen = ({ navigation }) => {
     </KeyboardAvoidingView>
   );
 };
+
+const styles = StyleSheet.create({
+  scrollWrapper: {
+    height: '100%',
+    width: '100%',
+    paddingHorizontal: 15,
+  },
+});
