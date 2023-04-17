@@ -129,7 +129,7 @@ export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
           />
         </>
       ) : (
-        <Text>Не удалось загрузить соьытие</Text>
+        <Text>Не удалось загрузить событие</Text>
       )}
     </View>
   );

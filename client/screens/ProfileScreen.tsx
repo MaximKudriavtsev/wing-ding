@@ -89,6 +89,7 @@ export const ProfileScreen: React.FC<Props> = ({ navigation, route }) => {
 
   useEffect(() => {
     setIsUserLoading(true);
+    setIsEventLoading(true);
     api.user
       .getUser(userId)
       .then(({ data }) => {
@@ -162,47 +163,46 @@ export const ProfileScreen: React.FC<Props> = ({ navigation, route }) => {
     });
   }, [isUserLoading, isFriend]);
 
-  const listHeader =
-    !authorizedUser || !user ? undefined : (
-      <>
-        {isUserLoading ? (
-          <ProfileHeaderLoader />
-        ) : (
-          <Column style={PROFILE_STYLE.userBar}>
-            <Row style={PROFILE_STYLE.userBarRow}>
-              <View style={PROFILE_STYLE.userIconWrapper}>
-                <UserIcon userPhoto={user.photo} iconSize={THEME.PROFILE_ICON_SIZE} />
-              </View>
-              <Row style={PROFILE_STYLE.userBarButtons}>
-                <Text>{`Событий: ${user.events}`}</Text>
-                <Button
-                  type={ButtonType.Link}
-                  fontColor={THEME.BUTTON_COLOR}
-                  onPress={showFriendsHandler}
-                >{`Друзей: ${friendsCount}`}</Button>
-              </Row>
+  const listHeader = (
+    <>
+      {isUserLoading || !authorizedUser || !user ? (
+        <ProfileHeaderLoader />
+      ) : (
+        <Column style={PROFILE_STYLE.userBar}>
+          <Row style={PROFILE_STYLE.userBarRow}>
+            <View style={PROFILE_STYLE.userIconWrapper}>
+              <UserIcon userPhoto={user.photo} iconSize={THEME.PROFILE_ICON_SIZE} />
+            </View>
+            <Row style={PROFILE_STYLE.userBarButtons}>
+              <Text>{`Событий: ${user.events}`}</Text>
+              <Button
+                type={ButtonType.Link}
+                fontColor={THEME.BUTTON_COLOR}
+                onPress={showFriendsHandler}
+              >{`Друзей: ${friendsCount}`}</Button>
             </Row>
-            <Text>{user.description ? user.description : 'Текст о себе...'}</Text>
-          </Column>
-        )}
-        <Row style={styles.filterRow}>
-          <ToggleButton
-            isActive={filter === Filter.Upcoming}
-            style={styles.filterButton}
-            onPress={showUpcomingEvents}
-          >
-            {user.id === authorizedUser.id ? `Мои события` : `События`}
-          </ToggleButton>
-          <ToggleButton
-            isActive={filter === Filter.Past}
-            style={styles.filterButton}
-            onPress={showPastEvents}
-          >
-            История событий
-          </ToggleButton>
-        </Row>
-      </>
-    );
+          </Row>
+          <Text>{user.description ? user.description : 'Текст о себе...'}</Text>
+        </Column>
+      )}
+      <Row style={styles.filterRow}>
+        <ToggleButton
+          isActive={filter === Filter.Upcoming}
+          style={styles.filterButton}
+          onPress={showUpcomingEvents}
+        >
+          {user && authorizedUser && user.id === authorizedUser.id ? `Мои события` : `События`}
+        </ToggleButton>
+        <ToggleButton
+          isActive={filter === Filter.Past}
+          style={styles.filterButton}
+          onPress={showPastEvents}
+        >
+          История событий
+        </ToggleButton>
+      </Row>
+    </>
+  );
 
   return (
     <View
