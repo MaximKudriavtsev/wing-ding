@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
 
   photoPicker: {
     display: 'flex',
-    width: '50%',
+    width: 150,
     height: 150,
     alignItems: 'center',
     justifyContent: 'center',

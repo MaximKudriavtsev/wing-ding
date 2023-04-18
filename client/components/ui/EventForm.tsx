@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   row: {
     width: '100%',
     height: 170,
-    marginBottom: 10,
+    marginVertical: 20,
   },
 
   photoPicker: {

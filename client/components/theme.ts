@@ -2,8 +2,6 @@ import { StyleSheet, Dimensions } from 'react-native';
 import Constants from 'expo-constants';
 import { FontAwesome } from '@expo/vector-icons';
 
-type FontAwesomeName = React.ComponentProps<typeof FontAwesome>['name'];
-
 export const THEME = {
   //General
   SCREEN_WIDTH: Dimensions.get('screen').width,
@@ -30,8 +28,8 @@ export const THEME = {
   //Input
   PLACEHOLDER_COLOR: '#999',
   //Default pictures
-  USER_PHOTO: require('../assets/user.jpg'),
-  EVENT_IMAGE: require('../assets/event.jpg'),
+  USER_PHOTO: require('../assets/user.png'),
+  EVENT_IMAGE: require('../assets/image.png'),
   //Sizes
   PROFILE_ICON_SIZE: 80,
   USER_TAB_ICON_SIZE: 46,
