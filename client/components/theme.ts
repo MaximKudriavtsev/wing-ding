@@ -212,3 +212,46 @@ export const COMMENT_TAB_STYLE = StyleSheet.create({
     marginTop: 5,
   },
 });
+
+export const EVENT_SHEET_STYLE = StyleSheet.create({
+  wrapper: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+    padding: 15,
+    height: 250,
+  },
+  icon: {
+    width: 15,
+  },
+  button: {
+    marginVertical: 25,
+    borderWidth: 2,
+    borderColor: THEME.BUTTON_COLOR,
+  },
+});
+
+export const EVENT_INFO_PAGE_STYLE = StyleSheet.create({
+  wrapper: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    paddingHorizontal: 15,
+    paddingVertical: 20,
+    height: '100%',
+  },
+  infoRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    height: 60,
+  },
+  icon: {
+    width: 40,
+  },
+  infoText: {
+    display: 'flex',
+    flexDirection: 'column',
+    paddingLeft: 10,
+  },
+});

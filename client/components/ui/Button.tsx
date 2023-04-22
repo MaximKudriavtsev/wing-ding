@@ -13,7 +13,7 @@ export enum ButtonType {
 type Props = {
   children?: string;
   icon?: ReactNode;
-  onPress: () => void;
+  onPress?: () => void;
   style?: any;
   type?: ButtonType;
   fontColor?: string;

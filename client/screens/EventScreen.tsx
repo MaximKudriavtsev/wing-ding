@@ -11,6 +11,8 @@ import { BottomScrolledTab } from '../components/sheets/BottomScrolledTab';
 import { EventPages } from '../components/event/EventPages';
 import { EventScreenBackground } from '../components/event/EventScreenBackground';
 import { EventScreenSheet } from '../components/event/EventScreenSheet';
+import { EventScreenSheetLoader } from '../components/loaders/EventScreenSheetLoader';
+import { Button, ButtonType } from '../components/ui/Button';
 
 type Props = {
   navigation: any;
@@ -22,6 +24,7 @@ export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
   const { showAlertMessage } = useContext(AlertContext);
 
   const [isLoading, setIsLoading] = useState(true);
+  const [loadingSucceed, setLoadingSucceed] = useState(true);
   const [event, setEvent] = useState<Event | null>(null);
   const [isOptionsSheetVisible, setOptionsSheetVisible] = useState(false);
 
@@ -72,20 +75,20 @@ export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const toggleMember = () => {
     if (event === null) return;
-    setIsLoading(true);
     api.event[event.isMember ? 'leaveEvent' : 'joinEvent'](eventId)
       .then(() => {
         api.event //Until I use useQuery
           .getEvent(eventId)
           .then(({ data }) => {
             setEvent(data);
+            setLoadingSucceed(true);
           });
       })
       .catch(error => {
         showAlertMessage(AlertMessages.unknownError, AlertType.Error);
+        setLoadingSucceed(false);
         console.log(error.response);
-      })
-      .finally(() => setIsLoading(false));
+      });
   };
 
   useEffect(() => {
@@ -104,10 +107,8 @@ export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
 
   return (
     <View style={styles.wrapper}>
-      {isLoading ? (
-        <Loader />
-      ) : event != null ? (
-        <>
+      {loadingSucceed ? (
+        <View style={{ height: '100%', width: '100%' }}>
           <BottomScrolledTab
             backgroundNode={
               <EventScreenBackground
@@ -118,7 +119,13 @@ export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
                 onGoBack={goBack}
               />
             }
-            collapsedNode={<EventScreenSheet event={event} toggleMember={toggleMember} />}
+            collapsedNode={
+              isLoading || !event ? (
+                <EventScreenSheetLoader />
+              ) : (
+                <EventScreenSheet event={event} toggleMember={toggleMember} />
+              )
+            }
             fullScreenNode={<EventPages navigation={navigation} route={route} event={event} />}
           />
           <EventOptionsSheet
@@ -127,9 +134,14 @@ export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
             isVisible={isOptionsSheetVisible}
             onClose={closeOptionsSheet}
           />
-        </>
+        </View>
       ) : (
-        <Text>Не удалось загрузить событие</Text>
+        <>
+          <Text>Не удалось загрузить событие</Text>
+          <Button type={ButtonType.Link} onPress={navigation.goBack}>
+            {'Назад'}
+          </Button>
+        </>
       )}
     </View>
   );
@@ -139,5 +151,8 @@ const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: THEME.BACKGROUND_COLOR,
     flex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
