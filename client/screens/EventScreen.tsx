@@ -13,6 +13,7 @@ import { EventScreenBackground } from '../components/event/EventScreenBackground
 import { EventScreenSheet } from '../components/event/EventScreenSheet';
 import { EventScreenSheetLoader } from '../components/loaders/EventScreenSheetLoader';
 import { Button, ButtonType } from '../components/ui/Button';
+import { ModalLoader } from '../components/loaders/ModalLoader';
 
 type Props = {
   navigation: any;
@@ -23,6 +24,7 @@ export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
   const { eventId } = route.params;
   const { showAlertMessage } = useContext(AlertContext);
 
+  const [isDeleting, setIsDeleting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loadingSucceed, setLoadingSucceed] = useState(true);
   const [event, setEvent] = useState<Event | null>(null);
@@ -50,7 +52,7 @@ export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const onDeleteEvent = () => {
-    setIsLoading(true);
+    setIsDeleting(true);
     api.event
       .deleteEvent(eventId)
       .then(({ status }) => {
@@ -63,7 +65,7 @@ export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
         showAlertMessage(AlertMessages.unknownError, AlertType.Error);
         console.log(error.response);
       })
-      .finally(() => setIsLoading(false));
+      .finally(() => setIsDeleting(false));
   };
 
   const showMembersHandler = () => {
@@ -81,12 +83,10 @@ export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
           .getEvent(eventId)
           .then(({ data }) => {
             setEvent(data);
-            setLoadingSucceed(true);
           });
       })
       .catch(error => {
         showAlertMessage(AlertMessages.unknownError, AlertType.Error);
-        setLoadingSucceed(false);
         console.log(error.response);
       });
   };
@@ -97,9 +97,11 @@ export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
       .getEvent(eventId)
       .then(({ data }) => {
         setEvent(data);
+        setLoadingSucceed(true);
       })
       .catch(error => {
         showAlertMessage(AlertMessages.unknownError, AlertType.Error);
+        setLoadingSucceed(false);
         console.log(error.response);
       })
       .finally(() => setIsLoading(false));
@@ -108,7 +110,8 @@ export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
   return (
     <View style={styles.wrapper}>
       {loadingSucceed ? (
-        <View style={{ height: '100%', width: '100%' }}>
+        <View style={styles.eventScreen}>
+          <ModalLoader isVisible={isDeleting} />
           <BottomScrolledTab
             backgroundNode={
               <EventScreenBackground
@@ -155,4 +158,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  eventScreen: { height: '100%', width: '100%' },
 });

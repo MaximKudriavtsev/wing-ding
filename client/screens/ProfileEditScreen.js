@@ -18,6 +18,7 @@ import { KeyboardAvoidingView } from '../components/ui/KeyboardAvoidingView';
 import { IconNames } from '../components/ui/Icon';
 import { DateTimeInput } from '../components/ui/DateTimeInput';
 import { DateTimePickerType } from '../components/pickers/DateTimePicker';
+import { ModalLoader } from '../components/loaders/ModalLoader';
 
 export const ProfileEditScreen = ({ navigation }) => {
   const { showAlertMessage } = useContext(AlertContext);
@@ -92,69 +93,64 @@ export const ProfileEditScreen = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <ScrollView>
-            <Column style={{ alignItems: 'center', padding: 15 }}>
-              <PhotoPicker
-                style={styles.photoPicker}
-                onPress={openPickerSheet}
-                photoDiameter={110}
-                source={userPhoto}
-              />
-              <Text style={styles.label}>Имя</Text>
-              <TextInput
-                iconName={IconNames.ICON_USER}
-                autoCapitalize={'words'}
-                onChangeText={firstName => {
-                  setFirstName(firstName);
-                  setFirstNameValidations(validate(firstName, { isRequired: true, isName: true }));
-                }}
-                value={firstName}
-              />
-              <Text style={styles.label}>Фамилия</Text>
-              <TextInput
-                iconName={IconNames.ICON_USER}
-                autoCapitalize={'words'}
-                onChangeText={lastName => {
-                  setLastName(lastName);
-                  setLastNameValidations(validate(lastName, { isRequired: true, isName: true }));
-                }}
-                value={lastName}
-              />
-              <Text style={styles.label}>День рождения</Text>
-              <DateTimeInput
-                type={DateTimePickerType.Date}
-                onChange={setDate}
-                style={{ width: '100%' }}
-                dateTime={new Date(date)}
-                maximumDate={new Date()}
-              />
-              <Text style={styles.label}>О себе</Text>
-              <TextInput
-                maxLength={250}
-                onChangeText={setDescription}
-                iconName={IconNames.ICON_PENCIL}
-                value={description}
-              />
-              <Button
-                type={'link'}
-                fontColor={THEME.DANGER_COLOR}
-                onPress={() => setAuthorizedUser(null)}
-              >
-                Выйти из аккаунта
-              </Button>
-            </Column>
-          </ScrollView>
-          <PhotoPickerSheet
-            isVisible={isPickerSheetVisible}
-            onClose={closePickerSheet}
-            onSetPhoto={setUserPhoto}
+      <ModalLoader isVisible={isLoading} />
+      <ScrollView>
+        <Column style={{ alignItems: 'center', padding: 15 }}>
+          <PhotoPicker
+            style={styles.photoPicker}
+            onPress={openPickerSheet}
+            photoDiameter={110}
+            source={userPhoto}
           />
-        </>
-      )}
+          <Text style={styles.label}>Имя</Text>
+          <TextInput
+            iconName={IconNames.ICON_USER}
+            autoCapitalize={'words'}
+            onChangeText={firstName => {
+              setFirstName(firstName);
+              setFirstNameValidations(validate(firstName, { isRequired: true, isName: true }));
+            }}
+            value={firstName}
+          />
+          <Text style={styles.label}>Фамилия</Text>
+          <TextInput
+            iconName={IconNames.ICON_USER}
+            autoCapitalize={'words'}
+            onChangeText={lastName => {
+              setLastName(lastName);
+              setLastNameValidations(validate(lastName, { isRequired: true, isName: true }));
+            }}
+            value={lastName}
+          />
+          <Text style={styles.label}>День рождения</Text>
+          <DateTimeInput
+            type={DateTimePickerType.Date}
+            onChange={setDate}
+            style={{ width: '100%' }}
+            dateTime={new Date(date)}
+            maximumDate={new Date()}
+          />
+          <Text style={styles.label}>О себе</Text>
+          <TextInput
+            maxLength={250}
+            onChangeText={setDescription}
+            iconName={IconNames.ICON_PENCIL}
+            value={description}
+          />
+          <Button
+            type={'link'}
+            fontColor={THEME.DANGER_COLOR}
+            onPress={() => setAuthorizedUser(null)}
+          >
+            Выйти из аккаунта
+          </Button>
+        </Column>
+      </ScrollView>
+      <PhotoPickerSheet
+        isVisible={isPickerSheetVisible}
+        onClose={closePickerSheet}
+        onSetPhoto={setUserPhoto}
+      />
     </KeyboardAvoidingView>
   );
 };

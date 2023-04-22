@@ -12,6 +12,7 @@ import { TOKEN_PROP } from '../src/config';
 import { KeyboardAvoidingView } from '../components/ui/KeyboardAvoidingView';
 import { IconNames } from '../components/ui/Icon';
 import { Loader } from '../components/loaders/Loader';
+import { ModalLoader } from '../components/loaders/ModalLoader';
 
 export const AuthenticationScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -44,45 +45,36 @@ export const AuthenticationScreen = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView style={SCREEN_STYLE.wrapper}>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <Title>Добро пожаловать!</Title>
-          <ValidationHint validations={emailValidations} />
-          <TextInput
-            iconName={IconNames.ICON_ENVELOPE}
-            placeholder={'E-mail'}
-            onChangeText={email => {
-              setEmail(email);
-              setEmailValidations(validate(email, { isEmail: true, minLength: 3 }));
-            }}
-          />
-          <ValidationHint validations={passwordValidations} />
-          <TextInput
-            secureTextEntry={true}
-            iconName={IconNames.ICON_LOCK}
-            placeholder={'Пароль'}
-            onChangeText={password => {
-              setPassword(password);
-              setPasswordValidations(validate(password, { isRequired: true }));
-            }}
-          />
-          <Button style={{ marginVertical: 25 }} type={ButtonType.Primary} onPress={onSignIn}>
-            Войти
-          </Button>
-          <Button type={'LINK'} onPress={() => navigation.navigate('RestoringPassword')}>
-            Я не помню пароль
-          </Button>
-          <Button
-            type={'LINK'}
-            transparent={true}
-            onPress={() => navigation.navigate('Registration')}
-          >
-            Еще не с нами? Зарегистрируйтесь!
-          </Button>
-        </>
-      )}
+      <ModalLoader isVisible={isLoading} />
+      <Title>Добро пожаловать!</Title>
+      <ValidationHint validations={emailValidations} />
+      <TextInput
+        iconName={IconNames.ICON_ENVELOPE}
+        placeholder={'E-mail'}
+        onChangeText={email => {
+          setEmail(email);
+          setEmailValidations(validate(email, { isEmail: true, minLength: 3 }));
+        }}
+      />
+      <ValidationHint validations={passwordValidations} />
+      <TextInput
+        secureTextEntry={true}
+        iconName={IconNames.ICON_LOCK}
+        placeholder={'Пароль'}
+        onChangeText={password => {
+          setPassword(password);
+          setPasswordValidations(validate(password, { isRequired: true }));
+        }}
+      />
+      <Button style={{ marginVertical: 25 }} type={ButtonType.Primary} onPress={onSignIn}>
+        Войти
+      </Button>
+      <Button type={'LINK'} onPress={() => navigation.navigate('RestoringPassword')}>
+        Я не помню пароль
+      </Button>
+      <Button type={'LINK'} transparent={true} onPress={() => navigation.navigate('Registration')}>
+        Еще не с нами? Зарегистрируйтесь!
+      </Button>
     </KeyboardAvoidingView>
   );
 };

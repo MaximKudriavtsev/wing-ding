@@ -13,6 +13,7 @@ import { SCREEN_STYLE } from '../components/theme';
 import { getObjectChanges } from '../src/utils';
 import { Event } from '../src/api/event/types';
 import { KeyboardAvoidingView } from '../components/ui/KeyboardAvoidingView';
+import { ModalLoader } from '../components/loaders/ModalLoader';
 
 type Props = {
   navigation: any;
@@ -63,30 +64,25 @@ export const EditEventScreen: React.FC<Props> = ({ navigation, route }) => {
 
   return (
     <KeyboardAvoidingView>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <ScrollView>
-            <Column style={{ padding: 15 }}>
-              <EventForm
-                event={event}
-                eventPhoto={eventPhotoUri}
-                onOpenPhotoPicker={openPickerSheet}
-                onValidate={setFormValid}
-                onSetValidationMessage={setValidationMessage}
-                onSetEventObject={setEventObject}
-              />
-              <Button onPress={onChangeEvent}>Изменить событие</Button>
-            </Column>
-          </ScrollView>
-          <PhotoPickerSheet
-            isVisible={isPickerSheetVisible}
-            onClose={closePickerSheet}
-            onSetPhoto={setEventPhotoUri}
+      <ModalLoader isVisible={isLoading} />
+      <ScrollView>
+        <Column style={{ padding: 15 }}>
+          <EventForm
+            event={event}
+            eventPhoto={eventPhotoUri}
+            onOpenPhotoPicker={openPickerSheet}
+            onValidate={setFormValid}
+            onSetValidationMessage={setValidationMessage}
+            onSetEventObject={setEventObject}
           />
-        </>
-      )}
+          <Button onPress={onChangeEvent}>Изменить событие</Button>
+        </Column>
+      </ScrollView>
+      <PhotoPickerSheet
+        isVisible={isPickerSheetVisible}
+        onClose={closePickerSheet}
+        onSetPhoto={setEventPhotoUri}
+      />
     </KeyboardAvoidingView>
   );
 };
