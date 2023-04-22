@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from 'react';
 import { api } from '../src/api';
 import { StyleSheet, View } from 'react-native';
 import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertContext';
-import { Loader } from '../components/loaders/Loader';
 import { EventOptionsSheet } from '../components/sheets/EventOptionsSheet';
 import { Text } from '../components/ui/Text';
 import { THEME } from '../components/theme';

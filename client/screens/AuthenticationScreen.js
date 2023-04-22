@@ -11,7 +11,6 @@ import { SCREEN_STYLE } from '../components/theme';
 import { TOKEN_PROP } from '../src/config';
 import { KeyboardAvoidingView } from '../components/ui/KeyboardAvoidingView';
 import { IconNames } from '../components/ui/Icon';
-import { Loader } from '../components/loaders/Loader';
 import { ModalLoader } from '../components/loaders/ModalLoader';
 
 export const AuthenticationScreen = ({ navigation }) => {

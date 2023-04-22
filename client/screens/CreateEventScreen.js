@@ -5,7 +5,6 @@ import { PhotoPickerSheet } from '../components/sheets/PhotoPickerSheet';
 import { api } from '../src/api';
 import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertContext';
 import { Button } from '../components/ui/Button';
-import { Loader } from '../components/loaders/Loader';
 import { KeyboardAvoidingView } from '../components/ui/KeyboardAvoidingView';
 import { ModalLoader } from '../components/loaders/ModalLoader';
 

@@ -11,7 +11,6 @@ import { Column } from '../components/ui/Column';
 import { Button } from '../components/ui/Button';
 import { Text } from '../components/ui/Text';
 import { TextInput } from '../components/ui/TextInput';
-import { Loader } from '../components/loaders/Loader';
 import { dateRu, validate, getObjectChanges } from '../src/utils';
 import { THEME } from '../components/theme';
 import { KeyboardAvoidingView } from '../components/ui/KeyboardAvoidingView';
