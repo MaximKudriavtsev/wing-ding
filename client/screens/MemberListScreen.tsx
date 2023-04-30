@@ -17,7 +17,7 @@ export const MemberListScreen: React.FC<Props> = ({ route, navigation }) => {
   const { eventId, title } = route.params;
   const { showAlertMessage } = useContext(AlertContext);
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
 
   const openProfileHandler = (userId: string) => {

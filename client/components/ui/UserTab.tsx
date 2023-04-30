@@ -8,7 +8,7 @@ import { User } from '../../src/api/user/types';
 
 type Props = {
   item: User;
-  onOpen: (arg0: string) => void;
+  onOpen: (userId: string) => void;
 };
 
 export const UserTab: React.FC<Props> = ({ item, onOpen }) => {

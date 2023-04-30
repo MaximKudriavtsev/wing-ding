@@ -108,7 +108,7 @@ export const EventScreen: React.FC<Props> = ({ navigation, route }) => {
 
   return (
     <View style={styles.wrapper}>
-      {loadingSucceed ? (
+      {!!loadingSucceed ? (
         <View style={styles.eventScreen}>
           <ModalLoader isVisible={isDeleting} />
           <BottomScrolledTab

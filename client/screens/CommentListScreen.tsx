@@ -21,8 +21,8 @@ export const CommentListScreen: React.FC<Props> = ({
   const { showAlertMessage } = useContext(AlertContext);
   const { eventId } = route.params;
   const [comments, setComments] = useState<Comment[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [commentText, setCommentText] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [commentText, setCommentText] = useState('');
 
   useEffect(() => {
     setIsLoading(true);

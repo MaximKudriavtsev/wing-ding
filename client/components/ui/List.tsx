@@ -37,10 +37,9 @@ export const List: React.FC<Props> = ({
   stickyHeader = false,
   listEmptyComponent,
 }) => {
-  const tempData = [];
-  for (let i = 0; i < onLoadComponentsCount; i++) {
-    tempData.push({ id: i });
-  }
+  const tempData = Array(onLoadComponentsCount)
+    .fill(null)
+    .map((_, index) => ({ id: index }));
 
   return (
     <View style={SCREEN_STYLE.listWrapper}>

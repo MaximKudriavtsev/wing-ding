@@ -24,11 +24,10 @@ enum SearchedType {
 const MIN_SEARCH_STRING_LENGTH = 3;
 
 export const SearchScreen: React.FC<Props> = ({ navigation }) => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [searchString, setSearchString] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchString, setSearchString] = useState('');
   const [searchedType, setSearchedType] = useState<SearchedType>(SearchedType.Users);
   const [foundItems, setFoundItems] = useState<User[] | Event[]>([]);
-  const timeoutEditing = useRef(null);
 
   const openEventHandler = (event: Event) => {
     navigation.push('EventDetails', { eventId: event.id });

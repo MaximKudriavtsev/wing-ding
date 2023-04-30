@@ -7,8 +7,6 @@ type Props = {
 };
 
 export const ModalLoader: React.FC<Props> = ({ isVisible }) => {
-  console.log(isVisible);
-
   return isVisible ? (
     <View style={styles.wrapper}>
       <View style={styles.spinnerWrapper}>
@@ -18,9 +16,7 @@ export const ModalLoader: React.FC<Props> = ({ isVisible }) => {
         />
       </View>
     </View>
-  ) : (
-    <></>
-  );
+  ) : null;
 };
 
 const styles = StyleSheet.create({

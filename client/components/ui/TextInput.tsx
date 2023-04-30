@@ -29,7 +29,7 @@ export const TextInput: React.FC<Props> = ({
   maxLength,
   isLoading = false,
 }) => {
-  const [valueLength, setValueLength] = useState<number>(0);
+  const [valueLength, setValueLength] = useState(0);
 
   useEffect(() => {
     if (value == undefined) return;

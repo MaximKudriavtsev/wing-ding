@@ -25,7 +25,7 @@ type RenderSceneProps = {
 
 export const EventPages: React.FC<Props> = ({ navigation, route, event }) => {
   const componentRoute = route;
-  const [index, setIndex] = useState<number>(0);
+  const [index, setIndex] = useState(0);
 
   const routes: RouteType[] = [
     { key: 'info', icon: IconNames.ICON_INFO },

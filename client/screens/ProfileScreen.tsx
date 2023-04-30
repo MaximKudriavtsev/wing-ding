@@ -38,10 +38,10 @@ export const ProfileScreen: React.FC<Props> = ({ navigation, route }) => {
   const { showAlertMessage } = useContext(AlertContext);
 
   const [user, setUser] = useState<User | null>(null);
-  const [isFriend, setIsFriend] = useState<boolean>(false);
-  const [isUserLoading, setIsUserLoading] = useState<boolean>(false);
-  const [isEventLoading, setIsEventLoading] = useState<boolean>(false);
-  const [friendsCount, setFriendsCount] = useState<number>(0);
+  const [isFriend, setIsFriend] = useState(false);
+  const [isUserLoading, setIsUserLoading] = useState(false);
+  const [isEventLoading, setIsEventLoading] = useState(false);
+  const [friendsCount, setFriendsCount] = useState(0);
   const [events, setEvents] = useState<Event[]>([]);
   const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
   const [filter, setFilter] = useState<Filter>(Filter.Upcoming);

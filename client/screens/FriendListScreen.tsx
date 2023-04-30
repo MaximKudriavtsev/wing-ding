@@ -16,7 +16,7 @@ export const FriendListScreen: React.FC<Props> = ({ route, navigation }) => {
   const { userId, title } = route.params;
   const { showAlertMessage } = useContext(AlertContext);
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
 
   const openProfileHandler = (userId: string) => {
