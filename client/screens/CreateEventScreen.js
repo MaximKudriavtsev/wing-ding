@@ -5,8 +5,8 @@ import { PhotoPickerSheet } from '../components/sheets/PhotoPickerSheet';
 import { api } from '../src/api';
 import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertContext';
 import { Button } from '../components/ui/Button';
-import { Loader } from '../components/ui/Loader';
 import { KeyboardAvoidingView } from '../components/ui/KeyboardAvoidingView';
+import { ModalLoader } from '../components/loaders/ModalLoader';
 
 export const CreateEventScreen = ({ navigation }) => {
   const { showAlertMessage } = useContext(AlertContext);
@@ -50,27 +50,22 @@ export const CreateEventScreen = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <ScrollView style={styles.scrollWrapper}>
-            <EventForm
-              eventPhoto={eventPhotoUri}
-              onOpenPhotoPicker={openPickerSheet}
-              onValidate={setFormValid}
-              onSetValidationMessage={setValidationMessage}
-              onSetEventObject={setEventObject}
-            />
-            <Button onPress={onCreateEvent}>Создать событие</Button>
-          </ScrollView>
-          <PhotoPickerSheet
-            isVisible={isPickerSheetVisible}
-            onClose={closePickerSheet}
-            onSetPhoto={setEventPhotoUri}
-          />
-        </>
-      )}
+      <ModalLoader isVisible={isLoading} />
+      <ScrollView style={styles.scrollWrapper}>
+        <EventForm
+          eventPhoto={eventPhotoUri}
+          onOpenPhotoPicker={openPickerSheet}
+          onValidate={setFormValid}
+          onSetValidationMessage={setValidationMessage}
+          onSetEventObject={setEventObject}
+        />
+        <Button onPress={onCreateEvent}>Создать событие</Button>
+      </ScrollView>
+      <PhotoPickerSheet
+        isVisible={isPickerSheetVisible}
+        onClose={closePickerSheet}
+        onSetPhoto={setEventPhotoUri}
+      />
     </KeyboardAvoidingView>
   );
 };

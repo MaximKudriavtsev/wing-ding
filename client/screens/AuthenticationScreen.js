@@ -11,18 +11,21 @@ import { SCREEN_STYLE } from '../components/theme';
 import { TOKEN_PROP } from '../src/config';
 import { KeyboardAvoidingView } from '../components/ui/KeyboardAvoidingView';
 import { IconNames } from '../components/ui/Icon';
+import { ModalLoader } from '../components/loaders/ModalLoader';
 
 export const AuthenticationScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailValidations, setEmailValidations] = useState(null);
   const [passwordValidations, setPasswordValidations] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { showAlertMessage } = useContext(AlertContext);
   const { setUserToken } = useContext(TokenContext);
 
   const onSignIn = () => {
     if (!emailValidations || !passwordValidations) return;
     if (emailValidations.isValid && passwordValidations.isValid) {
+      setIsLoading(true);
       api.user
         .auth({ email, password })
         .then(({ data, status }) => {
@@ -34,12 +37,14 @@ export const AuthenticationScreen = ({ navigation }) => {
           const errorMessage = decodeError(error.response.data.error);
           showAlertMessage(errorMessage, AlertType.Error);
           console.log(error.response);
-        });
+        })
+        .finally(() => setIsLoading(false));
     }
   };
 
   return (
     <KeyboardAvoidingView style={SCREEN_STYLE.wrapper}>
+      <ModalLoader isVisible={isLoading} />
       <Title>Добро пожаловать!</Title>
       <ValidationHint validations={emailValidations} />
       <TextInput

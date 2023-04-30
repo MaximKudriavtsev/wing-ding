@@ -7,11 +7,12 @@ import { EventInfoPage } from './EventInfoPage';
 import { Event } from '../../src/api/event/types';
 import { TabView, TabBar, TabBarProps, Route } from 'react-native-tab-view';
 import { Icon, IconNames } from '../ui/Icon';
+import { EventInfoPageLoader } from '../loaders/EventInfoPageLoader';
 
 type Props = {
   navigation: any;
   route: any;
-  event: Event;
+  event: Event | null;
 };
 
 interface RouteType extends Route {
@@ -24,7 +25,7 @@ type RenderSceneProps = {
 
 export const EventPages: React.FC<Props> = ({ navigation, route, event }) => {
   const componentRoute = route;
-  const [index, setIndex] = useState<number>(0);
+  const [index, setIndex] = useState(0);
 
   const routes: RouteType[] = [
     { key: 'info', icon: IconNames.ICON_INFO },
@@ -36,7 +37,7 @@ export const EventPages: React.FC<Props> = ({ navigation, route, event }) => {
   const renderScene = (props: RenderSceneProps) => {
     switch (props.route.key) {
       case 'info':
-        return <EventInfoPage event={event} />;
+        return event ? <EventInfoPage event={event} /> : <EventInfoPageLoader />;
       case 'members':
         return <MemberListScreen route={componentRoute} navigation={navigation} />;
       case 'comments':

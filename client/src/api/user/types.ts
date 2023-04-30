@@ -22,7 +22,7 @@ export type GetUserResponse = { status: 200; data: { user: User } };
 
 export type GetUserEvents = { status: 200; data: { events: Event[] } };
 
-export type GetUserFriends = { status: 200; friends: User[] };
+export type GetUserFriends = { data: { status: 200; friends: User[] } };
 
 export type Status = { status: 200; error?: string };
 

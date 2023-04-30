@@ -10,6 +10,9 @@ const idToString = (id: number | string) => id.toString();
 
 type Props = {
   data?: Event[] | User[] | Comment[];
+  isDataLoaded?: boolean;
+  onLoadComponentsCount?: number;
+  OnLoadComponent?: React.ElementType;
   Component: React.ElementType;
   onOpen?: ((event: Event) => void) | ((userId: string) => void);
   onShowMembers?: () => void;
@@ -23,6 +26,9 @@ type Props = {
 export const List: React.FC<Props> = ({
   style,
   data,
+  isDataLoaded,
+  onLoadComponentsCount = 15,
+  OnLoadComponent,
   Component,
   onOpen,
   onShowMembers,
@@ -31,6 +37,10 @@ export const List: React.FC<Props> = ({
   stickyHeader = false,
   listEmptyComponent,
 }) => {
+  const tempData = Array(onLoadComponentsCount)
+    .fill(null)
+    .map((_, index) => ({ id: index }));
+
   return (
     <View style={SCREEN_STYLE.listWrapper}>
       <FlatList
@@ -38,11 +48,15 @@ export const List: React.FC<Props> = ({
         stickyHeaderHiddenOnScroll={stickyHeader}
         style={style}
         ListHeaderComponent={listHeader}
-        data={data}
+        data={!isDataLoaded && OnLoadComponent ? tempData : data}
         keyExtractor={item => idToString(item.id)}
-        renderItem={({ item }) => (
-          <Component item={item} onOpen={onOpen} onShowMembers={onShowMembers} />
-        )}
+        renderItem={({ item }) => {
+          return !isDataLoaded && OnLoadComponent ? (
+            <OnLoadComponent item={item} />
+          ) : (
+            <Component item={item} onOpen={onOpen} onShowMembers={onShowMembers} />
+          );
+        }}
         ListEmptyComponent={listEmptyComponent || <Text style={styles.empty}>{emptyText}</Text>}
       />
     </View>

@@ -16,8 +16,8 @@ export const PhotoPicker: React.FC<Props> = ({ style, source, onPress, photoDiam
     <TouchableOpacity style={style} activeOpacity={0.7} onPress={onPress}>
       <Image
         source={source}
-        style={styles.imageWrapper}
-        imageStyle={{ ...styles.image, width: photoDiameter, height: photoDiameter }}
+        style={{ ...styles.imageWrapper, width: photoDiameter, height: photoDiameter }}
+        imageStyle={styles.image}
         defaultImage={THEME.USER_PHOTO}
       />
       <Text style={styles.text}>{source ? 'Изменить фото' : 'Загрузить фото'}</Text>
@@ -28,7 +28,7 @@ export const PhotoPicker: React.FC<Props> = ({ style, source, onPress, photoDiam
 const styles = StyleSheet.create({
   imageWrapper: {
     display: 'flex',
-    width: '100%',
+    width: '80%',
     height: '80%',
     alignItems: 'center',
     justifyContent: 'center',
@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     justifyContent: 'center',
     height: '20%',
+    marginTop: 10,
     color: THEME.BUTTON_COLOR,
   },
 });

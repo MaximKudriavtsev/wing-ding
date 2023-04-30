@@ -12,9 +12,10 @@ import { Event } from '../../src/api/event/types';
 import { ButtonType } from '../../components/ui/Button';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Icon, IconNames } from '../ui/Icon';
+import { Skeleton } from '../loaders/Skeleton';
 
 type Props = {
-  event: Event;
+  event: Event | null;
   onShowMembersHandler: () => void;
   onOpenCommentsScreen: () => void;
   onOpenOptionsSheet: () => void;
@@ -29,7 +30,11 @@ export const EventScreenBackground: React.FC<Props> = ({
   onGoBack,
 }) => (
   <View style={styles.imageBackground}>
-    <Image style={styles.image} source={event.img} defaultImage={THEME.EVENT_IMAGE} />
+    <Image
+      style={styles.image}
+      source={event ? event.img : undefined}
+      defaultImage={THEME.EVENT_IMAGE}
+    />
     <LinearGradient
       colors={['transparent', '#000']}
       style={styles.gradient}
@@ -46,7 +51,7 @@ export const EventScreenBackground: React.FC<Props> = ({
           onPress={onGoBack}
           icon={<Icon name={IconNames.ICON_ARROW_BACK} size={20} color={THEME.FONT_COLOR} />}
         />
-        {event.isHost ? (
+        {event && event.isHost ? (
           <Button
             style={{
               ...styles.rowButton,
@@ -60,15 +65,19 @@ export const EventScreenBackground: React.FC<Props> = ({
       </Row>
       <Row style={styles.mainRow}>
         <View style={styles.userInfo}>
-          <UserIcon userPhoto={event.host.photo} iconSize={50} />
-          <Text bold={true} style={styles.hostName}>
-            {`${event.host.firstName} ${event.host.lastName}`}
-          </Text>
+          <UserIcon userPhoto={event ? event.host.photo : null} iconSize={50} />
+          {event ? (
+            <Text bold={true} style={styles.hostName}>
+              {`${event.host.firstName} ${event.host.lastName}`}
+            </Text>
+          ) : (
+            <Skeleton />
+          )}
         </View>
         <View style={styles.activitiesWrapper}>
           <MemberTab
-            membersPhotos={event.membersPhotos}
-            membersCount={event.membersCount}
+            membersPhotos={event ? event.membersPhotos : [null]}
+            membersCount={event ? event.membersCount : 0}
             onOpen={onShowMembersHandler}
             style={styles.memberTab}
           />
@@ -78,7 +87,7 @@ export const EventScreenBackground: React.FC<Props> = ({
             onPress={onOpenCommentsScreen}
           >
             <Icon name={IconNames.ICON_COMMENTS} size={24} color={THEME.FONT_COLOR} />
-            <Text style={{ marginLeft: 12 }}>{event.commentsCount}</Text>
+            <Text style={{ marginLeft: 12 }}>{event ? event.commentsCount : 0}</Text>
           </TouchableOpacity>
         </View>
       </Row>

@@ -28,7 +28,7 @@ export const TopAlert: React.FC<Props> = ({ type, message, isVisible }) => {
     <View style={styles.wrapper}>
       <Modal animationType='fade' transparent={true} visible={isVisible}>
         <View style={styles.modal}>
-          <Icon name={icon} color={'#fff'} size={24} style={{ width: '15%' }} />
+          <Icon name={icon} color={THEME.FONT_COLOR} size={24} style={{ width: '15%' }} />
           <Text style={{ width: '85%', textAlign: 'left' }}>{message}</Text>
         </View>
       </Modal>
@@ -42,12 +42,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'flex-end',
-    marginTop: 22 + THEME.STATUS_BAR_HEIGHT,
   },
   modal: {
     display: 'flex',
     flexDirection: 'row',
     margin: 20,
+    marginTop: THEME.STATUS_BAR_HEIGHT,
     backgroundColor: THEME.DARKER_COLOR,
     borderRadius: 20,
     paddingVertical: 35,

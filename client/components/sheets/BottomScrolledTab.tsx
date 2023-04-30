@@ -39,8 +39,8 @@ export const BottomScrolledTab: React.FC<Props> = ({
   const translateScrolledTab = useSharedValue(0);
   const backgroundOpacity = useSharedValue(1);
 
-  const [fullScreen, setFullScreen] = useState<boolean>(false);
-  const [currentScrollTranslation, setCurrentScrollTranslation] = useState<number>(0);
+  const [fullScreen, setFullScreen] = useState(false);
+  const [currentScrollTranslation, setCurrentScrollTranslation] = useState(0);
 
   useEffect(() => {
     fullScreen ? pagerRef.current?.setPage(1) : pagerRef.current?.setPage(0);

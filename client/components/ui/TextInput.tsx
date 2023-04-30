@@ -3,7 +3,7 @@ import { View, TextInput as DefaultTextInput, StyleSheet } from 'react-native';
 import { Text } from './Text';
 import { TextInputProps } from 'react-native';
 import { THEME } from '../theme';
-import { Loader } from './Loader';
+import { Loader } from '../loaders/Loader';
 import { Icon, IconNames } from './Icon';
 
 type Props = TextInputProps & {
@@ -29,7 +29,7 @@ export const TextInput: React.FC<Props> = ({
   maxLength,
   isLoading = false,
 }) => {
-  const [valueLength, setValueLength] = useState<number>(0);
+  const [valueLength, setValueLength] = useState(0);
 
   useEffect(() => {
     if (value == undefined) return;

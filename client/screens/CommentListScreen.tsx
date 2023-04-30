@@ -2,13 +2,14 @@ import React, { useState, useEffect, useContext } from 'react';
 import { AlertContext, AlertType, AlertMessages } from '../src/context/AlertContext';
 import { List } from '../components/ui/List';
 import { CommentTab } from '../components/ui/CommentTab';
-import { Loader } from '../components/ui/Loader';
+import { Loader } from '../components/loaders/Loader';
 import { Comment } from '../src/api/event/types';
 import { SCREEN_STYLE } from '../components/theme';
 import { MessageInputBar } from '../components/ui/MessageInputBar';
 import { KeyboardAvoidingView } from '../components/ui/KeyboardAvoidingView';
 import { View } from 'react-native';
 import api from '../src/api/production';
+import { CommentTabLoader } from '../components/loaders/CommentTabLoader';
 
 type Props = { navigation: any; route: any; hasDefaultOffset?: boolean };
 
@@ -20,8 +21,8 @@ export const CommentListScreen: React.FC<Props> = ({
   const { showAlertMessage } = useContext(AlertContext);
   const { eventId } = route.params;
   const [comments, setComments] = useState<Comment[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [commentText, setCommentText] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [commentText, setCommentText] = useState('');
 
   useEffect(() => {
     setIsLoading(true);
@@ -58,16 +59,14 @@ export const CommentListScreen: React.FC<Props> = ({
       hasDefaultOffset={hasDefaultOffset}
     >
       <View style={{ flex: 1 }}>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <List
-            data={comments}
-            Component={CommentTab}
-            emptyText={'Еще никто не оставил комментарий. Будьте первыми!'}
-            style={{ paddingTop: 10 }}
-          />
-        )}
+        <List
+          data={comments}
+          Component={CommentTab}
+          emptyText={'Еще никто не оставил комментарий. Будьте первыми!'}
+          style={{ paddingTop: 10 }}
+          isDataLoaded={!isLoading}
+          OnLoadComponent={CommentTabLoader}
+        />
       </View>
       <MessageInputBar
         placeholder={'Добавьте комментарий...'}

@@ -4,17 +4,22 @@ import { api } from '../src/api';
 import { View } from 'react-native';
 import { List } from '../components/ui/List';
 import { UserTab } from '../components/ui/UserTab';
-import { Loader } from '../components/ui/Loader';
 import { THEME } from '../components/theme';
+import { User } from '../src/api/user/types';
+import { UserTabLoader } from '../components/loaders/UserTabLoader';
 
-export const FriendListScreen = ({ route, navigation }) => {
+type Props = {
+  route: any;
+  navigation: any;
+};
+export const FriendListScreen: React.FC<Props> = ({ route, navigation }) => {
   const { userId, title } = route.params;
   const { showAlertMessage } = useContext(AlertContext);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<User[]>([]);
 
-  const openProfileHandler = userId => {
+  const openProfileHandler = (userId: string) => {
     navigation.push('ProfileScreen', { userId });
   };
 
@@ -46,11 +51,13 @@ export const FriendListScreen = ({ route, navigation }) => {
         flex: 1,
       }}
     >
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <List data={users} Component={UserTab} onOpen={openProfileHandler} />
-      )}
+      <List
+        data={users}
+        Component={UserTab}
+        onOpen={openProfileHandler}
+        isDataLoaded={!isLoading}
+        OnLoadComponent={UserTabLoader}
+      />
     </View>
   );
 };

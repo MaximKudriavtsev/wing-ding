@@ -19,7 +19,7 @@ type Props = {
 };
 
 export const BottomSheet: React.FC<Props> = ({ children, isVisible, onClose }) => {
-  const translateSheet = useSharedValue(0);
+  const translateSheet = useSharedValue(THEME.SCREEN_HEIGHT);
   const translateBackground = useSharedValue(0);
   const opacity = useSharedValue(0);
 
